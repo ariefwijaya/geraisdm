@@ -1,0 +1,13 @@
+{
+  "app_name": "Your App Name",
+  "router_auth_failed_title": "Oops, something went wrong",
+  "router_auth_failed_subtitle": "Authentication failed to access this page",
+  "router_auth_try_again": "Try Again",
+  "router_auth_relogin": "Login Again",
+  "authorization_refresh_token_invalid_title": "Refresh Token Failed",
+  "authorization_refresh_token_invalid_subtitle": "Your token session has expired and you have to login again",
+  "authorization_refresh_token_invalid_relogin": "Login Again",
+  "tutorial_action_next": "Continue",
+  "tutorial_action_done": "Done",
+  "router_auth_failed_ok": "Okay"
+}

@@ -1,0 +1,12 @@
+str,id,en
+app_name,Your App Name,Your App Name
+router_auth_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+router_auth_failed_subtitle,Gagal melakukan autentikasi untuk mendapatkan akses ke halaman ini,Authentication failed to access this page
+router_auth_try_again,Coba Lagi,Try Again
+router_auth_relogin,Login Ulang,Login Again
+authorization_refresh_token_invalid_title,Refresh Token Gagal,Refresh Token Failed
+authorization_refresh_token_invalid_subtitle,Wah.. sepertinya sesi token kamu sudah kadaluarsa dan harus login ulang ,Your token session has expired and you have to login again
+authorization_refresh_token_invalid_relogin,Login Ulang,Login Again
+tutorial_action_next,Lanjut,Continue
+tutorial_action_done,Selesai,Done
+router_auth_failed_ok,Oke,Okay

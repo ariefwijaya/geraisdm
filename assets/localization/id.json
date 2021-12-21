@@ -1,0 +1,13 @@
+{
+  "app_name": "Your App Name",
+  "router_auth_failed_title": "Oops, terjadi kesalahan",
+  "router_auth_failed_subtitle": "Gagal melakukan autentikasi untuk mendapatkan akses ke halaman ini",
+  "router_auth_try_again": "Coba Lagi",
+  "router_auth_relogin": "Login Ulang",
+  "authorization_refresh_token_invalid_title": "Refresh Token Gagal",
+  "authorization_refresh_token_invalid_subtitle": "Wah.. sepertinya sesi token kamu sudah kadaluarsa dan harus login ulang ",
+  "authorization_refresh_token_invalid_relogin": "Login Ulang",
+  "tutorial_action_next": "Lanjut",
+  "tutorial_action_done": "Selesai",
+  "router_auth_failed_ok": "Oke"
+}

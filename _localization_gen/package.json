@@ -1,0 +1,31 @@
+{
+  "name": "i18ncsv2json",
+  "version": "0.9.4",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "i18ncsv2json": "index.js"
+  },
+  "dependencies": {
+    "commander": "^2.20.3",
+    "csv-parse": "^4.16.0",
+    "glob": "^7.1.2",
+    "lodash-transpose": "^0.2.1",
+    "lodash.merge": "^4.6.0",
+    "mkdirp": "^0.5.1",
+    "object-path": "^0.11.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/othree/i18ncsv2json.git"
+  },
+  "author": "othree",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/othree/i18ncsv2json/issues"
+  },
+  "homepage": "https://github.com/othree/i18ncsv2json#readme"
+}
