@@ -2,11 +2,11 @@ import '../../../../core/auth/providers/auth_local_provider_interface.dart';
 import '../../../../utils/services/local_storage_service/local_storage_service.dart';
 import '../../../../utils/services/local_storage_service/tables/sessions_table.dart';
 import 'package:injectable/injectable.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 part 'auth_local_provider.g.dart';
 
 @Injectable(as: AuthLocalProviderInterface)
-@UseDao(tables: [Sessions])
+@DriftAccessor(tables: [Sessions])
 class AuthLocalProvider extends DatabaseAccessor<AppDatabase>
     with _$AuthLocalProviderMixin
     implements AuthLocalProviderInterface {
@@ -26,24 +26,7 @@ class AuthLocalProvider extends DatabaseAccessor<AppDatabase>
       update(sessions).replace(session);
 
   @override
-  Stream<List<Session>> watchAllSession() {
-    return (select(sessions)
-          ..orderBy(
-            [
-              (t) => OrderingTerm(
-                  expression: t.createdDate, mode: OrderingMode.desc),
-              (t) => OrderingTerm(
-                  expression: t.updatedDate, mode: OrderingMode.desc),
-            ],
-          ))
-        .watch();
-  }
-
-  @override
-  Future<List<Session>> getAllSession() => select(sessions).get();
-
-  @override
-  Future<Session?> getSessionById(int id) =>
+  Future<Session?> getSessionById(String id) =>
       (select(sessions)..where((t) => t.userId.equals(id))).getSingleOrNull();
 
   @override
@@ -55,7 +38,7 @@ class AuthLocalProvider extends DatabaseAccessor<AppDatabase>
   }
 
   @override
-  Future truncateSession() {
-    return delete(sessions).go();
+  Future<void> clearSession() async {
+    await delete(sessions).go();
   }
 }

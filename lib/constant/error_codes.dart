@@ -35,4 +35,12 @@ class BackendErrors {
       const ApiErrorModel(errorCode: "INTERNAL_SERVER_ERROR");
   static ApiErrorModel get refreshTokenInvalid =>
       const ApiErrorModel(errorCode: "REFRESH_TOKEN_INVALID");
+
+  //Login
+  static ApiErrorModel get loginWrongAccess =>
+      const ApiErrorModel(errorCode: "WRONG_PASSWORD");
+  static ApiErrorModel get loginBadRequest =>
+      const ApiErrorModel(errorCode: "BAD_REQUEST");
+  static ApiErrorModel get loginNotRegistered =>
+      const ApiErrorModel(errorCode: "NOT_REGISTERED");
 }

@@ -432,7 +432,7 @@ class FilledTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null)
-          Text(label!, style: Theme.of(context).textTheme.headline6),
+          Text(label!, style: Theme.of(context).textTheme.headline5),
         if (label != null) const SizedBox(height: 8),
         TextFormField(
           validator: validator,
@@ -445,22 +445,106 @@ class FilledTextField extends StatelessWidget {
           keyboardType: keyboardType,
           style: const TextStyle(fontSize: 14),
           decoration: InputDecoration(
+              prefixIcon: prefixIcon,
+              suffixIcon: suffixIcon,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-              fillColor: Theme.of(context).indicatorColor,
+              fillColor: Theme.of(context).dividerColor,
               filled: true,
               hintText: hint,
               border: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).unselectedWidgetColor),
-                  borderRadius: BorderRadius.circular(100)),
+                  borderRadius: BorderRadius.circular(10)),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                  borderRadius: BorderRadius.circular(100)),
+                  borderRadius: BorderRadius.circular(10)),
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).unselectedWidgetColor),
-                  borderRadius: BorderRadius.circular(100))),
+                  borderRadius: BorderRadius.circular(10))),
+        ),
+      ],
+    );
+  }
+}
+
+class FilledPasswordTextField extends StatefulWidget {
+  final String? Function(String?)? validator;
+  final String? initialValue;
+  final TextEditingController? controller;
+  final bool? enabled;
+  final bool readOnly;
+  final void Function(String? val)? onSaved;
+  final TextInputType? keyboardType;
+  final String label;
+  final String hint;
+  final void Function(String val)? onChanged;
+
+  const FilledPasswordTextField(
+      {Key? key,
+      this.onSaved,
+      this.validator,
+      this.initialValue,
+      this.controller,
+      this.enabled,
+      this.readOnly = false,
+      this.onChanged,
+      this.keyboardType = TextInputType.text,
+      required this.label,
+      required this.hint})
+      : super(key: key);
+
+  @override
+  _FilledPasswordTextFieldState createState() =>
+      _FilledPasswordTextFieldState();
+}
+
+class _FilledPasswordTextFieldState extends State<FilledPasswordTextField> {
+  bool obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.label, style: Theme.of(context).textTheme.headline6),
+        const SizedBox(height: 8),
+        TextFormField(
+          validator: widget.validator,
+          initialValue: widget.initialValue,
+          controller: widget.controller,
+          enabled: widget.enabled,
+          readOnly: widget.readOnly,
+          onSaved: widget.onSaved,
+          onChanged: widget.onChanged,
+          keyboardType: widget.keyboardType,
+          obscureText: obscure,
+          decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+              fillColor: Theme.of(context).dividerColor,
+              filled: true,
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).unselectedWidgetColor),
+                  borderRadius: BorderRadius.circular(10)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(10)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).unselectedWidgetColor),
+                  borderRadius: BorderRadius.circular(10)),
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      obscure = !obscure;
+                    });
+                  },
+                  icon:
+                      Icon(obscure ? Icons.visibility : Icons.visibility_off)),
+              hintText: widget.hint),
         ),
       ],
     );

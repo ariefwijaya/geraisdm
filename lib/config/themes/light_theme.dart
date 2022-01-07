@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class ColorLight {
   ColorLight._();
 
-  static const Color ocean = Color(0xFF59C4AF);
-  static const Color oceanBlue = Color(0xFF3BA2B9);
-  static const Color oceanDisabled = Color(0xFFc5e5df);
-  static const Color deepBlue = Color(0xFF348BCB);
+  static const Color maroon = Color(0xFFb01418);
+  static const Color maroonLight = Color(0xFFf03a36);
+  static const Color maroonDisabled = Color(0xFFE5C5C5);
+  static const Color gold = Color(0xFFf5a325);
 
   static const Color yellow = Color(0xFFFFC526);
   static const Color green = Color(0xFF32D07B);
@@ -37,25 +37,4 @@ class ColorLight {
       700: black70,
     },
   );
-
-  /// Gradient color for ocean
-  static LinearGradient oceanGradient = const LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [Color(0xFF59C4AF), Color(0xFF3BA2B9)]);
-
-  static LinearGradient oceanGradientDark = const LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [Color(0xFF42AF9A), Color(0xFF346C78)]);
-
-  static LinearGradient expenseGradient = const LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [Color(0xFFE24D4D), Color(0xFFFFAAAA)]);
-
-  static LinearGradient incomeGradient = const LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [ColorLight.ocean, ColorLight.oceanBlue]);
 }

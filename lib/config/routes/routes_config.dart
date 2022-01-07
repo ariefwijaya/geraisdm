@@ -31,7 +31,7 @@ class AuthGuard extends AutoRouteGuard {
         resolver.next();
       } else {
         // we redirect the user to our login page
-        final bool? success = await router.push<bool?>(const LoginRoute());
+        final bool? success = await router.push<bool?>(LoginRoute());
         if (success != null && success) {
           resolver.next();
         } else {
@@ -73,7 +73,7 @@ class AuthGuard extends AutoRouteGuard {
                         buttonText: LocaleKeys.router_auth_relogin.tr(),
                         onPressed: () async {
                           final success =
-                              await context.router.push(const LoginRoute());
+                              await context.router.push(LoginRoute());
                           context.router.pop(success);
                         }),
                   )

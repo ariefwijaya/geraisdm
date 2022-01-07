@@ -11,7 +11,7 @@ import '../../../config/injectable/injectable_core.dart';
 import '../../../core/notification/blocs/notification_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_platform/universal_platform.dart';
 

@@ -1,55 +1,54 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:geraisdm/core/auth/models/personil_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
 
-enum GenderType {
-  @JsonValue("m")
-  male,
-  @JsonValue("f")
-  female,
-  @JsonValue(null)
+enum UserType {
+  @JsonValue("UMUM")
+  umum,
+  @JsonValue("PNS")
+  pns,
+  @JsonValue("POLISI")
+  polisi,
   unknown
 }
 
 @CopyWith()
 @JsonSerializable(fieldRename: FieldRename.snake)
 class AuthUserModel {
-  static DateTime? _dateOfBirthFromJson(String? date) {
-    if (date == null) return null;
-    final splitted = date.split("-");
-    return DateTime.parse([splitted[2], splitted[1], splitted[0]].join("-"));
-  }
+  final int poldaId;
+  final int groupsId;
 
-  final int id;
-  final String name;
-  final String email;
-  @JsonKey(fromJson: _dateOfBirthFromJson)
-  final DateTime? dateOfBirth;
-  final String? phoneNumber;
-  final String? profilePic;
-  final int? monthlyIncome;
-  final String username;
-  @JsonKey(defaultValue: [], name: "device_tokens")
-  final List<String> tokens;
-  final String? referrerUsername;
-  final String? paydayDate;
-  @JsonKey(unknownEnumValue: GenderType.unknown)
-  final GenderType? gender;
+  /// nrp or nip
+  final String employeeId;
+  final String nik;
+  final String hpNo;
+  final DateTime birthday;
+  final String address;
+
+  final String fullName;
+  final String shortName;
+  @JsonKey(unknownEnumValue: UserType.unknown)
+  final UserType accountType;
+  final String? avatar;
+  final String? email;
+  final PersonilModel? dataPersonil;
 
   const AuthUserModel(
-      {required this.id,
-      required this.name,
-      required this.email,
-      this.dateOfBirth,
-      this.phoneNumber,
-      this.profilePic,
-      required this.monthlyIncome,
-      required this.username,
-      required this.tokens,
-      this.referrerUsername,
-      this.paydayDate,
-      this.gender});
+      {required this.poldaId,
+      required this.groupsId,
+      required this.employeeId,
+      required this.nik,
+      required this.hpNo,
+      required this.birthday,
+      required this.address,
+      required this.fullName,
+      required this.shortName,
+      required this.accountType,
+      this.avatar,
+      this.email,
+      this.dataPersonil});
 
   factory AuthUserModel.fromJson(Map<String, dynamic> json) =>
       _$AuthUserModelFromJson(json);

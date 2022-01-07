@@ -1,4 +1,4 @@
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 import 'tables/sessions_table.dart';
 
@@ -6,14 +6,13 @@ export 'database/shared.dart';
 
 part 'local_storage_service.g.dart';
 
-@UseMoor(tables: [Sessions])
+@DriftDatabase(tables: [Sessions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(QueryExecutor e) : super(e);
 
   @override
   int get schemaVersion => 1;
 
-  @override
   @override
   MigrationStrategy get migration =>
       MigrationStrategy(beforeOpen: (openingDetails) async {

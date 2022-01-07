@@ -2,8 +2,8 @@ import 'dart:io';
 
 import '../../../../env/env.dart';
 import 'package:encrypted_moor/encrypted_moor.dart';
-import 'package:moor/ffi.dart';
-import 'package:moor/moor.dart';
+import 'package:drift/native.dart';
+import 'package:drift/drift.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as paths;
 
@@ -32,5 +32,5 @@ AppDatabase constructDb({bool logStatements = false}) {
   //   final file = File('db.sqlite');
   //   return Database(VMDatabase(file, logStatements: logStatements));
   // }
-  return AppDatabase(VmDatabase.memory(logStatements: logStatements));
+  return AppDatabase(NativeDatabase.memory(logStatements: logStatements));
 }

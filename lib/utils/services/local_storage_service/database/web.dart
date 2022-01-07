@@ -1,5 +1,5 @@
 import '../../../../env/env.dart';
-import 'package:moor/moor_web.dart';
+import 'package:drift/web.dart';
 
 import '../local_storage_service.dart';
 

@@ -10,3 +10,37 @@ authorization_refresh_token_invalid_relogin,Login Ulang,Login Again
 tutorial_action_next,Lanjut,Continue
 tutorial_action_done,Selesai,Done
 router_auth_failed_ok,Oke,Okay
+auth_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+auth_failed_subtitle,"Ada yang ga beres nih ketika melakukan autentikasi, silahkan coba lagi atau logout jika masalah terjadi berulang","Something went wrong when authenticating your account, please try again or logout if the errors persist"
+auth_failed_retry,Coba Lagi,Try Again
+app_update_title,"Perbarui App Dulu, Yuk!",Let's Update Your App First!
+app_update_subtitle,"Wah versi {} terbaru {} telah rilis nih. Saat ini, kamu pakai {}","A newer version, {} version {} has been released. You are currently using version {}"
+app_update_hint,Mau di update sekarang?,Do you want to update it now?
+app_update_later,Nanti,Later
+app_update_download,Perbarui,Update
+onboarding1_title,Anggota dan PNS Polri,Anggota dan PNS Polri
+onboarding1_description,Pelayanan Terpadu Administrasi Sumber Daya Manusia Bagi Personel Polda Sumsel,Pelayanan Terpadu Administrasi Sumber Daya Manusia Bagi Personel Polda Sumsel
+onboarding2_title,Masyarakat Umum,Masyarakat Umum
+onboarding2_description,"Dapatkan Informasi Secara Cepat dan Akurat Terkait Penerimaan, Berita, Pengumuman di Bidang Sumber Daya Manusia Polda Sumsel","Dapatkan Informasi Secara Cepat dan Akurat Terkait Penerimaan, Berita, Pengumuman di Bidang Sumber Daya Manusia Polda Sumsel"
+onboarding_create_new_account,Buat Akun Baru,Create New Account
+onboarding_login,Login,Login
+onboarding_start,Mulai,Start
+onboarding_config_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+onboarding_config_failed_subtitle,"Gagal ketika mendapatkan konfigurasi, Silahkan hubungi admin jika kesalahan terjadi berulang","Failure in getting configurations, Please contact admin if this persists"
+onboarding_config_failed_retry,Coba Lagi,Try Again
+onboarding_next,Selanjutnya,Next
+onboarding_skip,Lewati,Skip
+login_title,Masuk,Login
+login_username_title,Username,Username
+login_username_hint,E-MAIL / NIK / NIP / NRP,E-MAIL / NIK / NIP / NRP
+login_password_title,Password,Password
+login_password_hint,Masukkan ,Enter your password
+login_button,Login,Login
+login_forgot_password,Forgot Password?,Lupa Password?
+login_signup,Daftar Akun,Signup
+login_config_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+login_config_failed_subtitle,"Gagal ketika mendapatkan konfigurasi, Silahkan hubungi admin jika kesalahan terjadi berulang","Failure in getting configurations, Please contact admin if this persists"
+login_wrong_password,Username / Password Salah,Username / Password Salah
+login_failed,"Login Gagal, terjadi kesalahan","Login Gagal, terjadi kesalahan"
+login_user_notfound,"Akun belum terdaftar, Silahkan daftar dulu","Akun belum terdaftar, Silahkan daftar dulu"
+login_user_notfound_signup,Daftar,Daftar

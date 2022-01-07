@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/injectable/injectable_core.dart';
 import 'config/routes/routes.gr.dart';
 import 'core/auth/blocs/auth_bloc.dart';
+import 'core/deeplink/blocs/deeplink_bloc/deeplink_bloc.dart';
 import 'core/notification/blocs/notification_bloc.dart';
 import 'core/settings/blocs/language_cubit/language_cubit.dart';
 import 'core/settings/blocs/theme_cubit/theme_cubit.dart';
@@ -40,6 +40,8 @@ class MyApp extends StatelessWidget {
             create: (context) => getIt.get<LanguageCubit>()..init()),
         BlocProvider<NotificationBloc>(
             create: (context) => getIt.get<NotificationBloc>()),
+        BlocProvider<DeeplinkBloc>(
+            create: (context) => getIt.get<DeeplinkBloc>()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => BlocListener<LanguageCubit, LanguageState>(
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
                   initialDeepLink: const SplashRoute().path,
                   navigatorObservers: () => [
                         FirebaseAnalyticsObserver(
-                            analytics: FirebaseAnalytics()),
+                            analytics: FirebaseAnalytics.instance),
                       ]),
               routeInformationParser:
                   router.defaultRouteParser(includePrefixMatches: true),

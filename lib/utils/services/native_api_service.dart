@@ -1,3 +1,5 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
 import '../../../../constant/error_codes.dart';
 import '../../../../core/app_setting.dart';
 import '../../../../core/settings/models/environment_model.dart';
@@ -62,6 +64,10 @@ abstract class NativeApiService {
 
   @singleton
   FirebaseMessaging get firebaseMessaging => FirebaseMessaging.instance;
+
+  @singleton
+  FirebaseDynamicLinks get firebaseDynamicLinks =>
+      FirebaseDynamicLinks.instance;
 
   @singleton
   FirebaseCrashlytics get firebaseCrashlytics => FirebaseCrashlytics.instance;
