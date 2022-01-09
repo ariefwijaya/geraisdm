@@ -43,4 +43,24 @@ class BackendErrors {
       const ApiErrorModel(errorCode: "BAD_REQUEST");
   static ApiErrorModel get loginNotRegistered =>
       const ApiErrorModel(errorCode: "NOT_REGISTERED");
+//Register Request OTP
+  static ApiErrorModel get registerUserAlreadyRegistered =>
+      const ApiErrorModel(errorCode: "ALREADY_REGISTERED");
+  static ApiErrorModel get registerPhoneUsed =>
+      const ApiErrorModel(errorCode: "PHONE_HAS_BEEN_USED");
+  static ApiErrorModel get registerInvalidNRP =>
+      const ApiErrorModel(errorCode: "INVALID_NRP");
+  static ApiErrorModel get registerInvalidNIK =>
+      const ApiErrorModel(errorCode: "INVALID_NIK");
+
+  //Register Activation
+  static ApiErrorModel get registerActivationWrongOTP =>
+      const ApiErrorModel(errorCode: "OTP_WRONG");
+  static ApiErrorModel get registerActivationExpiredOTP =>
+      const ApiErrorModel(errorCode: "OTP_EXPIRED");
+  static ApiErrorModel get registerActivationBadRequest =>
+      const ApiErrorModel(errorCode: "BAD_REQUEST");
+
+  static ApiErrorModel get registerActivationWrongBirthday =>
+      const ApiErrorModel(errorCode: "BIRTHDAY_WRONG");
 }

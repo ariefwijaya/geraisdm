@@ -196,23 +196,22 @@ class _GhostPasswordTextFieldState extends State<GhostPasswordTextField> {
   }
 }
 
-class GhostPickerFieldValue<T> {
+class FormPickerFieldValue<T> {
   final String name;
   final T? val;
 
-  const GhostPickerFieldValue({required this.name, this.val});
+  const FormPickerFieldValue({required this.name, this.val});
 }
 
 class GhostPickerField<T> extends StatefulWidget {
-  final GhostPickerFieldValue<T>? Function(GhostPickerFieldValue<T>?)?
-      validator;
-  final GhostPickerFieldValue<T>? initialValue;
-  final void Function(GhostPickerFieldValue<T>?)? onSaved;
+  final FormPickerFieldValue<T>? Function(FormPickerFieldValue<T>?)? validator;
+  final FormPickerFieldValue<T>? initialValue;
+  final void Function(FormPickerFieldValue<T>?)? onSaved;
   final String label;
   final String hint;
   final Widget? prefixWidget;
   final IconData? suffixIcon;
-  final Future<GhostPickerFieldValue<T>?> Function(GhostPickerFieldValue<T>?)?
+  final Future<FormPickerFieldValue<T>?> Function(FormPickerFieldValue<T>?)?
       onTap;
 
   const GhostPickerField(
@@ -233,7 +232,7 @@ class GhostPickerField<T> extends StatefulWidget {
 
 class _GhostPickerFieldState<T> extends State<GhostPickerField<T>> {
   late final TextEditingController controller;
-  GhostPickerFieldValue<T>? currentValue;
+  FormPickerFieldValue<T>? currentValue;
 
   @override
   void initState() {
@@ -284,15 +283,14 @@ class _GhostPickerFieldState<T> extends State<GhostPickerField<T>> {
 }
 
 class GhostCustomPickerField<T> extends StatefulWidget {
-  final GhostPickerFieldValue<T>? Function(GhostPickerFieldValue<T>?)?
-      validator;
-  final GhostPickerFieldValue<T>? initialValue;
-  final void Function(GhostPickerFieldValue<T>?)? onSaved;
+  final FormPickerFieldValue<T>? Function(FormPickerFieldValue<T>?)? validator;
+  final FormPickerFieldValue<T>? initialValue;
+  final void Function(FormPickerFieldValue<T>?)? onSaved;
   final String label;
-  final Widget Function(BuildContext, GhostPickerFieldValue<T>) selectedBuilder;
+  final Widget Function(BuildContext, FormPickerFieldValue<T>) selectedBuilder;
   final Widget Function(BuildContext) unselectedBuilder;
 
-  final Future<GhostPickerFieldValue<T>?> Function(GhostPickerFieldValue<T>?)?
+  final Future<FormPickerFieldValue<T>?> Function(FormPickerFieldValue<T>?)?
       onTap;
 
   const GhostCustomPickerField(
@@ -312,7 +310,7 @@ class GhostCustomPickerField<T> extends StatefulWidget {
 }
 
 class _GhostCustomPickerFieldState<T> extends State<GhostCustomPickerField<T>> {
-  GhostPickerFieldValue<T>? currentValue;
+  FormPickerFieldValue<T>? currentValue;
   late final TextEditingController controller;
   bool isValid = true;
 
@@ -395,14 +393,157 @@ class _GhostCustomPickerFieldState<T> extends State<GhostCustomPickerField<T>> {
   }
 }
 
+class _GhostPinTextFieldBuilder extends StatelessWidget {
+  final bool enabled;
+  final bool enablePinAutofill;
+  final int length;
+  final void Function(String value)? onCompleted;
+  final void Function(String value) onChanged;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
+  final TextStyle? textStyle;
+  final double errorTextSpace;
+  final bool readOnly;
+
+  const _GhostPinTextFieldBuilder(
+      {Key? key,
+      this.enabled = true,
+      this.enablePinAutofill = true,
+      this.onCompleted,
+      required this.onChanged,
+      this.validator,
+      this.onSaved,
+      required this.length,
+      this.textStyle,
+      this.errorTextSpace = 16,
+      this.readOnly = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PinCodeTextField(
+      autoFocus: true,
+      readOnly: readOnly,
+      cursorColor: Colors.black,
+      enabled: enabled,
+      enablePinAutofill: enablePinAutofill,
+      appContext: context,
+      length: length,
+      textStyle: textStyle ?? Theme.of(context).textTheme.headline2,
+      keyboardType: TextInputType.number,
+      animationType: AnimationType.scale,
+      hintCharacter: '\u2212',
+      errorTextSpace: errorTextSpace,
+      hintStyle: (textStyle ?? Theme.of(context).textTheme.headline2)!
+          .copyWith(color: Theme.of(context).indicatorColor),
+      pinTheme: PinTheme(
+          shape: PinCodeFieldShape.underline,
+          activeFillColor: Theme.of(context).primaryColor,
+          inactiveColor: Theme.of(context).unselectedWidgetColor,
+          activeColor: Theme.of(context).primaryColor,
+          selectedColor: Theme.of(context).primaryColor,
+          inactiveFillColor: Colors.transparent,
+          selectedFillColor: Colors.transparent),
+      onCompleted: onCompleted,
+      onChanged: onChanged,
+      onSaved: onSaved,
+      validator: validator,
+    );
+  }
+}
+
+class GhostPinTextField extends StatelessWidget {
+  final bool enabled;
+  final bool enablePinAutofill;
+  final int length;
+  final void Function(String value)? onCompleted;
+  final void Function(String value) onChanged;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
+  final String label;
+  final bool readOnly;
+
+  const GhostPinTextField(
+      {Key? key,
+      required this.label,
+      this.enabled = true,
+      this.enablePinAutofill = true,
+      this.onCompleted,
+      required this.onChanged,
+      this.validator,
+      this.onSaved,
+      required this.length,
+      this.readOnly = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.headline6),
+        const SizedBox(height: 8),
+        _GhostPinTextFieldBuilder(
+          onChanged: onChanged,
+          length: length,
+          enablePinAutofill: enablePinAutofill,
+          enabled: enabled,
+          onCompleted: onCompleted,
+          onSaved: onSaved,
+          textStyle: Theme.of(context).textTheme.headline2,
+          validator: validator,
+          readOnly: readOnly,
+          errorTextSpace: 24,
+        ),
+      ],
+    );
+  }
+}
+
+class GhostPinFullTextField extends StatelessWidget {
+  final bool enabled;
+  final bool enablePinAutofill;
+  final int length;
+  final void Function(String value)? onCompleted;
+  final void Function(String value) onChanged;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
+
+  const GhostPinFullTextField(
+      {Key? key,
+      this.enabled = true,
+      this.enablePinAutofill = true,
+      this.onCompleted,
+      required this.onChanged,
+      this.validator,
+      this.onSaved,
+      required this.length})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _GhostPinTextFieldBuilder(
+      onChanged: onChanged,
+      length: length,
+      enablePinAutofill: enablePinAutofill,
+      enabled: enabled,
+      onCompleted: onCompleted,
+      onSaved: onSaved,
+      textStyle: Theme.of(context).textTheme.headline2,
+      validator: validator,
+      errorTextSpace: 24,
+    );
+  }
+}
+
 /// Filled Text Form Field
 class FilledTextField extends StatelessWidget {
-  final String? Function(String?)? validator;
+  final String? Function(String? value)? validator;
   final String? initialValue;
   final TextEditingController? controller;
   final bool? enabled;
   final bool readOnly;
-  final void Function(String?)? onSaved;
+  final void Function(String? value)? onSaved;
   final TextInputType? keyboardType;
   final String? label;
   final String hint;
@@ -551,7 +692,149 @@ class _FilledPasswordTextFieldState extends State<FilledPasswordTextField> {
   }
 }
 
-class _GhostPinTextFieldBuilder extends StatelessWidget {
+class FilledPickerField<T> extends StatefulWidget {
+  final FormPickerFieldValue<T>? Function(FormPickerFieldValue<T>?)? validator;
+  final FormPickerFieldValue<T>? initialValue;
+  final void Function(FormPickerFieldValue<T>?)? onSaved;
+  final String label;
+  final String hint;
+  final Widget? prefixWidget;
+  final IconData? suffixIcon;
+  final Future<FormPickerFieldValue<T>?> Function(FormPickerFieldValue<T>?)?
+      onTap;
+
+  const FilledPickerField(
+      {Key? key,
+      this.onSaved,
+      this.validator,
+      this.initialValue,
+      this.prefixWidget,
+      this.suffixIcon,
+      this.onTap,
+      required this.label,
+      required this.hint})
+      : super(key: key);
+
+  @override
+  _FilledPickerFieldState<T> createState() => _FilledPickerFieldState<T>();
+}
+
+class _FilledPickerFieldState<T> extends State<FilledPickerField<T>> {
+  late final TextEditingController controller;
+  FormPickerFieldValue<T>? currentValue;
+
+  @override
+  void initState() {
+    currentValue = widget.initialValue;
+    controller = TextEditingController(text: currentValue?.name);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.label, style: Theme.of(context).textTheme.headline6),
+        const SizedBox(height: 8),
+        TextFormField(
+          validator: (value) {
+            final val = widget.validator?.call(currentValue);
+            return val?.name;
+          },
+          controller: controller,
+          onTap: () async {
+            final choosen = await widget.onTap?.call(currentValue);
+            if (choosen != null) {
+              controller.text = choosen.name;
+              currentValue = choosen;
+            }
+          },
+          readOnly: true,
+          onSaved: (newValue) {
+            widget.onSaved?.call(currentValue);
+          },
+          decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+              fillColor: Theme.of(context).dividerColor,
+              filled: true,
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).unselectedWidgetColor),
+                  borderRadius: BorderRadius.circular(10)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(10)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).unselectedWidgetColor),
+                  borderRadius: BorderRadius.circular(10)),
+              prefixIcon: widget.prefixWidget,
+              hintText: widget.hint,
+              hintStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).textTheme.bodyText1!.color),
+              suffixIcon: Icon(
+                widget.suffixIcon,
+                color: Theme.of(context).textTheme.bodyText1!.color,
+              )),
+        ),
+      ],
+    );
+  }
+}
+
+class FilledPinTextField extends StatelessWidget {
+  final bool enabled;
+  final bool enablePinAutofill;
+  final int length;
+  final void Function(String value)? onCompleted;
+  final void Function(String value) onChanged;
+  final String? Function(String? value)? validator;
+  final void Function(String? value)? onSaved;
+  final String label;
+  final bool readOnly;
+
+  const FilledPinTextField(
+      {Key? key,
+      required this.label,
+      this.enabled = true,
+      this.enablePinAutofill = true,
+      this.onCompleted,
+      required this.onChanged,
+      this.validator,
+      this.onSaved,
+      required this.length,
+      this.readOnly = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.headline6),
+        const SizedBox(height: 8),
+        _FilledPinTextFieldBuilder(
+          onChanged: onChanged,
+          length: length,
+          enablePinAutofill: enablePinAutofill,
+          enabled: enabled,
+          onCompleted: onCompleted,
+          onSaved: onSaved,
+          textStyle: Theme.of(context).textTheme.headline2,
+          validator: validator,
+          readOnly: readOnly,
+          errorTextSpace: 24,
+        ),
+      ],
+    );
+  }
+}
+
+class _FilledPinTextFieldBuilder extends StatelessWidget {
   final bool enabled;
   final bool enablePinAutofill;
   final int length;
@@ -563,7 +846,7 @@ class _GhostPinTextFieldBuilder extends StatelessWidget {
   final double errorTextSpace;
   final bool readOnly;
 
-  const _GhostPinTextFieldBuilder(
+  const _FilledPinTextFieldBuilder(
       {Key? key,
       this.enabled = true,
       this.enablePinAutofill = true,
@@ -595,7 +878,8 @@ class _GhostPinTextFieldBuilder extends StatelessWidget {
       hintStyle: (textStyle ?? Theme.of(context).textTheme.headline2)!
           .copyWith(color: Theme.of(context).indicatorColor),
       pinTheme: PinTheme(
-          shape: PinCodeFieldShape.underline,
+          shape: PinCodeFieldShape.box,
+          borderRadius: BorderRadius.circular(8),
           activeFillColor: Theme.of(context).primaryColor,
           inactiveColor: Theme.of(context).unselectedWidgetColor,
           activeColor: Theme.of(context).primaryColor,
@@ -606,90 +890,6 @@ class _GhostPinTextFieldBuilder extends StatelessWidget {
       onChanged: onChanged,
       onSaved: onSaved,
       validator: validator,
-    );
-  }
-}
-
-class GhostPinTextField extends StatelessWidget {
-  final bool enabled;
-  final bool enablePinAutofill;
-  final int length;
-  final void Function(String value)? onCompleted;
-  final void Function(String value) onChanged;
-  final String? Function(String?)? validator;
-  final void Function(String?)? onSaved;
-  final String label;
-  final bool readOnly;
-
-  const GhostPinTextField(
-      {Key? key,
-      required this.label,
-      this.enabled = true,
-      this.enablePinAutofill = true,
-      this.onCompleted,
-      required this.onChanged,
-      this.validator,
-      this.onSaved,
-      required this.length,
-      this.readOnly = false})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: Theme.of(context).textTheme.headline6),
-        const SizedBox(height: 8),
-        _GhostPinTextFieldBuilder(
-          onChanged: onChanged,
-          length: length,
-          enablePinAutofill: enablePinAutofill,
-          enabled: enabled,
-          onCompleted: onCompleted,
-          onSaved: onSaved,
-          textStyle: Theme.of(context).textTheme.headline2,
-          validator: validator,
-          readOnly: readOnly,
-          errorTextSpace: 24,
-        ),
-      ],
-    );
-  }
-}
-
-class GhostPinFullTextField extends StatelessWidget {
-  final bool enabled;
-  final bool enablePinAutofill;
-  final int length;
-  final void Function(String value)? onCompleted;
-  final void Function(String value) onChanged;
-  final String? Function(String?)? validator;
-  final void Function(String?)? onSaved;
-
-  const GhostPinFullTextField(
-      {Key? key,
-      this.enabled = true,
-      this.enablePinAutofill = true,
-      this.onCompleted,
-      required this.onChanged,
-      this.validator,
-      this.onSaved,
-      required this.length})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _GhostPinTextFieldBuilder(
-      onChanged: onChanged,
-      length: length,
-      enablePinAutofill: enablePinAutofill,
-      enabled: enabled,
-      onCompleted: onCompleted,
-      onSaved: onSaved,
-      textStyle: Theme.of(context).textTheme.headline2,
-      validator: validator,
-      errorTextSpace: 24,
     );
   }
 }

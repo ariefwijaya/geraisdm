@@ -200,3 +200,39 @@ class ImagePlaceholder extends StatelessWidget {
     );
   }
 }
+
+class HighlightInfoCard extends StatelessWidget {
+  final String title;
+
+  const HighlightInfoCard({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).indicatorColor),
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).primaryColor.withOpacity(0.1)),
+      child: Row(
+        children: [
+          const Icon(Icons.info, size: 24),
+          const SizedBox(width: 12),
+          Expanded(
+              child: MarkdownBody(
+            data: title,
+            styleSheet: MarkdownStyleSheet(
+                p: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).textTheme.headline1!.color),
+                strong: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).primaryColor)),
+          ))
+        ],
+      ),
+    );
+  }
+}

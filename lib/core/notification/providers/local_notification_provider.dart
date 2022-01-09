@@ -28,7 +28,8 @@ class LocalNotificationProvider {
       const AndroidNotificationChannel(
           'high_importance_channel', // id
           'Default', // title
-          'This channel is used for default notifications.', // description
+          description:
+              'This channel is used for default notifications.', // description
           importance: Importance.max,
           sound: RawResourceAndroidNotificationSound(
               AppConstant.notificationSound),
@@ -80,7 +81,8 @@ class LocalNotificationProvider {
           body,
           NotificationDetails(
               android: AndroidNotificationDetails(
-                  channels[0].id, channels[0].name, channels[0].description,
+                  channels[0].id, channels[0].name,
+                  channelDescription: channels[0].description,
                   importance: Importance.max,
                   priority: Priority.high,
                   visibility: NotificationVisibility.public,
@@ -103,7 +105,8 @@ class LocalNotificationProvider {
         scheduledDate,
         NotificationDetails(
             android: AndroidNotificationDetails(
-                channels[0].id, channels[0].name, channels[0].description,
+                channels[0].id, channels[0].name,
+                channelDescription: channels[0].description,
                 importance: Importance.max,
                 priority: Priority.high,
                 visibility: NotificationVisibility.public,
@@ -127,7 +130,8 @@ class LocalNotificationProvider {
         repeatInterval,
         NotificationDetails(
             android: AndroidNotificationDetails(
-                channels[0].id, channels[0].name, channels[0].description,
+                channels[0].id, channels[0].name,
+                channelDescription: channels[0].description,
                 importance: Importance.max,
                 priority: Priority.high,
                 visibility: NotificationVisibility.public,

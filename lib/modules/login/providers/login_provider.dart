@@ -34,9 +34,7 @@ class LoginProvider implements LoginProviderInterface {
       jsonmap[name] = values[0];
     });
     final responseData = response.data as Map<String, dynamic>;
-    jsonmap['uid'] = responseData['user_id'] as int;
-    jsonmap['nrp'] = responseData['nrp'] as String;
-    jsonmap['nickname'] = responseData['nickname'] as String;
+    jsonmap['uid'] = responseData['user_id'] as String;
     return AuthSessionModel.fromJson(jsonmap);
   }
 

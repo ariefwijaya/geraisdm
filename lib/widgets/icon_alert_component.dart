@@ -16,8 +16,9 @@ class _IconPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-          BoxDecoration(color: color.withOpacity(0.08), shape: BoxShape.circle),
+      decoration: BoxDecoration(
+          color: color.withOpacity(0.08),
+          borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: padding ?? const EdgeInsets.all(20.0),
         child: Icon(
@@ -69,7 +70,7 @@ class SuccessIconPlaceholder extends StatelessWidget {
     return _IconPlaceholder(
       size: size,
       color: Theme.of(context).primaryColor,
-      icon: icon ?? Icons.check_circle,
+      icon: icon ?? Icons.check_box,
       padding: padding,
     );
   }

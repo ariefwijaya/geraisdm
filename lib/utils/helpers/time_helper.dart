@@ -14,6 +14,12 @@ class TimeHelper {
         .format(date);
   }
 
+  static String dateTimeToDayMonthYear(DateTime date, [String? locale]) {
+    return DateFormat(
+            'd MMMM yyyy', locale != null && locale.isNotEmpty ? locale : null)
+        .format(date);
+  }
+
   static List<DateTime> getDaysInBetween(DateTime startDate, DateTime endDate) {
     final List<DateTime> days = [];
     final diff = endDate.difference(startDate).inDays;

@@ -16,6 +16,7 @@ import '../../../constant/localizations.g.dart';
 import 'package:auto_route/auto_route.dart';
 
 class LoginScreen extends StatefulWidget {
+  @queryParam
   final String? username;
   const LoginScreen({Key? key, this.username}) : super(key: key);
 
@@ -97,9 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
             FlushbarHelper.createAction(
                 message: LocaleKeys.login_user_notfound.tr(),
                 button: NudeButton.small(
+                    infiniteWidth: false,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     buttonText: LocaleKeys.login_user_notfound_signup.tr(),
                     onPressed: () {
-                      context.router.replace(RegisterRoute(username: username));
+                      context.router.replace(RegisterRouter(
+                          children: [RegisterRoute(username: username)]));
                     })).show(context);
           }
         },
@@ -122,8 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         infiniteWidth: false,
                         buttonText: LocaleKeys.login_signup.tr(),
                         onPressed: () {
-                          context.router
-                              .replace(RegisterRoute(username: username));
+                          context.router.replace(RegisterRouter(
+                              children: [RegisterRoute(username: username)]));
                         })
                   ],
                 ),
@@ -155,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20),
                 FilledButton.large(
+                    isLoading: isLoading,
                     buttonText: LocaleKeys.login_button.tr(),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {

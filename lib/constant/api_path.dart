@@ -7,5 +7,7 @@ class ApiPath {
   static const String version = "/version";
   static const String lookupUser = "/lookup-user";
   static const String deviceToken = '/device-token';
+  static const String register = "/register";
+  static const String verification = "/verification";
   static const String userSettings = "/user/settings";
 }

@@ -1,3 +1,4 @@
+import 'package:alice/alice.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = getIt.get<AppRouter>();
+    getIt.get<Alice>().setNavigatorKey(router.navigatorKey);
 
     return MultiBlocProvider(
       providers: [

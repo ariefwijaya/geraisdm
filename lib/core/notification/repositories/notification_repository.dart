@@ -1,3 +1,4 @@
+import 'package:alice/alice.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -156,9 +157,13 @@ class NotificationRepository implements NotificationRepositoryInterface {
     // Don't do anything when payload is null
     if (payload == null) return;
     try {
-      final NotificationPayloadModel notifModel =
-          NotificationPayloadModel.fromString(payload);
-      await _processNotificationPayload(notifModel);
+      if (payload == "") {
+        getIt.get<Alice>().showInspector();
+      } else {
+        final NotificationPayloadModel notifModel =
+            NotificationPayloadModel.fromString(payload);
+        await _processNotificationPayload(notifModel);
+      }
     } catch (e, s) {
       FirebaseCrashlytics.instance.recordError(e, s);
     }

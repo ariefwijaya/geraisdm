@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:alice/alice.dart';
 import 'package:catcher/catcher.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -34,6 +35,7 @@ Future setupConfiguration() async {
 
   //configure dependency injection
   await configureDependencies();
+  setupAlice();
   await setupRestApiClient();
   setupSqlCipher();
 }
@@ -47,6 +49,11 @@ void setupSqlCipher() {
 Future<void> setupRestApiClient() {
   final RestApiClient restApiClient = RestApiClient();
   return restApiClient.addRequiredInterceptor();
+}
+
+void setupAlice() {
+  final Alice alice = Alice(showNotification: currentEnv != "prod");
+  getIt.registerLazySingleton<Alice>(() => alice);
 }
 
 //init hydrated bloc using hive
@@ -88,6 +95,7 @@ Widget _setupLocalization(Widget child) {
           .toList(),
       path: AppConstant.localizationDir,
       assetLoader: SmartNetworkAssetLoader(
+          timeout: Duration(seconds: 5),
           assetsPath: AppConstant.localizationDir,
           localeUrl: (String localeName) => Env.localizationUrl),
       startLocale: AppSetting.defaultLanguage.toLocale(),

@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:alice/alice.dart';
+
 import '../../../../config/injectable/injectable_core.dart';
 import '../../../../core/app_setting.dart';
 import '../../../../utils/services/rest_api_service/auth_interceptor.dart';
@@ -35,6 +37,7 @@ class RestApiClient {
     // final dir = await getApplicationDocumentsDirectory();
     dio.interceptors.addAll([
       cacheInterceptor(),
+      getIt.get<Alice>().getDioInterceptor(),
       firebasePerformanceInterceptor(),
       authInterceptorInstance ?? getIt.get<AuthInterceptor>(),
       if (AppSetting.showLog) logInterceptor(),
