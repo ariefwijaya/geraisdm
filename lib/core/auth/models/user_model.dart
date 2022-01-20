@@ -29,7 +29,7 @@ class AuthUserModel {
 
   final String fullName;
   final String shortName;
-  @JsonKey(unknownEnumValue: UserType.unknown)
+  @JsonKey(unknownEnumValue: UserType.unknown, defaultValue: UserType.unknown)
   final UserType accountType;
   final String? avatar;
   final String? email;

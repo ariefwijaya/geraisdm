@@ -550,6 +550,7 @@ class FilledTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final VoidCallback? onTap;
+  final int? maxLines;
 
   const FilledTextField(
       {Key? key,
@@ -564,6 +565,7 @@ class FilledTextField extends StatelessWidget {
       this.suffixIcon,
       this.onTap,
       this.label,
+      this.maxLines,
       required this.hint})
       : super(key: key);
 
@@ -584,6 +586,7 @@ class FilledTextField extends StatelessWidget {
           readOnly: readOnly,
           onSaved: onSaved,
           keyboardType: keyboardType,
+          maxLines: maxLines,
           style: const TextStyle(fontSize: 14),
           decoration: InputDecoration(
               prefixIcon: prefixIcon,

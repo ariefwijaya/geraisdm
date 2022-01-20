@@ -1,3 +1,4 @@
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class LauncherHelper {
@@ -34,5 +35,18 @@ abstract class LauncherHelper {
     } catch (e) {
       return false;
     }
+  }
+
+  static Future<void> share(
+    String text, {
+    String? subject,
+  }) {
+    return Share.share(text, subject: subject);
+  }
+
+  static Future<void> shareFile(List<String> paths,
+      {List<String>? mimeTypes, String? subject, String? text}) {
+    return Share.shareFiles(paths,
+        mimeTypes: mimeTypes, text: text, subject: subject);
   }
 }

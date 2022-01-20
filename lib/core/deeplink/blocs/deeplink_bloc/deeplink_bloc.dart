@@ -9,7 +9,7 @@ import 'package:injectable/injectable.dart';
 part 'deeplink_event.dart';
 part 'deeplink_state.dart';
 
-@injectable
+@singleton
 class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
   final DeeplinkRepositoryInterface deeplinkRepository;
   late StreamSubscription<PendingDynamicLinkData> onLink;

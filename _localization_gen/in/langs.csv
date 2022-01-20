@@ -34,13 +34,232 @@ login_title,Masuk,Login
 login_username_title,Username,Username
 login_username_hint,E-MAIL / NIK / NIP / NRP,E-MAIL / NIK / NIP / NRP
 login_password_title,Password,Password
-login_password_hint,Masukkan ,Enter your password
+login_password_hint,Masukkan Password Anda,Enter your password
 login_button,Login,Login
 login_forgot_password,Forgot Password?,Lupa Password?
 login_signup,Daftar Akun,Signup
 login_config_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
 login_config_failed_subtitle,"Gagal ketika mendapatkan konfigurasi, Silahkan hubungi admin jika kesalahan terjadi berulang","Failure in getting configurations, Please contact admin if this persists"
+login_config_failed_retry,Coba Lagi,Retry
 login_wrong_password,Username / Password Salah,Username / Password Salah
 login_failed,"Login Gagal, terjadi kesalahan","Login Gagal, terjadi kesalahan"
 login_user_notfound,"Akun belum terdaftar, Silahkan daftar dulu","Akun belum terdaftar, Silahkan daftar dulu"
 login_user_notfound_signup,Daftar,Daftar
+login_form_required,Data Harus Diisi,Data Harus Diisi
+register_type_personel,Anggota / PNS Polri,Anggota / PNS Polri
+register_type_general,UMUM,UMUM
+register_nrp_title,NIP / NRP,NIP / NRP
+register_nrp_hint,Masukkan NIP / NRP anda,Masukkan NIP / NRP anda
+register_email_title,Email,Email
+register_email_hint,Diperlukan Email,Diperlukan Email
+register_email_invalid,Format Email Tidak Valid,Format Email Tidak Valid
+register_birthday_title,Tanggal Lahir,Tanggal Lahir
+register_birthday_hint,DD/MM/YYYY,DD/MM/YYYY
+register_phone_title,Nomor Handphone,Nomor Handphone
+register_phone_hint,08XXXXXXXX,08XXXXXXXX
+register_password_title,Password,Password
+register_password_hint,Masukkan Password,Masukkan Password
+register_password_minlength,Password tidak bisa kurang dari 6 Karakter,Password tidak bisa kurang dari 6 Karakter
+register_confirm_password_title,Konfirmasi Password,Konfirmasi Password
+register_confirm_password_hint,Masukkan Ulang Password,Masukkan Ulang Password
+register_nik_title,NIK,NIK
+register_nik_hint,Nomor KTP,Nomor KTP
+register_full_name_title,Nama Lengkap,Nama Lengkap
+register_full_name_hint,Masukkan Nama Lengkap,Masukkan Nama Lengkap
+register_address_title,Alamat,Alamat
+register_address_hint,Masukkan Alamat,Masukkan Alamat
+verification_nrp_title,NIP / NRP,NIP / NRP
+verification_nrp_hint,Masukkan NIP / NRP anda,Masukkan NIP / NRP anda
+verification_nik_title,NIK,NIK
+verification_nik_hint,Nomor KTP,Nomor KTP
+register_title,Daftar,Register
+register_config_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+register_config_failed_subtitle,"Gagal ketika mendapatkan konfigurasi, Silahkan hubungi admin jika kesalahan terjadi berulang","Failure in getting configurations, Please contact admin if this persists"
+register_config_failed_retry,Coba Lagi,Retry
+register_already_registered,"Akun sudah pernah terdaftar, Silahkan coba login","Akun sudah pernah terdaftar, Silahkan coba login"
+register_already_registered_login,Login,Login
+register_phone_used,Nomor Handphone sudah digunakan di akun lain,Nomor Handphone sudah digunakan di akun lain
+register_nrp_invalid,NIP / NRP tidak valid,NIP / NRP tidak valid
+register_nik_invalid,NIK tidak valid,NIK tidak valid
+register_otp_title,Kode OTP,Kode OTP
+register_otp_hint,Masukkan OTP,Masukkan OTP
+register_otp_description,Kami telah mengirimkan **{}** digit kode OTP ke **{}**.,Kami telah mengirimkan **{}** digit kode OTP ke **{}**.
+register_failure,"Oops, Terjadi Kesalahan","Oops, Terjadi Kesalahan"
+register_form_required,Data Harus Diisi,Data Harus Diisi
+register_login,Sudah Punya Akun? Login Sekarang,Sudah Punya Akun? Login Sekarang
+register_as,Daftar Sebagai,Daftar Sebagai
+register_button,Daftar,Daftar
+register_activation_title,Selesaikan Pendaftaran,Selesaikan Pendaftaran
+register_activation_otp_wrong,OTP yang anda masukkan salah,OTP yang anda masukkan salah
+register_activation_otp_expired,OTP sudah kadaluarsa,OTP sudah kadaluarsa
+register_activation_bad_request,Silahkan Lengkapi semua form,Silahkan Lengkapi semua form
+register_activation_birthday_wrong,Tanggal Lahir tidak sesuai,Tanggal Lahir tidak sesuai
+register_activation_failure,"Oops, Terjadi Kesalahan","Oops, Terjadi Kesalahan"
+register_verification_resend,Kirim Ulang,Kirim Ulang
+register_activation_success_title,Pendaftaran Berhasil!,Pendaftaran Berhasil!
+register_activation_success_hint,"Akun anda telah didaftarkan, Silahkan login untuk menggunakan Gerai SDM","Akun anda telah didaftarkan, Silahkan login untuk menggunakan Gerai SDM"
+register_activation_button,Submit Data,Submit Data
+register_verification,**{}s** lagi untuk mengirim ulang kode,{} again to resent the code
+register_verification_pending,Tidak mendapatkan kode?,Did not get any codes?
+home_config_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+home_config_failed_subtitle,"Gagal ketika mendapatkan konfigurasi, Silahkan hubungi admin jika kesalahan terjadi berulang","Failure in getting the configuration, please contact admin if this persists"
+home_config_failed_retry,Coba Lagi,Try Again
+home_layout_menu_navbar_history,Riwayat,Riwayat
+home_layout_menu_navbar_likes,Bookmark,Bookmark
+home_layout_menu_navbar_home,Home,Home
+home_layout_menu_navbar_message,Pesan,Pesan
+home_layout_menu_navbar_profile,Profil,Profil
+home_halo_title,"Hai,","Hai,"
+home_halo_subtitle,Apa Kabar?,Apa Kabar?
+home_layout_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+home_layout_failed_subtitle,"Gagal ketika mendapatkan menu, Silahkan hubungi admin jika kesalahan terjadi berulang","Failure in getting the menu, please contact admin if this persists"
+home_layout_failed_retry,Coba Lagi,Try Again
+tap_twice_to_exit,Tekan sekali lagi untuk keluar,Tap one more time to exit
+home_menu_more,Lainnya,More
+home_menu_service_more,Layanan Lainnya,More Services
+home_section_announcement_title,Pengumuman Terbaru,Pengumuman Terbaru
+home_section_announcement_subtitle,Jangan lewatkan pengumuman terupdate dari GERAI SDM POLDA SUMSEL,Jangan lewatkan pengumuman terupdate dari GERAI SDM POLDA SUMSEL
+announcement_author_by,By: {},By: {}
+menu_bookmark_title,Riwayat Bookmark,Riwayat Bookmark
+menu_bookmark_subtitle,Berita atau pengumuman yang anda suka,Berita atau pengumuman yang anda suka
+menu_bookmark_nodata_title,Belum ada data,Belum ada data
+menu_bookmark_nodata_subtitle,Silahkan sukai berita atau pengumuman untuk menambahkan ke daftar bookmark,Silahkan sukai berita atau pengumuman untuk menambahkan ke daftar bookmark
+menu_bookmark_failure_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+menu_bookmark_failure_subtitle,Gagal memuat data,Gagal memuat data
+menu_bookmark_failure_retry,Coba Lagi,Coba Lagi
+menu_history_activity_title,Riwayat Aktifitas,Riwayat Aktifitas
+menu_history_activity_subtitle,Riwayat pengajuan melalui Pelayanan Terpadu Biro SDM,Riwayat pengajuan melalui Pelayanan Terpadu Biro SDM
+menu_history_activity_nodata_title,Belum ada data,Belum ada data
+menu_history_activity_nodata_subtitle,Yok Buat Pengajuanmu,Yok Buat Pengajuanmu
+menu_history_activity_failure_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+menu_history_activity_failure_subtitle,Gagal memuat data,Gagal memuat data
+menu_history_activity_failure_retry,Coba Lagi,Coba Lagi
+menu_inbox_title,Riwayat Pesan,Riwayat Pesan
+menu_inbox_subtitle,Kamu dapat berinteraksi dan melihat pesan kamu disini,Kamu dapat berinteraksi dan melihat pesan kamu disini
+menu_inbox_nodata_title,Belum ada data,Belum ada data
+menu_inbox_nodata_subtitle,Segera coba pelayanan terpadu BIRO SDM Sekarang,Segera coba pelayanan terpadu BIRO SDM Sekarang
+menu_inbox_failure_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+menu_inbox_failure_subtitle,Gagal memuat data,Gagal memuat data
+menu_inbox_failure_retry,Coba Lagi,Coba Lagi
+menu_sub_title,Daftar Menu,Daftar Menu
+menu_sub_failure_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+menu_sub_failure_subtitle,Gagal memuat data,Gagal memuat data
+menu_sub_failure_retry,Coba Lagi,Coba Lagi
+menu_sub_nodata_title,Belum ada data,Belum ada data
+menu_sub_nodata_subtitle,Sepertinya yang kamu cari tidak ada disini,Sepertinya yang kamu cari tidak ada disini
+announcement_detail_title,Detail Pengumuman,Detail Pengumuman
+announcement_detail_error_title,Terjadi Error,Terjadi Error
+announcement_detail_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+announcement_detail_error_retry,Coba Lagi,Coba Lagi
+announcement_detail_notfound_title,Data Tidak Ditemukan,Data Tidak Ditemukan
+announcement_title,Daftar Pengumuman,Daftar Pengumuman
+article_detail_title,Detail Berita,Detail Berita
+article_detail_error_title,Terjadi Error,Terjadi Error
+article_detail_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+article_detail_error_retry,Coba Lagi,Coba Lagi
+article_detail_notfound_title,Data Tidak Ditemukan,Data Tidak Ditemukan
+article_title,Daftar Berita,Daftar Berita
+notfound_screen_title,"Oops, Kamu nyasar ya?","Oops, Kamu nyasar ya?"
+notfound_screen_subtitle,Halaman yang kamu tuju tidak ditemukan,Halaman yang kamu tuju tidak ditemukan
+detail_menu_failure_title,"Oops, terjadi kesalahan","Oops, something went wrong"
+detail_menu_failure_subtitle,Gagal memuat data,Gagal memuat data
+detail_menu_failure_retry,Coba Lagi,Coba Lagi
+requirement_detail_title,Detail Pengumuman,Detail Pengumuman
+requirement_detail_error_title,Terjadi Error,Terjadi Error
+requirement_detail_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+requirement_detail_error_retry,Coba Lagi,Coba Lagi
+requirement_detail_notfound_title,Data Tidak Ditemukan,Data Tidak Ditemukan
+requirement_last_updated,Pembaruan Terakhir :{},Pembaruan Terakhir :{}
+form_submit_title,Formulir,Formulir
+form_submit_button,Kirim,Kirim
+form_required,Data Harus Diisi,Data Harus Diisi
+form_detail_error_title,Terjadi Error,Terjadi Error
+form_detail_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+form_detail_error_retry,Coba Lagi,Coba Lagi
+form_submit_success,Formulir berhasil dikirimkan!,Formulir berhasil dikirimkan!
+form_submit_failure,"Oops, terjadi kesalahan","Oops, terjadi kesalahan"
+form_email_invalid,Format Email Tidak Valid,Format Email Tidak Valid
+form_upload_failed,Gagal mengupload Data,Failed to upload data
+form_upload_required,Silahkan Upload Berkas,Silahkan Upload Berkas
+tnc_fill_form,Mengisi Formulir,Mengisi Formulir
+doc_viewer_error_title,Terjadi Error,Terjadi Error
+doc_viewer_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+doc_viewer_error_retry,Coba Lagi,Coba Lagi
+doc_viewer_nodata_title,Belum ada data,Belum ada data
+doc_viewer_nodata_subtitle,Sepertinya yang kamu cari tidak ada disini,Sepertinya yang kamu cari tidak ada disini
+doc_viewer_of,{} dari {} File,{} of {} File
+profile_error_title,Terjadi Error,Terjadi Error
+profile_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+profile_error_retry,Coba Lagi,Coba Lagi
+profile_menu_change_password,Ubah Password,Ubah Password
+profile_menu_complaint,Pengaduan,Pengaduan
+profile_menu_my_complaint,Pengaduan Saya,Pengaduan Saya
+profile_menu_logout,Keluar,Logout
+profile_menu_biodata,Biodata Saya,Biodata Saya
+change_password_old_title,Password Saat Ini,Password Saat Ini
+change_password_old_hint,Masukkan Password Saat Ini,Masukkan Password Saat Ini
+change_password_new_title,Password Baru,Password Baru
+change_password_new_hint,Masukkan Password Baru,Masukkan Password Baru
+change_password_failure,Password Gagal Dirubah,Password Gagal Dirubah
+change_password_invalid,Password lama tidak valid,Password lama tidak valid
+change_password_success,Password Berhasil diubah,Password Berhasil diubah
+change_password_submit,Simpan Perubahan,Simpan Perubahan
+change_password_form_required,Data Harus Diisi,Data Harus Diisi
+biodata_nik,Nomor Induk Kependudukan,Nomor Induk Kependudukan
+biodata_fullname,Nama Lengkap,Nama Lengkap
+biodata_email,Email,Email
+biodata_phone,Handphone,Handphone
+biodata_address,Alamat,Alamat
+biodata_birth,Tanggal Lahir,Tanggal Lahir
+biodata_no_id,Nomor Identitas,Nomor Identitas
+biodata_pangkat,Pangkat,Pangkat
+biodata_golongan,Golongan,Golongan
+biodata_jabatan,Jabatan,Jabatan
+biodata_satuan_kerja,Satuan Kerja,Satuan Kerja
+biodata_agama,Agama,Agama
+biodata_suku_bangsa,Suku Bangsa,Suku Bangsa
+biodata_gender,Jenis Kelamin,Jenis Kelamin
+biodata_bahasa_asing,Bahasa Asing,Bahasa Asing
+biodata_bahasa_daerah,Bahasa Daerah,Bahasa Daerah
+biodata_tinggi,Tinggi,Tinggi
+biodata_berat,Berat,Berat
+biodata_kulit,Kulit,Kulit
+biodata_mata,Mata,Mata
+biodata_darah,Darah,Darah
+biodata_error_title,Terjadi Error,Terjadi Error
+biodata_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+biodata_error_retry,Coba Lagi,Coba Lagi
+history_error_title,Terjadi Error,Terjadi Error
+history_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+history_error_retry,Coba Lagi,Coba Lagi
+inbox_error_title,Terjadi Error,Terjadi Error
+inbox_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+inbox_error_retry,Coba Lagi,Coba Lagi
+inbox_nodata_title,Data Tidak Tersedia,Data Tidak Tersedia
+inbox_nodata_subtitle,Belum ada pesan layanan,Belum ada pesan layanan
+bookmark_error_title,Terjadi Error,Terjadi Error
+bookmark_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+bookmark_error_retry,Coba Lagi,Coba Lagi
+bookmark_nodata_title,Data Tidak Tersedia,Data Tidak Tersedia
+bookmark_nodata_subtitle,Semua Artikel atau Pengumuman yang kamu sukai akan ada disini,Semua Artikel atau Pengumuman yang kamu sukai akan ada disini
+history_nodata_title,Data Tidak Tersedia,Data Tidak Tersedia
+history_nodata_subtitle,Saat ini kamu belum ada Riwayat Pengajuan. Silahkan coba lakukan pengajuan dulu,Saat ini kamu belum ada Riwayat Pengajuan. Silahkan coba lakukan pengajuan dulu
+history_detail_title,Detail Pengajuan,Detail Pengajuan
+history_detail_form_submission,Data Form Pengajuan,Data Form Pengajuan
+history_detail_form_submission_nodata,Data Tidak Tersedia,Data Tidak Tersedia
+history_detail_status_created_date,Tanggal Pengajuan,Tanggal Pengajuan
+history_detail_status_updated_date,Tanggal Perubahan Status Terakhir,Tanggal Perubahan Status Terakhir
+history_detail_status_title,Status,Status
+history_detail_file_upload,File yang anda upload,File yang anda upload
+history_detail_file_download,File balasan,File balasan
+history_detail_file_view,Lihat File,Lihat File
+survey_kepuasan_title,Penilaian dan Tanggapan,Penilaian dan Tanggapan
+survey_kepuasan_subtitle,"Terimakasih telah menggunakan layanan ini, Mohon berikan Penilaian anda tentang pelayanan digital yang telah kami sajikan","Terimakasih telah menggunakan layanan ini, Mohon berikan Penilaian anda tentang pelayanan digital yang telah kami sajikan"
+survey_kepuasan_submit,Kirimkan,Kirimkan
+survey_kepuasan_skip,Lewatkan,Lewatkan
+survey_1,Tidak Puas,Tidak Puas
+survey_2,Kurang Puas,Kurang Puas
+survey_3,Cukup Puas,Cukup Puas
+survey_4,Puas,Puas
+survey_5,Sangat Puas,Sangat Puas
+inbox_send_hint,Masukkan Pesan Anda....,Masukkan Pesan Anda....

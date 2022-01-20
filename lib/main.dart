@@ -32,8 +32,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = getIt.get<AppRouter>();
-    getIt.get<Alice>().setNavigatorKey(router.navigatorKey);
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (context) => getIt.get<AuthBloc>()),
@@ -64,23 +62,26 @@ class MyApp extends StatelessWidget {
               locale: context.locale,
               theme: state.themeData,
               title: Env.appName,
-              builder: (context, child) => MultiBlocListener(
-                  listeners: [
-                    BlocListener<AuthBloc, AuthState>(
-                        listener: (context, state) {
-                      if (state is AuthAuthenticated) {
-                        router.replaceAll([const HomeLayoutRoute()]);
-                      } else if (state is AuthUnauthenticated) {
-                        router.replaceAll([const OnboardingRoute()]);
-                      }
-                    }),
-                  ],
-                  child: currentEnv != "prod"
-                      ? Banner(
-                          message: currentEnv.toUpperCase(),
-                          location: BannerLocation.topStart,
-                          child: child)
-                      : child!),
+              builder: (context, child) {
+                getIt.get<Alice>().setNavigatorKey(router.navigatorKey);
+                return MultiBlocListener(
+                    listeners: [
+                      BlocListener<AuthBloc, AuthState>(
+                          listener: (context, state) {
+                        if (state is AuthAuthenticated) {
+                          router.replaceAll([const HomeLayoutRoute()]);
+                        } else if (state is AuthUnauthenticated) {
+                          router.replaceAll([LoginRoute()]);
+                        }
+                      }),
+                    ],
+                    child: currentEnv != "prod"
+                        ? Banner(
+                            message: currentEnv.toUpperCase(),
+                            location: BannerLocation.topStart,
+                            child: child)
+                        : child!);
+              },
             )),
       ),
     );

@@ -40,8 +40,7 @@ class LoginProvider implements LoginProviderInterface {
 
   @override
   Future<void> setDeviceToken(String deviceToken) async {
-    await restApi
-        .post(ApiPath.deviceToken, body: {"device_token": deviceToken});
+    await restApi.put(ApiPath.deviceToken, body: {"device_token": deviceToken});
   }
 
   @override

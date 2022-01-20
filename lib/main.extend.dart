@@ -95,7 +95,6 @@ Widget _setupLocalization(Widget child) {
           .toList(),
       path: AppConstant.localizationDir,
       assetLoader: SmartNetworkAssetLoader(
-          timeout: Duration(seconds: 5),
           assetsPath: AppConstant.localizationDir,
           localeUrl: (String localeName) => Env.localizationUrl),
       startLocale: AppSetting.defaultLanguage.toLocale(),

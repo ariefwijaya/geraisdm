@@ -220,5 +220,55 @@ Map<String, dynamic> remoteConfigDefaultValue = {
     "android_minimum_version": 137,
     "ios_bundle_id": "id.chatalia.app",
     "ios_minimum_version": "2.7.0"
+  }),
+  "home_layout": jsonEncode({
+    "highlight_menu": "home",
+    "enabled_highlight_menu": true,
+    "menus": [
+      {"name": "home", "visible": true},
+      {"name": "history", "visible": true},
+      {"name": "bookmark", "visible": true},
+      {"name": "message", "visible": true},
+      {"name": "profile", "visible": true}
+    ]
+  }),
+  "home_screen": jsonEncode({
+    "sections": [
+      {
+        "name": "article_banner",
+        "enable": true,
+        "config": {"max_item": 5}
+      },
+      {
+        "name": "divider",
+        "enable": true,
+        "config": {"size": 30}
+      },
+      {
+        "name": "menu_list",
+        "enable": true,
+        "config": {"enable_action_button": true, "max_item": 7}
+      },
+      {
+        "name": "divider",
+        "enable": true,
+        "config": {"size": 8}
+      },
+      {
+        "name": "menu_additional",
+        "enable": true,
+        "config": {"enable_action_button": false, "max_item": null}
+      },
+      {
+        "name": "divider",
+        "enable": true,
+        "config": {"size": 8}
+      },
+      {
+        "name": "announcement",
+        "enable": true,
+        "config": {"enable_action_button": true, "max_item": 12}
+      }
+    ]
   })
 };

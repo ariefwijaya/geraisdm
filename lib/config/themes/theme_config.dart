@@ -160,7 +160,8 @@ extension ColorSchemeExtension on ThemeData {
   Color get errorColorLight => brightness == Brightness.light
       ? ColorLight.lightRed
       : ColorLight.lightRed;
-
+Color get successColor =>
+      brightness == Brightness.light ? ColorLight.green : ColorLight.green;
   Color get warningColor =>
       brightness == Brightness.light ? ColorLight.yellow : ColorLight.yellow;
 }

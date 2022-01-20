@@ -1,4 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:geraisdm/utils/helpers/launcher_helper.dart';
+import 'package:geraisdm/widgets/image_viewer.dart';
 import 'package:shimmer/shimmer.dart';
 
 class _SkeletonLoader extends StatelessWidget {
@@ -92,6 +96,29 @@ class CustomChip extends StatelessWidget {
               ),
         ),
       ),
+    );
+  }
+}
+
+class HtmlViewer extends StatelessWidget {
+  final String htmlString;
+  const HtmlViewer({Key? key, required this.htmlString}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Html(
+      data: htmlString,
+      onLinkTap: (url, renderContext, map, element) {
+        if (url != null) {
+          LauncherHelper.openUrl(url);
+        }
+      },
+      onImageTap: (url, renderContext, attributes, element) {
+        if (url != null) {
+          context.router.pushWidget(ImageGalleryViewer(imageUrls: [url]),
+              fullscreenDialog: true);
+        }
+      },
     );
   }
 }
