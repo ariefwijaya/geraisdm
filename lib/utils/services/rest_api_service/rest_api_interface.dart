@@ -73,6 +73,7 @@ abstract class RestApiInterface {
   /// Return full url of uploaded file, used for third party uploader
   Future<Response> uploadFile(String pathUrl,
       {Map<String, String?>? headers,
+      Map<String, String?>? queryParameters,
       Map<String, dynamic>? body,
       required File file,
       Function(int progress, int length)? onSendProgress});

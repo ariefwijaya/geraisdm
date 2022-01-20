@@ -106,6 +106,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [RegisterRoute(username: username)]));
                     })).show(context);
           }
+
+          if (state is LoginDuplicatedRequest) {
+            FlushbarHelper.createError(
+                    message: LocaleKeys.login_error_duplicated_request.tr())
+                .show(context);
+          }
         },
         builder: (context, state) {
           final isLoading = state is LoginLoading;

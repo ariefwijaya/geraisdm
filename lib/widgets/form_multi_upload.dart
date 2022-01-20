@@ -20,6 +20,7 @@ class MultiUploadFilesField extends StatefulWidget {
   final bool showAdd;
   final void Function(List<ApiResUploadModel> datas) onChanged;
   final int? maxFile;
+  final String? id;
   const MultiUploadFilesField(
       {Key? key,
       this.label,
@@ -29,7 +30,8 @@ class MultiUploadFilesField extends StatefulWidget {
       this.showAdd = true,
       this.showDelete = true,
       this.maxFile,
-      required this.onChanged})
+      required this.onChanged,
+      this.id})
       : super(key: key);
 
   @override
@@ -258,6 +260,6 @@ class _MultiUploadFilesFieldState extends State<MultiUploadFilesField> {
   }
 
   void addFile() {
-    uploadFileBloc.add(UploadFileStarted());
+    uploadFileBloc.add(UploadFileStarted(id: widget.id));
   }
 }

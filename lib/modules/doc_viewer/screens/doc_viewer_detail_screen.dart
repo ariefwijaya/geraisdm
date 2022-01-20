@@ -80,7 +80,8 @@ class DocViewerDetailScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 if (data.linkShare != null) {
-                  LauncherHelper.openUrl(data.linkShare!);
+                  LauncherHelper.share(
+                      data.description + "\n" + data.linkShare!);
                 }
               },
               icon: const Icon(Icons.share))

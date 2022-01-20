@@ -9,10 +9,10 @@ class UploadFileRepository implements UploadFileRepositoryInterface {
   const UploadFileRepository({required this.uploadFileProvider});
 
   @override
-  Future<ApiResUploadModel?> uploadFile() async {
+  Future<ApiResUploadModel?> uploadFile({String? id}) async {
     final file = await uploadFileProvider.pickFile();
     if (file != null) {
-      return uploadFileProvider.uploadFile(file);
+      return uploadFileProvider.uploadFile(file, id: id);
     }
   }
 }

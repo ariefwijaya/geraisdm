@@ -150,7 +150,7 @@ class HomeMenuSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   style: const TextStyle(
-                      fontSize: 10, fontWeight: FontWeight.bold),
+                      fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               )
             ],
@@ -196,7 +196,7 @@ class HomeMenuSection extends StatelessWidget {
       crossAxisCount: 4,
       mainAxisSpacing: 16,
       crossAxisSpacing: 16,
-      childAspectRatio: 0.65,
+      childAspectRatio: 0.6,
       physics:
           const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
       shrinkWrap: true, // You won't see infinite size error

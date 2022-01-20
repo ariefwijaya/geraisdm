@@ -34,6 +34,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(LoginBadRequest());
         } else if (e == BackendErrors.loginNotRegistered) {
           emit(LoginNotRegistered());
+        } else if (e == BackendErrors.loginDuplicatedRequest) {
+          emit(LoginDuplicatedRequest());
         } else {
           emit(LoginFailed(error: e, stackTrace: s));
         }

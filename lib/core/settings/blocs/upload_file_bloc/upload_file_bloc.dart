@@ -16,7 +16,7 @@ class UploadFileBloc extends Bloc<UploadFileEvent, UploadFileState> {
     on<UploadFileStarted>((event, emit) async {
       try {
         emit(UploadFileLoading());
-        final res = await uploadFileRepository.uploadFile();
+        final res = await uploadFileRepository.uploadFile(id: event.id);
         if (res != null) {
           emit(UploadFileSuccess(data: res));
         } else {

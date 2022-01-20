@@ -23,7 +23,7 @@
   </queries>
   <!-- TODO: Change your app name in  `android:label` -->
    <application
-        android:label="geraisdm"
+        android:label="GeraiSDM"
         tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">

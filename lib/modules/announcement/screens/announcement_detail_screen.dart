@@ -24,9 +24,13 @@ class AnnouncementDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          getIt.get<AnnouncementBloc>()..add(AnnouncementFetchDetail(id: id)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => getIt.get<AnnouncementBloc>()
+              ..add(AnnouncementFetchDetail(id: id))),
+        BlocProvider(create: (context) => getIt.get<AnnouncementLikeBloc>()),
+      ],
       child: BlocBuilder<AnnouncementBloc, AnnouncementState>(
         builder: (context, state) {
           if (state is AnnouncementDetailSuccess) {

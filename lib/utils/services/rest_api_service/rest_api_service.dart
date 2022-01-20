@@ -146,6 +146,7 @@ class RestApiService implements RestApiInterface {
   @override
   Future<Response> uploadFile(String pathUrl,
       {Map<String, String?>? headers,
+      Map<String, String?>? queryParameters,
       Map<String, dynamic>? body,
       required File file,
       Function(int progress, int length)? onSendProgress}) async {
@@ -162,6 +163,7 @@ class RestApiService implements RestApiInterface {
     return dio
         .post(pathUrl,
             data: formData,
+            queryParameters: queryParameters,
             onSendProgress: onSendProgress,
             options: Options(headers: headers))
         .then((Response response) {

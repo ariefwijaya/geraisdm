@@ -26,9 +26,9 @@ class UploadFileProvider extends UploadFileProviderInterface {
   }
 
   @override
-  Future<ApiResUploadModel> uploadFile(File file) async {
-    final result =
-        await restApiInterface.uploadFile(ApiPath.uploadFile, file: file);
+  Future<ApiResUploadModel> uploadFile(File file, {String? id}) async {
+    final result = await restApiInterface.uploadFile(ApiPath.uploadFile,
+        file: file, queryParameters: {"id": id});
     return ApiResUploadModel.fromJson(result.data as Map<String, dynamic>);
   }
 }

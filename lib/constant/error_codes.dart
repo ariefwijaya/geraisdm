@@ -43,6 +43,9 @@ class BackendErrors {
       const ApiErrorModel(errorCode: "BAD_REQUEST");
   static ApiErrorModel get loginNotRegistered =>
       const ApiErrorModel(errorCode: "NOT_REGISTERED");
+  static ApiErrorModel get loginDuplicatedRequest =>
+      const ApiErrorModel(errorCode: "DUPLICATED_REQUEST");
+
 //Register Request OTP
   static ApiErrorModel get registerUserAlreadyRegistered =>
       const ApiErrorModel(errorCode: "ALREADY_REGISTERED");

@@ -15,7 +15,7 @@ class RegisterSuccessFragment extends StatelessWidget {
       appBar: AppBar(),
       body: CommonPlaceholder.success(
           title: LocaleKeys.register_activation_success_title.tr(),
-          subtitle: LocaleKeys.register_activation_success_hint,
+          subtitle: LocaleKeys.register_activation_success_hint.tr(),
           action: FilledButton.large(
               buttonText: LocaleKeys.login_button.tr(),
               onPressed: () {

@@ -57,7 +57,6 @@ class HomeAnnouncementSection extends StatelessWidget {
           children: [
             HomeTitleDivider(
               title: LocaleKeys.home_section_announcement_title.tr(),
-              subtitle: LocaleKeys.home_section_announcement_subtitle.tr(),
             ),
             GridView.count(
               crossAxisCount: 2,
@@ -83,7 +82,6 @@ class HomeAnnouncementSection extends StatelessWidget {
         children: [
           HomeTitleDivider(
             title: LocaleKeys.home_section_announcement_title.tr(),
-            subtitle: LocaleKeys.home_section_announcement_subtitle.tr(),
           ),
           Container(
             height: 160,
@@ -119,7 +117,6 @@ class HomeAnnouncementSection extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: HomeTitleDivider(
             title: LocaleKeys.home_section_announcement_title.tr(),
-            subtitle: LocaleKeys.home_section_announcement_subtitle.tr(),
             onTap: actionButton
                 ? () {
                     context.pushRoute(const AnnouncementRouter());

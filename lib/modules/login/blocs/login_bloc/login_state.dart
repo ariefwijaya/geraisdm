@@ -27,3 +27,5 @@ class LoginWrongPassword extends LoginState {}
 class LoginBadRequest extends LoginState {}
 
 class LoginNotRegistered extends LoginState {}
+
+class LoginDuplicatedRequest extends LoginState {}

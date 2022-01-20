@@ -23,7 +23,7 @@ class InboxProvider implements InboxProviderInterface {
   Future<List<InboxDetailModel>> getInboxById(int id) async {
     final res = await restApiInterface.get("${ApiPath.inbox}/$id");
     return (res.data as List<dynamic>)
-        .map((e) => InboxDetailModel.fromJson(res.data as Map<String, dynamic>))
+        .map((e) => InboxDetailModel.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 

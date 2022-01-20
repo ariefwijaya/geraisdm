@@ -50,6 +50,12 @@ class HomeLayoutScreen extends StatelessWidget {
                     includePrefixMatches: true);
               }
             }),
+            BlocListener<HomeLayoutConfigBloc, HomeLayoutConfigState>(
+                listener: (context, state) {
+              if (state is HomeLayoutConfigSuccess) {
+                context.read<DeeplinkBloc>().add(DeeplinkStarted());
+              }
+            }),
           ],
           child: BlocBuilder<HomeLayoutConfigBloc, HomeLayoutConfigState>(
             builder: (context, state) {

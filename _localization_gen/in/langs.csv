@@ -46,6 +46,7 @@ login_failed,"Login Gagal, terjadi kesalahan","Login Gagal, terjadi kesalahan"
 login_user_notfound,"Akun belum terdaftar, Silahkan daftar dulu","Akun belum terdaftar, Silahkan daftar dulu"
 login_user_notfound_signup,Daftar,Daftar
 login_form_required,Data Harus Diisi,Data Harus Diisi
+login_error_duplicated_request,"Kode sms sedang dikirim, mohon tunggu hingga 10 menit dari pengiriman awal, atau cek nomor yang diinputkan","Kode sms sedang dikirim, mohon tunggu hingga 10 menit dari pengiriman awal, atau cek nomor yang diinputkan"
 register_type_personel,Anggota / PNS Polri,Anggota / PNS Polri
 register_type_general,UMUM,UMUM
 register_nrp_title,NIP / NRP,NIP / NRP
@@ -119,6 +120,7 @@ home_menu_more,Lainnya,More
 home_menu_service_more,Layanan Lainnya,More Services
 home_section_announcement_title,Pengumuman Terbaru,Pengumuman Terbaru
 home_section_announcement_subtitle,Jangan lewatkan pengumuman terupdate dari GERAI SDM POLDA SUMSEL,Jangan lewatkan pengumuman terupdate dari GERAI SDM POLDA SUMSEL
+home_section_article_title,Berita Seputar SDM,Berita Seputar SDM
 announcement_author_by,By: {},By: {}
 menu_bookmark_title,Riwayat Bookmark,Riwayat Bookmark
 menu_bookmark_subtitle,Berita atau pengumuman yang anda suka,Berita atau pengumuman yang anda suka

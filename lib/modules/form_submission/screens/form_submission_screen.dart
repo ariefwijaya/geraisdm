@@ -306,6 +306,7 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
                       uploadFileKey = e.valueName;
                       return MultiUploadFilesField(
                         maxFile: 1,
+                        id: widget.id.toString(),
                         info: e.hint,
                         label: e.title,
                         readOnly: e.readonly,
