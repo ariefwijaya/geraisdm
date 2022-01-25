@@ -11,6 +11,7 @@ import 'package:geraisdm/widgets/common_placeholder.dart';
 import 'package:geraisdm/constant/localizations.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geraisdm/constant/assets.gen.dart';
+import 'package:secure_application/secure_gate.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class DocViewerDetailScreen extends StatelessWidget {
@@ -73,58 +74,60 @@ class DocViewerDetailScreen extends StatelessWidget {
   Widget _buildSuccess(BuildContext context,
       {required DocViewerDetailModel data}) {
     final PageController pageController = PageController(keepPage: true);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title ?? ""),
-        actions: [
-          IconButton(
-              onPressed: () {
-                if (data.linkShare != null) {
-                  LauncherHelper.share(
-                      data.description + "\n" + data.linkShare!);
-                }
-              },
-              icon: const Icon(Icons.share))
-        ],
-      ),
-      body: PageView.builder(
-        controller: pageController,
-        itemCount: data.files.length,
-        itemBuilder: (context, index) {
-          final file = data.files[index];
-          return KeepAliveComponent(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Text(
-                        LocaleKeys.doc_viewer_of
-                            .tr(args: ["${index + 1}", "${data.files.length}"]),
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          data.description,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: const TextStyle(fontSize: 12),
+    return SecureGate(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(title ?? ""),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  if (data.linkShare != null) {
+                    LauncherHelper.share(
+                        data.description + "\n" + data.linkShare!);
+                  }
+                },
+                icon: const Icon(Icons.share))
+          ],
+        ),
+        body: PageView.builder(
+          controller: pageController,
+          itemCount: data.files.length,
+          itemBuilder: (context, index) {
+            final file = data.files[index];
+            return KeepAliveComponent(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Text(
+                          LocaleKeys.doc_viewer_of.tr(
+                              args: ["${index + 1}", "${data.files.length}"]),
+                          style: Theme.of(context).textTheme.headline5,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            data.description,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                    child: SfPdfViewer.network(
-                  file.fileUrl,
-                )),
-              ],
-            ),
-          );
-        },
+                  const SizedBox(height: 8),
+                  Expanded(
+                      child: SfPdfViewer.network(
+                    file.fileUrl,
+                  )),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

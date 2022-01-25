@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geraisdm/config/routes/routes.gr.dart';
 import 'package:geraisdm/modules/home/blocs/home_bloc/home_bloc.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
@@ -15,7 +17,8 @@ class HomeHeaderSection extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeSuccess) {
-          return _buildSuccess(name: state.name, avatar: state.avatarUrl);
+          return _buildSuccess(context,
+              name: state.name, avatar: state.avatarUrl);
         }
         if (state is HomeFailure) {
           return _buildFailure(context);
@@ -68,35 +71,41 @@ class HomeHeaderSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSuccess({required String name, String? avatar}) {
+  Widget _buildSuccess(BuildContext context,
+      {required String name, String? avatar}) {
     return AppBar(
-      title: Row(
-        children: [
-          ImagePlaceholder(
-            shape: BoxShape.circle,
-            height: 45,
-            width: 45,
-            imageUrl: avatar,
-          ),
-          const SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  LocaleKeys.home_halo_title.tr(),
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  name,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w400),
-                )
-              ],
+      title: InkWell(
+        onTap: () {
+          context.navigateTo(const ProfileRouter());
+        },
+        child: Row(
+          children: [
+            ImagePlaceholder(
+              shape: BoxShape.circle,
+              height: 45,
+              width: 45,
+              imageUrl: avatar,
             ),
-          )
-        ],
+            const SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    LocaleKeys.home_halo_title.tr(),
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    name,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w400),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

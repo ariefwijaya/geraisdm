@@ -35,4 +35,5 @@ class ApiPath {
   static const String inbox = "/inbox";
   static const String sendMessage = "/send-message";
   static const String review = "/input-indeks-kepuasan";
+  static const String avatar = "/avatar";
 }

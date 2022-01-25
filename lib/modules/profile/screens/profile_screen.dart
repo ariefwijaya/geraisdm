@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,21 +6,32 @@ import 'package:geraisdm/config/injectable/injectable_core.dart';
 import 'package:geraisdm/config/routes/routes.gr.dart';
 import 'package:geraisdm/core/auth/blocs/auth_bloc.dart';
 import 'package:geraisdm/core/auth/models/user_model.dart';
+import 'package:geraisdm/core/settings/models/environment_model.dart';
+import 'package:geraisdm/modules/profile/blocs/profile_avatar_update_bloc/profile_avatar_update_bloc.dart';
 import 'package:geraisdm/modules/profile/blocs/profile_bloc/profile_bloc.dart';
 import 'package:geraisdm/modules/profile/screens/components/menu_tile_card.dart';
+import 'package:geraisdm/utils/helpers/format_helper.dart';
+import 'package:geraisdm/widgets/alert_component.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
 import 'package:geraisdm/constant/localizations.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geraisdm/widgets/general_component.dart';
+import 'package:geraisdm/widgets/image_viewer.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt.get<ProfileBloc>()..add(ProfileFetch()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt.get<ProfileBloc>()..add(ProfileFetch()),
+          child: Container(),
+        ),
+        BlocProvider(create: (context) => getIt.get<ProfileAvatarUpdateBloc>())
+      ],
       child: Scaffold(
         appBar: AppBar(),
         body: ListView(
@@ -69,7 +81,10 @@ class ProfileScreen extends StatelessWidget {
                       onPressed: () {
                         context.read<AuthBloc>().add(AuthLogoutEv());
                       }),
-                )
+                ),
+                const SizedBox(height: 8),
+                Text(
+                    "${LocaleKeys.version.tr()} ${getIt.get<EnvironmentModel>().appVersion}")
               ],
             ),
           ],
@@ -108,11 +123,104 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildSuccess(BuildContext context, {required AuthUserModel data}) {
     return Column(
       children: [
-        ImagePlaceholder(
-          height: 130,
-          width: 130,
-          borderRadius: BorderRadius.circular(12),
-          imageUrl: data.avatar,
+        BlocConsumer<ProfileAvatarUpdateBloc, ProfileAvatarUpdateState>(
+          listener: (context, state) {
+            if (state is ProfileAvatarUpdateFailed) {
+              FlushbarHelper.createError(
+                      message: LocaleKeys.avatar_upload_file_failed.tr())
+                  .show(context);
+            }
+          },
+          builder: (context, state) {
+            String? avatar = data.avatar;
+            if (state is ProfileAvatarUpdateSuccess) {
+              avatar = state.data.uploadedFileUrl;
+            }
+
+            if (state is ProfileAvatarUpdateLoading) {
+              return const SkeletonLoaderSquare(
+                width: 130,
+                height: 130,
+                roundedRadius: 12,
+              );
+            }
+
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (avatar != null) {
+                      context.router
+                          .pushWidget(ImageGalleryViewer(imageUrls: [avatar]));
+                    }
+                  },
+                  child: ImagePlaceholder(
+                    height: 130,
+                    width: 130,
+                    borderRadius: BorderRadius.circular(12),
+                    imageUrl: avatar,
+                  ),
+                ),
+                Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: CircleButton(
+                      elevation: 10,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      onPressed: () {
+                        showRoundedModalBottomSheet(
+                            context: context,
+                            enableCloseButton: false,
+                            builder: (subcontext) {
+                              return Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: FilledButton.large(
+                                            suffixIcon:
+                                                const Icon(Icons.camera_alt),
+                                            buttonText: LocaleKeys
+                                                .avatar_upload_camera
+                                                .tr(),
+                                            onPressed: () {
+                                              context
+                                                  .read<
+                                                      ProfileAvatarUpdateBloc>()
+                                                  .add(
+                                                      ProfileAvatarUpdateCameraStarted());
+
+                                              subcontext.popRoute();
+                                            })),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                        child: FilledButton.large(
+                                            suffixIcon: const Icon(Icons.image),
+                                            buttonText: LocaleKeys
+                                                .avatar_upload_gallery
+                                                .tr(),
+                                            onPressed: () {
+                                              context
+                                                  .read<
+                                                      ProfileAvatarUpdateBloc>()
+                                                  .add(
+                                                      ProfileAvatarUpdateGalleryStarted());
+                                              subcontext.popRoute();
+                                            }))
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Icon(Icons.file_upload_outlined),
+                      ),
+                    ))
+              ],
+            );
+          },
         ),
         const SizedBox(height: 8),
         Text(
@@ -122,7 +230,7 @@ class ProfileScreen extends StatelessWidget {
         const SizedBox(height: 4),
         Text(data.employeeId),
         const SizedBox(height: 4),
-        Text(data.accountType.name.toUpperCase(),
+        Text(FormatHelper.enumName(data.accountType).toUpperCase(),
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600))
       ],
     );

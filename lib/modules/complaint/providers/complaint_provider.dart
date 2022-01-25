@@ -12,8 +12,8 @@ class ComplaintProvider implements ComplaintProviderInterface {
   @override
   Future<List<ComplaintModel>> getComplaint(
       {PaginationControlModel? filter}) async {
-    final res =
-        await restApiInterface.get(ApiPath.likes, body: filter?.toJson());
+    final res = await restApiInterface.get(ApiPath.historyReport,
+        body: filter?.toJson());
     return (res.data as List<dynamic>)
         .map((e) => ComplaintModel.fromJson(e as Map<String, dynamic>))
         .toList();

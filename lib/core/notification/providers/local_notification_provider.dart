@@ -14,7 +14,7 @@ class LocalNotificationProvider {
 
   /// GroupId for channel notifications,
   /// so notifications will be grouped in the notification bar
-  final String _groupId = "id.chatalia.app";
+  final String _groupId = "com.sintechsolution.geraisdm";
 
   /// List of available notification channels
   List<AndroidNotificationChannel> channels = [];

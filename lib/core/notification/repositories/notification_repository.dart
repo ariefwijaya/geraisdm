@@ -10,7 +10,6 @@ import '../../../core/notification/models/notification_payload_model.dart';
 import '../../../core/notification/providers/local_notification_provider.dart';
 import '../../../config/injectable/injectable_core.dart';
 import '../../../core/notification/blocs/notification_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:drift/drift.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +31,6 @@ Future<dynamic> firebaseMessagingBackgroundHandler(
           await SharedPreferences.getInstance();
       await sharedPreferences.setBool("CONFIG_STALE", true);
     } else {
-      await Hive.initFlutter();
       NotificationPayloadModel? payload;
       if (message.data["action_type"] != null) {
         payload = NotificationPayloadModel.fromJson(message.data);

@@ -19,7 +19,7 @@ class AnnouncementLikeBloc
         await announcementRepositoryInterface.toggleLiked(event.id,
             liked: event.like);
       } catch (e) {
-        emit(AnnouncementLikeSuccess(liked: !event.like));
+        emit(AnnouncementLikeSuccess(liked: event.like));
       }
     });
   }

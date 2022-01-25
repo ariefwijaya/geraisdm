@@ -97,7 +97,7 @@ class AnnouncementDetailScreen extends StatelessWidget {
                               onPressed: () {
                                 context.read<AnnouncementLikeBloc>().add(
                                     AnnouncementLikeStart(
-                                        id: id, like: !data.liked));
+                                        id: id, like: !liked));
                               },
                               icon: Icon(
                                 Icons.favorite,

@@ -265,3 +265,7 @@ survey_3,Cukup Puas,Cukup Puas
 survey_4,Puas,Puas
 survey_5,Sangat Puas,Sangat Puas
 inbox_send_hint,Masukkan Pesan Anda....,Masukkan Pesan Anda....
+avatar_upload_file_failed,Gagal mengupload gambar,Gagal mengupload gambar
+avatar_upload_camera,Kamera,Kamera
+avatar_upload_gallery,Galeri,Galeri
+version,Versi,Version

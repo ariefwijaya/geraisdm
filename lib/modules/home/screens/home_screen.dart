@@ -5,7 +5,6 @@ import 'package:geraisdm/modules/home/blocs/home_announcement_bloc/home_announce
 import 'package:geraisdm/modules/home/blocs/home_article_banner_bloc/home_article_banner_bloc.dart';
 import 'package:geraisdm/modules/home/blocs/home_bloc/home_bloc.dart';
 import 'package:geraisdm/modules/home/blocs/home_config_bloc/home_config_bloc.dart';
-import 'package:geraisdm/modules/home/blocs/home_menu_additional_bloc/home_menu_additional_bloc.dart';
 import 'package:geraisdm/modules/home/blocs/home_menu_bloc/home_menu_bloc.dart';
 import 'package:geraisdm/constant/localizations.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -31,8 +30,8 @@ class HomeScreen extends StatelessWidget {
             create: (context) => getIt.get<HomeArticleBannerBloc>()),
         BlocProvider<HomeMenuBloc>(
             create: (context) => getIt.get<HomeMenuBloc>()),
-        BlocProvider<HomeMenuAdditionalBloc>(
-            create: (context) => getIt.get<HomeMenuAdditionalBloc>()),
+        // BlocProvider<HomeMenuAdditionalBloc>(
+        //     create: (context) => getIt.get<HomeMenuAdditionalBloc>()),
         BlocProvider<HomeAnnouncementBloc>(
             create: (context) => getIt.get<HomeAnnouncementBloc>()),
         BlocProvider<HomeBloc>(create: (context) => getIt.get<HomeBloc>()),
@@ -158,7 +157,7 @@ class HomeScreen extends StatelessWidget {
     context.read<HomeBloc>().add(HomeFetchHeader());
     context.read<HomeAnnouncementBloc>().add(HomeAnnouncementFetch());
     context.read<HomeMenuBloc>().add(HomeMenuFetch());
-    context.read<HomeMenuAdditionalBloc>().add(HomeMenuAdditionalFetch());
+    // context.read<HomeMenuAdditionalBloc>().add(HomeMenuAdditionalFetch());
     context.read<HomeArticleBannerBloc>().add(HomeArticleBannerFetch());
   }
 }

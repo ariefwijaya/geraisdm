@@ -264,5 +264,9 @@
   "survey_3": "Cukup Puas",
   "survey_4": "Puas",
   "survey_5": "Sangat Puas",
-  "inbox_send_hint": "Masukkan Pesan Anda...."
+  "inbox_send_hint": "Masukkan Pesan Anda....",
+  "avatar_upload_file_failed": "Gagal mengupload gambar",
+  "avatar_upload_camera": "Kamera",
+  "avatar_upload_gallery": "Galeri",
+  "version": "Version"
 }

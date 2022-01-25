@@ -9,8 +9,7 @@ class HistoryDetailModel {
   final int id;
   final String title;
   final DateTime createdDate;
-  final String? fileDownload;
-  final String fileUpload;
+  final List<String> fileDownload;
   final DateTime? updatedDate;
   @JsonKey(
       defaultValue: HistoryStatus.unknown,
@@ -23,8 +22,7 @@ class HistoryDetailModel {
       {required this.id,
       required this.title,
       required this.createdDate,
-      this.fileDownload,
-      required this.fileUpload,
+      required this.fileDownload,
       this.updatedDate,
       required this.status,
       required this.forms,

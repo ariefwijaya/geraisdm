@@ -36,7 +36,7 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
   final Map<String, dynamic> valueMapper = {};
   final Map<String, dynamic> valueObjectMapper = {};
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? uploadFileKey;
+  final List<String> uploadFileKeyRequired = [];
 
   @override
   void initState() {
@@ -138,12 +138,20 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        if (valueMapper[uploadFileKey] == null ||
-                            valueMapper[uploadFileKey] == "") {
-                          FlushbarHelper.createError(
-                                  message: LocaleKeys.form_upload_required.tr())
-                              .show(context);
-                        } else {
+                        int requiredValidation = 0;
+                        for (final item in uploadFileKeyRequired) {
+                          if (valueMapper[item] == null ||
+                              valueMapper[item] == "") {
+                            requiredValidation++;
+                            FlushbarHelper.createError(
+                                    message:
+                                        LocaleKeys.form_upload_required.tr())
+                                .show(context);
+                            break;
+                          }
+                        }
+
+                        if (requiredValidation == 0) {
                           formSubmissionSubmitBloc.add(
                               FormSubmissionSubmitStart(
                                   form: valueMapper, id: widget.id));
@@ -303,7 +311,11 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
                       );
 
                     case FormSubmissionFieldType.uploadFile:
-                      uploadFileKey = e.valueName;
+                      if (e.required) {
+                        uploadFileKeyRequired
+                            .removeWhere((element) => element == e.valueName);
+                        uploadFileKeyRequired.add(e.valueName);
+                      }
                       return MultiUploadFilesField(
                         maxFile: 1,
                         id: widget.id.toString(),

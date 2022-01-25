@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:secure_application/secure_application.dart';
 
 import 'config/injectable/injectable_core.dart';
 import 'config/routes/routes.gr.dart';
@@ -75,12 +76,18 @@ class MyApp extends StatelessWidget {
                         }
                       }),
                     ],
-                    child: currentEnv != "prod"
-                        ? Banner(
-                            message: currentEnv.toUpperCase(),
-                            location: BannerLocation.topStart,
-                            child: child)
-                        : child!);
+                    child: SecureApplication(
+                      onNeedUnlock: (secure) {
+                        print(
+                            'need unlock maybe use biometric to confirm and then use sercure.unlock()');
+                      },
+                      child: currentEnv != "prod"
+                          ? Banner(
+                              message: currentEnv.toUpperCase(),
+                              location: BannerLocation.topStart,
+                              child: child)
+                          : child!,
+                    ));
               },
             )),
       ),

@@ -106,7 +106,8 @@ class HomeArticleSection extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
+          color: Theme.of(context).scaffoldBackgroundColor,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: HomeTitleDivider(
             title: LocaleKeys.home_section_article_title.tr(),
             onTap: () {

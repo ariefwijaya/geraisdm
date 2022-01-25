@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geraisdm/config/injectable/injectable_core.dart';
 import 'package:geraisdm/config/routes/routes.gr.dart';
+import 'package:geraisdm/modules/form_submission/models/form_submission_model.dart';
 import 'package:geraisdm/modules/history/blocs/history_bloc/history_bloc.dart';
 import 'package:geraisdm/modules/history/models/history_detail_model.dart';
 import 'package:geraisdm/modules/history/models/history_model.dart';
 import 'package:geraisdm/modules/history/screens/components/history_rating_card.dart';
+import 'package:geraisdm/utils/helpers/format_helper.dart';
 import 'package:geraisdm/utils/helpers/launcher_helper.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
@@ -142,7 +144,7 @@ class HistoryDetailScreen extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    data.status.name.toUpperCase(),
+                    FormatHelper.enumName(data.status).toUpperCase(),
                     textAlign: TextAlign.right,
                     style: Theme.of(context)
                         .textTheme
@@ -154,27 +156,13 @@ class HistoryDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 16),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    LocaleKeys.history_detail_file_upload.tr(),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                NudeButton.small(
-                    infiniteWidth: false,
-                    buttonText: LocaleKeys.history_detail_file_view.tr(),
-                    onPressed: () {
-                      LauncherHelper.openUrl(data.fileUpload);
-                    })
-              ],
-            ),
-            if (data.fileDownload != null)
+            if (data.fileDownload.isNotEmpty)
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Text(
@@ -182,14 +170,36 @@ class HistoryDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  NudeButton.small(
-                      infiniteWidth: false,
-                      buttonText: LocaleKeys.history_detail_file_view.tr(),
-                      onPressed: () {
-                        LauncherHelper.openUrl(data.fileDownload!);
-                      })
+                  Column(
+                      children: data.fileDownload.map((e) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        onTap: () {
+                          LauncherHelper.openUrl(e);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(LocaleKeys.history_detail_file_view.tr()),
+                        ),
+                      ),
+                    );
+                  }).toList())
                 ],
-              ),
+              )
+            else
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      LocaleKeys.history_detail_file_download.tr(),
+                    ),
+                  ),
+                  Text(LocaleKeys.history_detail_form_submission_nodata.tr()),
+                ],
+              )
           ],
         ),
         Divider(
@@ -209,14 +219,35 @@ class HistoryDetailScreen extends StatelessWidget {
               Text(LocaleKeys.history_detail_form_submission.tr(),
                   style: Theme.of(context).textTheme.headline4),
               Column(
-                  children: data.forms
-                      .map((e) => ListTile(
-                            title: Text(e.title),
-                            subtitle: Text(e.initialValue ??
-                                LocaleKeys.history_detail_form_submission_nodata
-                                    .tr()),
-                          ))
-                      .toList()),
+                  children: data.forms.map((e) {
+                if (e.type == FormSubmissionFieldType.uploadFile) {
+                  return ListTile(
+                    title: Text(e.title),
+                    subtitle: e.initialValue != null
+                        ? Container(
+                            alignment: Alignment.centerLeft,
+                            child: NudeButton.small(
+                                infiniteWidth: false,
+                                buttonText:
+                                    LocaleKeys.history_detail_file_view.tr(),
+                                onPressed: () {
+                                  if (e.initialValue != null) {
+                                    LauncherHelper.openUrl(e.initialValue!);
+                                  }
+                                }),
+                          )
+                        : Text(e.initialValue ??
+                            LocaleKeys.history_detail_form_submission_nodata
+                                .tr()),
+                  );
+                } else {
+                  return ListTile(
+                    title: Text(e.title),
+                    subtitle: Text(e.initialValue ??
+                        LocaleKeys.history_detail_form_submission_nodata.tr()),
+                  );
+                }
+              }).toList()),
             ],
           )
         else

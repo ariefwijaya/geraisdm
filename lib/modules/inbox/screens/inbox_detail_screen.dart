@@ -7,6 +7,7 @@ import 'package:geraisdm/modules/inbox/blocs/inbox_bloc/inbox_bloc.dart';
 import 'package:geraisdm/modules/inbox/blocs/inbox_send_bloc/inbox_send_bloc.dart';
 import 'package:geraisdm/modules/inbox/models/inbox_detail_model.dart';
 import 'package:geraisdm/modules/inbox/models/inbox_model.dart';
+import 'package:geraisdm/utils/helpers/format_helper.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
 import 'package:geraisdm/constant/assets.gen.dart';
@@ -165,7 +166,8 @@ class _InboxDetailScreenState extends State<InboxDetailScreen> {
                   children: [
                     Container(
                       padding: const EdgeInsets.all(8),
-                      child: Text(data.type.name.toUpperCase(),
+                      child: Text(
+                          FormatHelper.enumName(data.type).toUpperCase(),
                           textAlign: TextAlign.left,
                           style: Theme.of(context).textTheme.headline5),
                     ),

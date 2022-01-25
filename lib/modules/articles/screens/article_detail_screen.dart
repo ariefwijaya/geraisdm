@@ -129,8 +129,7 @@ class ArticleDetailScreen extends StatelessWidget {
                           return IconButton(
                               onPressed: () {
                                 context.read<ArticleLikeBloc>().add(
-                                    ArticleLikeStart(
-                                        id: id, like: !data.liked));
+                                    ArticleLikeStart(id: id, like: !liked));
                               },
                               icon: Icon(
                                 Icons.favorite,

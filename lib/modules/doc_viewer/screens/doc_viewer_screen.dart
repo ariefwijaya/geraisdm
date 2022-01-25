@@ -91,8 +91,8 @@ class DocViewerScreen extends StatelessWidget {
             title: Text(data.name),
             subtitle: Text(DateFormat("d MMM yyyy, hh:mm").format(data.date)),
             onTap: () {
-              context.pushRoute(
-                  DocViewerDetailRoute(id: data.id, title: data.name));
+              context.pushRoute(DocViewerDetailRoute(
+                  id: data.id, title: data.name, type: data.type));
             },
           ),
         );

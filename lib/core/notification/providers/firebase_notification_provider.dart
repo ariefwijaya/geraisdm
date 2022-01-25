@@ -17,7 +17,8 @@ class FirebaseNotificationProvider {
         announcement: true,
         carPlay: true,
         criticalAlert: true,
-        provisional: true);
+        provisional: true,
+        sound: true);
   }
 
   /// Setup FirebaseMessaging for the first time when app opened.

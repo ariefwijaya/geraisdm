@@ -11,7 +11,7 @@ enum ActionType { url, screen, unknown }
 /// ```dart
 ///  {
 ///    "action_type":"url",
-///    "params":"https://sribuu.id",
+///    "params":"https://google.id",
 ///    "play_sound":"yes"
 ///  }
 /// ```

@@ -1,4 +1,5 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../constant/error_codes.dart';
 import '../../../../core/app_setting.dart';
@@ -57,6 +58,9 @@ abstract class NativeApiService {
   AppDatabase databaseInstance() {
     return constructDb(logStatements: AppSetting.showLog);
   }
+
+  @injectable
+  ImagePicker get imagePicker => ImagePicker();
 
   @singleton
   FlutterLocalNotificationsPlugin get flutterLocalNotificationsPlugin =>

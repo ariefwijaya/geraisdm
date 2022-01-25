@@ -26,6 +26,6 @@ class AnnouncementProvider implements AnnouncementProviderInterface {
 
   @override
   Future<void> toggleLiked(int id, {required bool liked}) {
-    return restApi.post(ApiPath.articleLiked + "/$id");
+    return restApi.post(ApiPath.articleLiked + "/$id", body: {"liked": liked});
   }
 }

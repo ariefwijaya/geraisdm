@@ -7,6 +7,7 @@ import 'package:geraisdm/modules/history/blocs/history_list_bloc/history_list_bl
 import 'package:geraisdm/constant/localizations.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geraisdm/modules/history/models/history_model.dart';
+import 'package:geraisdm/utils/helpers/format_helper.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -51,7 +52,7 @@ class HistoryScreen extends StatelessWidget {
                           subtitle: Text(DateFormat("d MMMM yyyy, hh:mm")
                               .format(entry.createdDate)),
                           trailing: Text(
-                            entry.status.name.toUpperCase(),
+                            FormatHelper.enumName(entry.status).toUpperCase(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline5!

@@ -48,6 +48,8 @@ class FormatHelper {
       return chars[indexRandom];
     }).join();
   }
+
+  static String enumName(Object o) => o.toString().split('.').last;
 }
 
 extension CapExtension on String {

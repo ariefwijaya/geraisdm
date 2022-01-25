@@ -18,7 +18,7 @@ class ArticleLikeBloc extends Bloc<ArticleLikeEvent, ArticleLikeState> {
         await articleRepositoryInterface.toggleLiked(event.id,
             liked: event.like);
       } catch (e) {
-        emit(ArticleLikeSuccess(liked: !event.like));
+        emit(ArticleLikeSuccess(liked: event.like));
       }
     });
   }

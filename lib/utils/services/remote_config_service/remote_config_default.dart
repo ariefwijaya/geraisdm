@@ -22,12 +22,12 @@ Map<String, dynamic> remoteConfigDefaultValue = {
     "enabled_register": true,
     "enabled_forgot_password": true,
     "illustration":
-        "https://storage.googleapis.com/geraisdm.appspot.com/illustrations/login.png"
+        "https://storage.googleapis.com/geraisdm.appspot.com/illustrations/logo_gerai_sdm.png"
   }),
   "register_screen": jsonEncode({
     "enable_login": true,
     "illustration_register":
-        "https://storage.googleapis.com/geraisdm.appspot.com/illustrations/welcome_cats.png",
+        "https://storage.googleapis.com/geraisdm.appspot.com/illustrations/logo_gerai_sdm.png",
     "verification_type_default": "personel",
     "verification_type": [
       {
@@ -215,11 +215,11 @@ Map<String, dynamic> remoteConfigDefaultValue = {
     ]
   }),
   "dynamic_link": jsonEncode({
-    "uri_prefix": "https://sribuu.page.link",
-    "android_package_name": "id.chatalia.app",
-    "android_minimum_version": 137,
-    "ios_bundle_id": "id.chatalia.app",
-    "ios_minimum_version": "2.7.0"
+    "uri_prefix": "https://geraisdm.page.link",
+    "android_package_name": "com.sintechsolution.geraisdm",
+    "android_minimum_version": 1,
+    "ios_bundle_id": "com.sintechsolution.geraisdm",
+    "ios_minimum_version": "2.0.0"
   }),
   "home_layout": jsonEncode({
     "highlight_menu": "home",
