@@ -15,6 +15,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:geraisdm/modules/form_submission/models/form_selection_model.dart';
 import 'package:geraisdm/modules/form_submission/models/form_submission_model.dart';
 import 'package:geraisdm/modules/form_submission/screens/form_submission_selection_screen.dart';
+import 'package:geraisdm/utils/helpers/time_helper.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
 import 'package:geraisdm/constant/assets.gen.dart';
@@ -114,7 +115,8 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
         }
 
         if (state is FormSubmissionSubmitSuccess) {
-          FlushbarHelper.createSuccess(message: LocaleKeys.form_submit_success)
+          FlushbarHelper.createSuccess(
+                  message: LocaleKeys.form_submit_success.tr())
               .show(context)
               .then((value) {
             context.navigateTo(const HomeLayoutRoute());
@@ -163,184 +165,268 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
           ),
           body: Form(
             key: _formKey,
-            child: ListView.separated(
+            child: SingleChildScrollView(
+              child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: data.forms.length,
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 16);
-                },
-                itemBuilder: (context, index) {
-                  final e = data.forms[index];
-                  switch (e.type) {
-                    case FormSubmissionFieldType.text:
-                      return FilledTextField(
-                        hint: e.hint ?? "",
-                        readOnly: e.readonly,
-                        enabled: e.enabled,
-                        initialValue: e.initialValue,
-                        label: e.title,
-                        validator: MultiValidator([
-                          if (e.required)
-                            RequiredValidator(
-                                errorText: LocaleKeys.form_required.tr())
-                        ]),
-                        onSaved: (value) {
-                          valueMapper[e.valueName] = value;
-                        },
-                      );
+                child: Column(
+                    children: data.forms
+                        .map((e) {
+                          switch (e.type) {
+                            case FormSubmissionFieldType.text:
+                              return FilledTextField(
+                                hint: e.hint ?? "",
+                                readOnly: e.readonly,
+                                enabled: e.enabled,
+                                initialValue: e.initialValue,
+                                label: e.title,
+                                validator: MultiValidator([
+                                  if (e.required)
+                                    RequiredValidator(
+                                        errorText:
+                                            LocaleKeys.form_required.tr())
+                                ]),
+                                onSaved: (value) {
+                                  valueMapper[e.valueName] = value;
+                                },
+                              );
 
-                    case FormSubmissionFieldType.email:
-                      return FilledTextField(
-                        hint: e.hint ?? "",
-                        readOnly: e.readonly,
-                        enabled: e.enabled,
-                        initialValue: e.initialValue,
-                        label: e.title,
-                        validator: MultiValidator([
-                          if (e.required)
-                            RequiredValidator(
-                                errorText: LocaleKeys.form_required.tr()),
-                          EmailValidator(
-                              errorText: LocaleKeys.form_email_invalid.tr())
-                        ]),
-                        onSaved: (value) {
-                          valueMapper[e.valueName] = value;
-                        },
-                      );
-                    case FormSubmissionFieldType.password:
-                      return FilledPasswordTextField(
-                        hint: e.hint ?? "",
-                        readOnly: e.readonly,
-                        enabled: e.enabled,
-                        initialValue: e.initialValue,
-                        label: e.title,
-                        validator: MultiValidator([
-                          if (e.required)
-                            RequiredValidator(
-                                errorText: LocaleKeys.form_required.tr())
-                        ]),
-                        onSaved: (value) {
-                          valueMapper[e.valueName] = value;
-                        },
-                      );
-                    case FormSubmissionFieldType.textarea:
-                      return FilledTextField(
-                        maxLines: 4,
-                        hint: e.hint ?? "",
-                        readOnly: e.readonly,
-                        enabled: e.enabled,
-                        initialValue: e.initialValue,
-                        label: e.title,
-                        validator: MultiValidator([
-                          if (e.required)
-                            RequiredValidator(
-                                errorText: LocaleKeys.form_required.tr())
-                        ]),
-                        onSaved: (value) {
-                          valueMapper[e.valueName] = value;
-                        },
-                      );
+                            case FormSubmissionFieldType.email:
+                              return FilledTextField(
+                                hint: e.hint ?? "",
+                                readOnly: e.readonly,
+                                enabled: e.enabled,
+                                initialValue: e.initialValue,
+                                label: e.title,
+                                validator: MultiValidator([
+                                  if (e.required)
+                                    RequiredValidator(
+                                        errorText:
+                                            LocaleKeys.form_required.tr()),
+                                  EmailValidator(
+                                      errorText:
+                                          LocaleKeys.form_email_invalid.tr())
+                                ]),
+                                onSaved: (value) {
+                                  valueMapper[e.valueName] = value;
+                                },
+                              );
+                            case FormSubmissionFieldType.password:
+                              return FilledPasswordTextField(
+                                hint: e.hint ?? "",
+                                readOnly: e.readonly,
+                                enabled: e.enabled,
+                                initialValue: e.initialValue,
+                                label: e.title,
+                                validator: MultiValidator([
+                                  if (e.required)
+                                    RequiredValidator(
+                                        errorText:
+                                            LocaleKeys.form_required.tr())
+                                ]),
+                                onSaved: (value) {
+                                  valueMapper[e.valueName] = value;
+                                },
+                              );
+                            case FormSubmissionFieldType.textarea:
+                              return FilledTextField(
+                                maxLines: 4,
+                                hint: e.hint ?? "",
+                                readOnly: e.readonly,
+                                enabled: e.enabled,
+                                initialValue: e.initialValue,
+                                label: e.title,
+                                validator: MultiValidator([
+                                  if (e.required)
+                                    RequiredValidator(
+                                        errorText:
+                                            LocaleKeys.form_required.tr())
+                                ]),
+                                onSaved: (value) {
+                                  valueMapper[e.valueName] = value;
+                                },
+                              );
 
-                    case FormSubmissionFieldType.select:
-                      return GhostDropdownTextField<FormSelectionModel>(
-                        hint: e.hint ?? "",
-                        readOnly: e.readonly,
-                        value: valueObjectMapper[e.valueName],
-                        label: e.title,
-                        items:
-                            (jsonDecode(e.argument!) as List<dynamic>).map((e) {
-                          final el = FormSelectionModel.fromJson(
-                              e as Map<String, dynamic>);
-                          return DropdownMenuItem<FormSelectionModel>(
-                            child: Text(el.name),
-                            value: el,
-                          );
-                        }).toList(),
-                        validator: MultiValidator([
-                          if (e.required)
-                            RequiredValidator(
-                                errorText: LocaleKeys.form_required.tr())
-                        ]),
-                        onChanged: (value) {
-                          valueMapper[e.valueName] = value?.value;
-                          valueObjectMapper[e.valueName] = value;
-                        },
-                        onSaved: (value) {
-                          valueMapper[e.valueName] = value?.value;
-                          valueObjectMapper[e.valueName] = value;
-                        },
-                      );
+                            case FormSubmissionFieldType.select:
+                              return GhostDropdownTextField<FormSelectionModel>(
+                                hint: e.hint ?? "",
+                                readOnly: e.readonly,
+                                value: valueObjectMapper[e.valueName],
+                                label: e.title,
+                                items:
+                                    (jsonDecode(e.argument!) as List<dynamic>)
+                                        .map((e) {
+                                  final el = FormSelectionModel.fromJson(
+                                      e as Map<String, dynamic>);
+                                  return DropdownMenuItem<FormSelectionModel>(
+                                    child: Text(el.name),
+                                    value: el,
+                                  );
+                                }).toList(),
+                                validator: (value) {
+                                  if (e.required) {
+                                    final valid = RequiredValidator(
+                                            errorText:
+                                                LocaleKeys.form_required.tr())
+                                        .call(value?.name ?? "");
+                                    if (valid != null) {
+                                      return valid;
+                                    } else {
+                                      return null;
+                                    }
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onChanged: (value) {
+                                  valueMapper[e.valueName] = value?.value;
+                                  valueObjectMapper[e.valueName] = value;
+                                },
+                                onSaved: (value) {
+                                  valueMapper[e.valueName] = value?.value;
+                                  valueObjectMapper[e.valueName] = value;
+                                },
+                              );
 
-                    case FormSubmissionFieldType.selectApi:
-                      return FilledPickerField<FormSelectionModel>(
-                        hint: e.hint ?? "",
-                        label: e.title,
-                        initialValue: e.initialValue != null
-                            ? FormPickerFieldValue(
-                                name: e.initialValue!,
-                                val: FormSelectionModel.fromJson(
-                                    jsonDecode(e.initialValue!)))
-                            : null,
-                        validator: (val) {
-                          final valid = RequiredValidator(
-                                  errorText: LocaleKeys.form_required.tr())
-                              .call(val?.name ?? "");
-                          if (valid != null) {
-                            return FormPickerFieldValue(name: valid);
-                          } else {
-                            return null;
+                            case FormSubmissionFieldType.selectApi:
+                              return FilledPickerField<FormSelectionModel>(
+                                hint: e.hint ?? "",
+                                label: e.title,
+                                initialValue: e.initialValue != null
+                                    ? FormPickerFieldValue(
+                                        name: e.initialValue!,
+                                        val: FormSelectionModel.fromJson(
+                                            jsonDecode(e.initialValue!)))
+                                    : null,
+                                validator: (val) {
+                                  if (e.required) {
+                                    final valid = RequiredValidator(
+                                            errorText:
+                                                LocaleKeys.form_required.tr())
+                                        .call(val?.name ?? "");
+                                    if (valid != null) {
+                                      return FormPickerFieldValue(name: valid);
+                                    } else {
+                                      return null;
+                                    }
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onSaved: (value) {
+                                  valueMapper[e.valueName] = value?.val?.value;
+                                  valueObjectMapper[e.valueName] = value?.val;
+                                },
+                                onTap: (val) async {
+                                  final selected = await context.router
+                                      .pushWidget<FormSelectionModel?>(
+                                          FormSubmissionSelectionScreen(
+                                    title: e.title,
+                                    apiUrl: e.argument!,
+                                    initialValue:
+                                        valueObjectMapper[e.valueName],
+                                  ));
+                                  if (selected != null) {
+                                    return FormPickerFieldValue(
+                                        name: selected.name, val: selected);
+                                  }
+                                },
+                              );
+
+                            case FormSubmissionFieldType.uploadFile:
+                              if (e.required) {
+                                uploadFileKeyRequired.removeWhere(
+                                    (element) => element == e.valueName);
+                                uploadFileKeyRequired.add(e.valueName);
+                              }
+                              return MultiUploadFilesField(
+                                maxFile: 1,
+                                id: widget.id.toString(),
+                                info: e.hint,
+                                label: e.title,
+                                readOnly: e.readonly,
+                                initialValues: e.initialValue != null
+                                    ? (jsonDecode(e.initialValue!)
+                                            as List<dynamic>)
+                                        .map((s) => ApiResUploadModel.fromJson(
+                                            s as Map<String, dynamic>))
+                                        .toList()
+                                    : null,
+                                onChanged: (value) {
+                                  valueMapper[e.valueName] = value
+                                      .map((s) => s.uploadedFile)
+                                      .toList()
+                                      .join(",");
+                                  valueObjectMapper[e.valueName] = value;
+                                },
+                              );
+
+                            case FormSubmissionFieldType.date:
+                              return FilledPickerField<DateTime>(
+                                initialValue: e.initialValue != null
+                                    ? FormPickerFieldValue(
+                                        name: TimeHelper.dateTimeToYearMonthDay(
+                                            DateTime.tryParse(e.initialValue!)!,
+                                            context.locale.languageCode),
+                                        val: DateTime.tryParse(e.initialValue!))
+                                    : null,
+                                suffixIcon: Icons.calendar_today,
+                                hint: e.hint ?? "",
+                                label: e.title,
+                                validator: (val) {
+                                  if (!e.required) return null;
+                                  final valid = RequiredValidator(
+                                          errorText:
+                                              LocaleKeys.form_required.tr())
+                                      .call(val?.name ?? "");
+                                  if (valid != null) {
+                                    return FormPickerFieldValue(name: valid);
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onTap: e.readonly
+                                    ? null
+                                    : (val) async {
+                                        final selected = await showDatePicker(
+                                            context: context,
+                                            initialDate:
+                                                (val)?.val ?? DateTime.now(),
+                                            firstDate: DateTime(1945),
+                                            lastDate: DateTime.now());
+
+                                        if (selected != null) {
+                                          return FormPickerFieldValue(
+                                              name: TimeHelper
+                                                  .dateTimeToDayMonthYear(
+                                                      selected,
+                                                      context
+                                                          .locale.languageCode),
+                                              val: selected);
+                                        }
+                                      },
+                                onSaved: (value) {
+                                  if (value?.val != null) {
+                                    TimeHelper.dateTimeToYearMonthDay(
+                                        value!.val!);
+                                  }
+                                  valueMapper[e.valueName] =
+                                      TimeHelper.dateTimeToYearMonthDay(
+                                          value!.val!);
+                                  valueObjectMapper[e.valueName] =
+                                      TimeHelper.dateTimeToYearMonthDay(
+                                          value.val!);
+                                },
+                              );
+
+                            default:
+                              return Container();
                           }
-                        },
-                        onSaved: (value) {
-                          valueMapper[e.valueName] = value?.val?.value;
-                          valueObjectMapper[e.valueName] = value?.val;
-                        },
-                        onTap: (val) async {
-                          final selected = await context.router
-                              .pushWidget<FormSelectionModel?>(
-                                  FormSubmissionSelectionScreen(
-                            title: e.title,
-                            apiUrl: e.argument!,
-                            initialValue: valueObjectMapper[e.valueName],
-                          ));
-                          if (selected != null) {
-                            return FormPickerFieldValue(
-                                name: selected.name, val: selected);
-                          }
-                        },
-                      );
-
-                    case FormSubmissionFieldType.uploadFile:
-                      if (e.required) {
-                        uploadFileKeyRequired
-                            .removeWhere((element) => element == e.valueName);
-                        uploadFileKeyRequired.add(e.valueName);
-                      }
-                      return MultiUploadFilesField(
-                        maxFile: 1,
-                        id: widget.id.toString(),
-                        info: e.hint,
-                        label: e.title,
-                        readOnly: e.readonly,
-                        initialValues: e.initialValue != null
-                            ? (jsonDecode(e.initialValue!) as List<dynamic>)
-                                .map((s) => ApiResUploadModel.fromJson(
-                                    s as Map<String, dynamic>))
-                                .toList()
-                            : null,
-                        onChanged: (value) {
-                          valueMapper[e.valueName] = value
-                              .map((s) => s.uploadedFile)
-                              .toList()
-                              .join(",");
-                          valueObjectMapper[e.valueName] = value;
-                        },
-                      );
-
-                    default:
-                      return Container();
-                  }
-                }),
+                        })
+                        .map((e) =>
+                            Column(children: [e, const SizedBox(height: 16)]))
+                        .toList()),
+              ),
+            ),
           ),
         );
       },

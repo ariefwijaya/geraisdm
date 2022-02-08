@@ -132,7 +132,6 @@ class SplashScreen extends StatelessWidget {
                   buttonText: LocaleKeys.app_update_download.tr(),
                   onPressed: () {
                     context.popRoute();
-                    //TODO: use env or remoteconfig and in bloc instead
                     final InAppReview inAppReview = InAppReview.instance;
                     inAppReview.openStoreListing();
                   }),

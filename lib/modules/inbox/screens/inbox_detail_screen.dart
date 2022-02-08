@@ -90,6 +90,9 @@ class _InboxDetailScreenState extends State<InboxDetailScreen> {
 
   Widget _buildSuccess(BuildContext context,
       {required List<InboxDetailModel> listData}) {
+    if (messages.isEmpty) {
+      messages = listData;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title ?? ""),
@@ -102,6 +105,10 @@ class _InboxDetailScreenState extends State<InboxDetailScreen> {
             BlocConsumer<InboxSendBloc, InboxSendState>(
               bloc: inboxSendBloc,
               listener: (context, state) {
+                if (state is InboxSendFailure) {
+                  FlushbarHelper.createError(
+                      message: LocaleKeys.inbox_error_subtitle.tr());
+                }
                 if (state is InboxSendSuccess) {
                   setState(() {
                     messages.add(InboxDetailModel(
@@ -114,38 +121,49 @@ class _InboxDetailScreenState extends State<InboxDetailScreen> {
                 }
               },
               builder: (context, state) {
-                return Row(
-                  children: [
-                    Expanded(
-                        child: FilledTextField(
-                      maxLines: null,
-                      controller: messageText,
-                      hint: LocaleKeys.inbox_send_hint.tr(),
-                    )),
-                    const SizedBox(width: 8),
-                    CircleButton(
-                      outlineColor: Theme.of(context).primaryColor,
-                      useOutline: true,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.send,
-                          color: Theme.of(context).primaryColor,
+                return Container(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: FilledTextField(
+                        maxLines: null,
+                        controller: messageText,
+                        hint: LocaleKeys.inbox_send_hint.tr(),
+                      )),
+                      const SizedBox(width: 8),
+                      if (state is InboxSendLoading)
+                        const SizedBox(
+                          width: 35,
+                          height: 35,
+                          child: CircularProgressIndicator(),
+                        )
+                      else
+                        CircleButton(
+                          outlineColor: Theme.of(context).primaryColor,
+                          useOutline: true,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.send,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            if (messageText.text.isEmpty) {
+                              FlushbarHelper.createError(
+                                      message: LocaleKeys.form_required.tr())
+                                  .show(context);
+                            } else {
+                              inboxSendBloc.add(InboxSendMessageStart(
+                                  id: widget.id, message: messageText.text));
+                              messageText.clear();
+                            }
+                          },
                         ),
-                      ),
-                      onPressed: () {
-                        if (messageText.text.isEmpty) {
-                          FlushbarHelper.createError(
-                                  message: LocaleKeys.form_required.tr())
-                              .show(context);
-                        } else {
-                          inboxSendBloc.add(InboxSendMessageStart(
-                              id: widget.id, message: messageText.text));
-                          messageText.clear();
-                        }
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             )
@@ -155,7 +173,7 @@ class _InboxDetailScreenState extends State<InboxDetailScreen> {
       body: ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           itemBuilder: (context, index) {
-            final data = listData[index];
+            final data = messages[index];
 
             final childrens = [
               Expanded(
@@ -239,7 +257,7 @@ class _InboxDetailScreenState extends State<InboxDetailScreen> {
           separatorBuilder: (context, index) {
             return const SizedBox(height: 8);
           },
-          itemCount: listData.length),
+          itemCount: messages.length),
     );
   }
 }

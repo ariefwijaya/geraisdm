@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geraisdm/config/injectable/injectable_core.dart';
@@ -9,6 +10,7 @@ import 'package:geraisdm/core/notification/blocs/notification_bloc.dart';
 import 'package:geraisdm/modules/home_layout/home_layout_config_bloc/home_layout_config_bloc.dart';
 import 'package:geraisdm/modules/home_layout/models/layout_config_model.dart';
 import 'package:geraisdm/modules/home_layout/screens/components/home_layout_content.dart';
+import 'package:geraisdm/modules/inbox/blocs/inbox_counter_bloc/inbox_counter_bloc.dart';
 import 'package:geraisdm/utils/helpers/launcher_helper.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
@@ -21,9 +23,15 @@ class HomeLayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeLayoutConfigBloc>(
-      create: (context) =>
-          getIt.get<HomeLayoutConfigBloc>()..add(HomeLayoutConfigFetch()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeLayoutConfigBloc>(
+            create: (context) => getIt.get<HomeLayoutConfigBloc>()
+              ..add(HomeLayoutConfigFetch())),
+        BlocProvider(
+            create: (context) => getIt.get<InboxCounterBloc>()
+              ..add(const InboxCounterUnreadFetch()))
+      ],
       child: Scaffold(
         body: MultiBlocListener(
           listeners: [
@@ -54,6 +62,7 @@ class HomeLayoutScreen extends StatelessWidget {
                 listener: (context, state) {
               if (state is HomeLayoutConfigSuccess) {
                 context.read<DeeplinkBloc>().add(DeeplinkStarted());
+                context.read<NotificationBloc>().add(NotificationStarted());
               }
             }),
           ],
@@ -105,7 +114,33 @@ class HomeLayoutScreen extends StatelessWidget {
           listPage.add(const InboxRoute());
           bottomNavBarItems.add(BottomNavigationBarItem(
               label: LocaleKeys.home_layout_menu_navbar_message.tr(),
-              icon: const Icon(Icons.inbox_rounded)));
+              icon: BlocBuilder<InboxCounterBloc, InboxCounterState>(
+                builder: (context, state) {
+                  int totalUnread = 0;
+                  if (state is InboxCounterUnreadTotal) {
+                    totalUnread = state.total;
+                  }
+                  return GestureDetector(
+                    onTap: () {
+                      if (totalUnread > 0) {
+                        context
+                            .read<InboxCounterBloc>()
+                            .add(const InboxCounterSetAsReadStart());
+                      } else {
+                        context.navigateTo(const InboxRoute());
+                      }
+                    },
+                    child: Badge(
+                        showBadge: totalUnread > 0,
+                        badgeContent: Text(
+                          '$totalUnread',
+                          style: TextStyle(
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                        ),
+                        child: const Icon(Icons.inbox_rounded)),
+                  );
+                },
+              )));
           break;
 
         case LayoutMenuType.profile:

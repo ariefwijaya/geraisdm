@@ -66,4 +66,13 @@ class BackendErrors {
 
   static ApiErrorModel get registerActivationWrongBirthday =>
       const ApiErrorModel(errorCode: "BIRTHDAY_WRONG");
+
+  static ApiErrorModel get forgotPasswordUserNotValid =>
+      const ApiErrorModel(errorCode: "USER_NOT_FOUND");
+
+  static ApiErrorModel get forgotPasswordConfirmWrongOTP =>
+      const ApiErrorModel(errorCode: "OTP_WRONG");
+
+  static ApiErrorModel get forgotPasswordConfirmExpiredOTP =>
+      const ApiErrorModel(errorCode: "OTP_EXPIRED");
 }

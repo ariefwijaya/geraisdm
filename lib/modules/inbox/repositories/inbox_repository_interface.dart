@@ -6,4 +6,8 @@ abstract class InboxRepositoryInterface {
   Future<List<InboxModel>> getInbox({PaginationControlModel? filter});
   Future<List<InboxDetailModel>> getInboxById(int id);
   Future<void> sendMessage(int id, String message);
+  Future<int> getUnreadAll();
+  Future<int> getUnreadById(int id);
+  Future<void> setAsReadAll();
+  Future<void> setAsReadByID(int id);
 }

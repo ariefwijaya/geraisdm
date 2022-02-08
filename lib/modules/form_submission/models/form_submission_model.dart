@@ -28,6 +28,7 @@ enum FormSubmissionFieldType {
   uploadFile,
   password,
   email,
+  date,
   unknown
 }
 

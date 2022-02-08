@@ -16,9 +16,8 @@ import '../../../constant/localizations.g.dart';
 import 'package:auto_route/auto_route.dart';
 
 class LoginScreen extends StatefulWidget {
-  @queryParam
   final String? username;
-  const LoginScreen({Key? key, this.username}) : super(key: key);
+  const LoginScreen({Key? key, @queryParam this.username}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -178,8 +177,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 NudeButton.small(
                     buttonText: LocaleKeys.login_forgot_password.tr(),
                     onPressed: () {
-                      context
-                          .pushRoute(ForgotPasswordRoute(username: username));
+                      context.pushRoute(ForgotPasswordRouter(
+                          children: [ForgotPasswordRoute(username: username)]));
                     })
               ],
             ),

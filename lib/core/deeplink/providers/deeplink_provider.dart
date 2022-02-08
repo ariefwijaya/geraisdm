@@ -45,7 +45,11 @@ class DeeplinkProvider implements DeeplinkProviderInterface {
   Future<String?> getInitialLink() async {
     final res = await dynamicLinks.getInitialLink();
     if (res != null) {
-      final path = res.link.path;
+      String path = res.link.path;
+      if (res.link.hasQuery) {
+        path = path + "?" + res.link.query;
+      }
+
       if (path.isNotEmpty) {
         return path;
       }

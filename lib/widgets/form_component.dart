@@ -652,7 +652,7 @@ class _FilledPasswordTextFieldState extends State<FilledPasswordTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.label, style: Theme.of(context).textTheme.headline6),
+        Text(widget.label, style: Theme.of(context).textTheme.headline5),
         const SizedBox(height: 8),
         TextFormField(
           validator: widget.validator,

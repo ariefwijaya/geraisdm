@@ -12,7 +12,9 @@ import 'package:geraisdm/modules/detail_menu/screens/detail_menu_screen.dart';
 import 'package:geraisdm/modules/detail_menu/screens/detail_menu_tnc_screen.dart';
 import 'package:geraisdm/modules/doc_viewer/screens/doc_viewer_detail_screen.dart';
 import 'package:geraisdm/modules/doc_viewer/screens/doc_viewer_screen.dart';
+import 'package:geraisdm/modules/forgot_password/screens/forgot_password_confirm_screen.dart';
 import 'package:geraisdm/modules/forgot_password/screens/forgot_password_screen.dart';
+import 'package:geraisdm/modules/forgot_password/screens/forgot_password_wrapper_screen.dart';
 import 'package:geraisdm/modules/form_submission/screens/form_submission_screen.dart';
 import 'package:geraisdm/modules/history/screens/history_detail_screen.dart';
 import 'package:geraisdm/modules/history/screens/history_screen.dart';
@@ -43,7 +45,15 @@ import '../../../../modules/splash/splash_screen.dart';
   routes: <AutoRoute>[
     AutoRoute(path: "/splash-screen", page: SplashScreen),
     AutoRoute(path: "/login", page: LoginScreen),
-    AutoRoute(path: "/forgot-password", page: ForgotPasswordScreen),
+    AutoRoute(
+        path: "/forgot-password",
+        name: "ForgotPasswordRouter",
+        page: ForgotPasswordWrapperScreen,
+        children: [
+          AutoRoute(path: "", page: ForgotPasswordScreen),
+          AutoRoute(path: "confirm", page: ForgotPasswordConfirmScreen),
+          RedirectRoute(path: '*', redirectTo: ''),
+        ]),
     AutoRoute(
         path: "/register",
         name: "RegisterRouter",

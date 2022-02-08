@@ -60,7 +60,6 @@ Future<dynamic> firebaseMessagingBackgroundHandler(
   }
 }
 
-//TODO: Bad Practice will be improved later
 Future<void> processClickedLocalNotification(String? payload) async {
   // Don't do anything when payload is null
   if (payload == null) return;

@@ -18,11 +18,14 @@ class InboxModel {
   @JsonKey(
       defaultValue: InboxStatus.unknown, unknownEnumValue: InboxStatus.unknown)
   final InboxStatus status;
+  @JsonKey(defaultValue: 0)
+  final int unreadTotal;
   const InboxModel(
       {required this.id,
       required this.serviceName,
       required this.createdDate,
-      required this.status});
+      required this.status,
+      required this.unreadTotal});
 
   factory InboxModel.fromJson(Map<String, dynamic> json) =>
       _$InboxModelFromJson(json);

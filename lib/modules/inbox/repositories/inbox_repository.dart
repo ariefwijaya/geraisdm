@@ -23,4 +23,24 @@ class InboxRepository implements InboxRepositoryInterface {
   Future<void> sendMessage(int id, String message) {
     return inboxProviderInterface.sendMessage(id, message);
   }
+
+  @override
+  Future<int> getUnreadAll() {
+    return inboxProviderInterface.getUnreadAll();
+  }
+
+  @override
+  Future<void> setAsReadAll() {
+    return inboxProviderInterface.setAsReadAll();
+  }
+
+  @override
+  Future<void> setAsReadByID(int id) {
+    return inboxProviderInterface.setAsReadByID(id);
+  }
+
+  @override
+  Future<int> getUnreadById(int id) {
+    return inboxProviderInterface.getUnreadById(id);
+  }
 }

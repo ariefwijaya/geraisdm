@@ -32,4 +32,26 @@ class InboxProvider implements InboxProviderInterface {
     return restApiInterface.post(ApiPath.sendMessage,
         body: {"id_activity": id, "message": message});
   }
+
+  @override
+  Future<int> getUnreadAll() async {
+    final res = await restApiInterface.get(ApiPath.inboxUnread);
+    return res.data['unread_total'] as int;
+  }
+
+  @override
+  Future<void> setAsReadAll() {
+    return restApiInterface.post(ApiPath.inboxMarkRead);
+  }
+
+  @override
+  Future<void> setAsReadByID(int id) {
+    return restApiInterface.post(ApiPath.inboxMarkRead + "/$id");
+  }
+
+  @override
+  Future<int> getUnreadById(int id) async {
+    final res = await restApiInterface.get(ApiPath.inboxUnread + "/$id");
+    return res.data['unread_total'] as int;
+  }
 }

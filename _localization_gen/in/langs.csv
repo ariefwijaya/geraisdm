@@ -1,5 +1,5 @@
 str,id,en
-app_name,Your App Name,Your App Name
+app_name,Gerai SDM,Gerai SDM
 router_auth_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
 router_auth_failed_subtitle,Gagal melakukan autentikasi untuk mendapatkan akses ke halaman ini,Authentication failed to access this page
 router_auth_try_again,Coba Lagi,Try Again
@@ -63,16 +63,16 @@ register_password_hint,Masukkan Password,Masukkan Password
 register_password_minlength,Password tidak bisa kurang dari 6 Karakter,Password tidak bisa kurang dari 6 Karakter
 register_confirm_password_title,Konfirmasi Password,Konfirmasi Password
 register_confirm_password_hint,Masukkan Ulang Password,Masukkan Ulang Password
-register_nik_title,NIK,NIK
-register_nik_hint,Nomor KTP,Nomor KTP
+register_nik_title,Username,Username
+register_nik_hint,Username,Username
 register_full_name_title,Nama Lengkap,Nama Lengkap
 register_full_name_hint,Masukkan Nama Lengkap,Masukkan Nama Lengkap
 register_address_title,Alamat,Alamat
 register_address_hint,Masukkan Alamat,Masukkan Alamat
 verification_nrp_title,NIP / NRP,NIP / NRP
 verification_nrp_hint,Masukkan NIP / NRP anda,Masukkan NIP / NRP anda
-verification_nik_title,NIK,NIK
-verification_nik_hint,Nomor KTP,Nomor KTP
+verification_nik_title,Username,Username
+verification_nik_hint,Username / NIK,Username / NIK
 register_title,Daftar,Register
 register_config_failed_title,"Oops, terjadi kesalahan","Oops, something went wrong"
 register_config_failed_subtitle,"Gagal ketika mendapatkan konfigurasi, Silahkan hubungi admin jika kesalahan terjadi berulang","Failure in getting configurations, Please contact admin if this persists"
@@ -269,3 +269,18 @@ avatar_upload_file_failed,Gagal mengupload gambar,Gagal mengupload gambar
 avatar_upload_camera,Kamera,Kamera
 avatar_upload_gallery,Galeri,Galeri
 version,Versi,Version
+forgot_password_form_failure,"Oops, terjadi kesalahan","Oops, terjadi kesalahan"
+forgot_password_form_user_not_valid,Username tidak valid,Username tidak valid
+forgot_password_form_username_title,Username,Username
+forgot_password_form_username_hint,E-MAIL / NIK / NIP / NRP,E-MAIL / NIK / NIP / NRP
+forgot_password_form_new_password_title,Password Baru,Password Baru
+forgot_password_form_new_password_hint,Perubahan Password yang diinginkan,Perubahan Password yang diinginkan
+forgot_password_form_otp_title,Kode OTP,Kode OTP
+forgot_password_form_otp_hint,Masukkan OTP,Masukkan OTP
+forgot_password_button_send,Kirimkan,Kirimkan
+forgot_password_button_save,Simpan,Simpan
+forgot_password_confirmation_form_wrong_otp,OTP yang anda masukkan salah,OTP yang anda masukkan salah
+forgot_password_confirmation_form_expired_otp,OTP sudah kadaluarsa,OTP sudah kadaluarsa
+forgot_password_confirmation_success,Password anda telah berhasil diubah,Password anda telah berhasil diubah
+forgot_password_title,Lupa Password?,Lupa Password?
+forgot_password_confirmation_title,Konfirmasi Perubahan Password,Konfirmasi Perubahan Password

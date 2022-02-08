@@ -11,10 +11,12 @@ import 'package:geraisdm/widgets/common_placeholder.dart';
 import 'package:geraisdm/constant/localizations.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geraisdm/constant/assets.gen.dart';
+import 'package:screen_capture_event/screen_capture_event.dart';
+import 'package:secure_application/secure_application.dart';
 import 'package:secure_application/secure_gate.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-class DocViewerDetailScreen extends StatelessWidget {
+class DocViewerDetailScreen extends StatefulWidget {
   final int id;
   final String? title;
   final String? type;
@@ -26,11 +28,39 @@ class DocViewerDetailScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<DocViewerDetailScreen> createState() => _DocViewerDetailScreenState();
+}
+
+class _DocViewerDetailScreenState extends State<DocViewerDetailScreen> {
+  final ScreenCaptureEvent screenListener = ScreenCaptureEvent();
+  late DocViewerDetailBloc docViewerDetailBloc;
+
+  @override
+  void initState() {
+    docViewerDetailBloc = getIt.get<DocViewerDetailBloc>()
+      ..add(DocViewerDetailFetch(id: widget.id, type: widget.type));
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    screenListener.preventAndroidScreenShot(false);
+    docViewerDetailBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt.get<DocViewerDetailBloc>()
-        ..add(DocViewerDetailFetch(id: id, type: type)),
-      child: BlocBuilder<DocViewerDetailBloc, DocViewerDetailState>(
+      create: (context) => docViewerDetailBloc,
+      child: BlocConsumer<DocViewerDetailBloc, DocViewerDetailState>(
+        bloc: docViewerDetailBloc,
+        listener: (context, state) {
+          if (state is DocViewerDetailSuccess) {
+            screenListener.preventAndroidScreenShot(true);
+          }
+        },
         builder: (context, state) {
           if (state is DocViewerDetailSuccess) {
             return _buildSuccess(context, data: state.data);
@@ -41,7 +71,7 @@ class DocViewerDetailScreen extends StatelessWidget {
           }
           return Scaffold(
             appBar: AppBar(
-              title: Text(title ?? ""),
+              title: Text(widget.title ?? ""),
             ),
             body: const Center(
               child: CircularProgressIndicator(),
@@ -55,7 +85,7 @@ class DocViewerDetailScreen extends StatelessWidget {
   Widget _buildFailure(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title ?? ""),
+        title: Text(widget.title ?? ""),
       ),
       body: CommonPlaceholder.customIcon(
           icon: Assets.images.illustration.warningCyt.image(height: 200),
@@ -64,9 +94,7 @@ class DocViewerDetailScreen extends StatelessWidget {
           action: FilledButton.large(
               buttonText: LocaleKeys.doc_viewer_error_retry.tr(),
               onPressed: () {
-                context
-                    .read<DocViewerDetailBloc>()
-                    .add(DocViewerDetailFetch(id: id));
+                docViewerDetailBloc.add(DocViewerDetailFetch(id: widget.id));
               })),
     );
   }
@@ -77,7 +105,7 @@ class DocViewerDetailScreen extends StatelessWidget {
     return SecureGate(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(title ?? ""),
+          title: Text(widget.title ?? ""),
           actions: [
             IconButton(
                 onPressed: () {
