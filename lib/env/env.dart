@@ -6,7 +6,7 @@ part 'env.g.dart';
 /// - `prod` for production
 /// - `dev` for development
 /// - `testing` for testing
-const currentEnv = "prod";
+const currentEnv = "dev";
 
 @Envify(
     path: currentEnv == "prod"

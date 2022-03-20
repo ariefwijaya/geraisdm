@@ -105,10 +105,13 @@ class SubmenuScreen extends StatelessWidget {
             description: data.description,
             icon: data.icon,
             onTap: () {
+              getIt.get<AppRouter>().push(
+                  PolriBelajarRouter(children: [PolriBelajarRoute(refId: 32)]));
+              //
               if (data.actionType == SubmenuActionType.screen) {
                 getIt
                     .get<AppRouter>()
-                    .navigateNamed(data.path!, includePrefixMatches: true);
+                    .pushNamed(data.path!, includePrefixMatches: true);
               } else if (data.actionType == SubmenuActionType.url) {
                 LauncherHelper.openUrl(data.path!);
               }

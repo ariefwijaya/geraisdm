@@ -284,3 +284,19 @@ forgot_password_confirmation_form_expired_otp,OTP sudah kadaluarsa,OTP sudah kad
 forgot_password_confirmation_success,Password anda telah berhasil diubah,Password anda telah berhasil diubah
 forgot_password_title,Lupa Password?,Lupa Password?
 forgot_password_confirmation_title,Konfirmasi Perubahan Password,Konfirmasi Perubahan Password
+polri_belajar_detail_title,Detail Polri Belajar,Detail Polri Belajar
+polri_belajar_detail_error_title,Terjadi Error,Terjadi Error
+polri_belajar_detail_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+polri_belajar_detail_error_retry,Coba Lagi,Coba Lagi
+polri_belajar_detail_notfound_title,Data Tidak Ditemukan,Data Tidak Ditemukan
+polri_belajar_title,Daftar Polri Pelajar,Daftar Polri Pelajar
+polri_belajar_trending,Trending,Trending
+polri_belajar_detail_file_type_unknown,Kategori tidak dikenal,Kategori tidak dikenal
+video_player_error,"Oops, gagal memutar video","Oops, gagal memutar video"
+polri_belajar_comment_error_title,Terjadi Error,Terjadi Error
+polri_belajar_comment_error_subtitle,Gagal mendapatkan data,Gagal mendapatkan data
+polri_belajar_comment_error_retry,Coba Lagi,Coba Lagi
+polri_belajar_comment_submit_fail,Gagal menambahkan komentar,Gagal menambahkan komentar
+polri_belajar_comment_submit_success,Berhasil menambahkan komentar,Berhasil menambahkan komentar
+polri_belajar_comment_submit_empty,Belum ada komentar,Belum ada komentar
+polri_belajar_comment_placeholder,Tulis komentar anda,Tulis komentar anda

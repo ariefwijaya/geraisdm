@@ -1,9 +1,14 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:geraisdm/utils/helpers/launcher_helper.dart';
 import 'package:geraisdm/widgets/image_viewer.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:video_player/video_player.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:geraisdm/constant/localizations.g.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class _SkeletonLoader extends StatelessWidget {
   final Widget child;
@@ -120,5 +125,98 @@ class HtmlViewer extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class VideoViewer extends StatefulWidget {
+  final String url;
+  const VideoViewer({Key? key, required this.url}) : super(key: key);
+
+  @override
+  State<VideoViewer> createState() => _VideoViewerState();
+}
+
+class _VideoViewerState extends State<VideoViewer> {
+  late VideoPlayerController videoPlayerController;
+  ChewieController? _chewieController;
+  bool isError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    videoPlayerController = VideoPlayerController.network(widget.url)
+      ..initialize().then((value) {
+        setState(() {
+          _chewieController = ChewieController(
+            videoPlayerController: videoPlayerController,
+            autoPlay: false,
+            looping: false,
+          );
+        });
+      }).catchError((onError) {
+        setState(() {
+          isError = true;
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    _chewieController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isError) {
+      return Center(
+        child: Text(LocaleKeys.video_player_error.tr()),
+      );
+    }
+    return Center(
+      child: _chewieController != null &&
+              _chewieController!.videoPlayerController.value.isInitialized
+          ? Chewie(
+              controller: _chewieController!,
+            )
+          : const CircularProgressIndicator(),
+    );
+  }
+}
+
+class VideoYoutubeViewer extends StatefulWidget {
+  final String idKey;
+  const VideoYoutubeViewer({Key? key, required this.idKey}) : super(key: key);
+
+  @override
+  State<VideoYoutubeViewer> createState() => _VideoYoutubeViewerState();
+}
+
+class _VideoYoutubeViewerState extends State<VideoYoutubeViewer> {
+  late YoutubePlayerController videoPlayerController;
+
+  @override
+  void initState() {
+    super.initState();
+    videoPlayerController = YoutubePlayerController(
+      initialVideoId: widget.idKey,
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: true,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return YoutubePlayer(
+        controller: videoPlayerController, showVideoProgressIndicator: true);
   }
 }

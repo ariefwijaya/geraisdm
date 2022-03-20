@@ -29,7 +29,7 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
           if (linkData.link.hasQuery) {
             link = link + "?" + linkData.link.query;
           }
-          add(DeeplinkStartNavigate(path: linkData.link.path));
+          add(DeeplinkStartNavigate(path: link));
         }).onError((Object error, StackTrace stacTrace) {
           add(DeeplinkThrowError(error: error, stackTrace: stacTrace));
         });

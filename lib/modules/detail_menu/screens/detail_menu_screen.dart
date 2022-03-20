@@ -99,7 +99,7 @@ class DetailMenuScreen extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Text(data.description),
+          child: Text(data.description ?? "-"),
         ),
         const SizedBox(height: 8),
         if (data.navigation.isNotEmpty)
@@ -115,7 +115,7 @@ class DetailMenuScreen extends StatelessWidget {
                           locked: e.locked,
                           onTap: () {
                             if (e.actionType == SubmenuActionType.screen) {
-                              getIt.get<AppRouter>().navigateNamed(e.path!,
+                              getIt.get<AppRouter>().pushNamed(e.path!,
                                   includePrefixMatches: true);
                             } else if (e.actionType == SubmenuActionType.url) {
                               LauncherHelper.openUrl(e.path!);

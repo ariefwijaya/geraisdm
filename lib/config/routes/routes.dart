@@ -23,6 +23,9 @@ import 'package:geraisdm/modules/history/screens/history_wrapper_screen.dart';
 import 'package:geraisdm/modules/home/screens/home_screen.dart';
 import 'package:geraisdm/modules/inbox/screens/inbox_detail_screen.dart';
 import 'package:geraisdm/modules/inbox/screens/inbox_screen.dart';
+import 'package:geraisdm/modules/polri_belajar/screens/polri_belajar_detail_screen.dart';
+import 'package:geraisdm/modules/polri_belajar/screens/polri_belajar_screen.dart';
+import 'package:geraisdm/modules/polri_belajar/screens/polri_belajar_wrapper_screen.dart';
 import 'package:geraisdm/modules/profile/screens/profile_biodata_screen.dart';
 import 'package:geraisdm/modules/profile/screens/profile_password_screen.dart';
 import 'package:geraisdm/modules/profile/screens/profile_screen.dart';
@@ -93,6 +96,15 @@ import '../../../../modules/splash/splash_screen.dart';
     AutoRoute(path: "/form-submission/:id", page: FormSubmissionScreen),
     AutoRoute(path: "/inbox-detail/:id", page: InboxDetailScreen),
     AutoRoute(path: "/complaint", page: ComplaintScreen),
+    AutoRoute(
+        path: "/polri-belajar",
+        name: "PolriBelajarRouter",
+        page: PolriBelajarWrapperScreen,
+        children: [
+          AutoRoute(path: '', page: PolriBelajarScreen),
+          AutoRoute(path: ":id", page: PolriBelajarDetailScreen),
+          RedirectRoute(path: '*', redirectTo: ''),
+        ]),
     AutoRoute(path: "/menu", page: HomeLayoutScreen, guards: [
       AuthGuard
     ], children: [

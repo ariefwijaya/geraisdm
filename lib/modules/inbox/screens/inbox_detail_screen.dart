@@ -107,7 +107,8 @@ class _InboxDetailScreenState extends State<InboxDetailScreen> {
               listener: (context, state) {
                 if (state is InboxSendFailure) {
                   FlushbarHelper.createError(
-                      message: LocaleKeys.inbox_error_subtitle.tr());
+                          message: LocaleKeys.inbox_error_subtitle.tr())
+                      .show(context);
                 }
                 if (state is InboxSendSuccess) {
                   setState(() {

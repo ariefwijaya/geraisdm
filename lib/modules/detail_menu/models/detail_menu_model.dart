@@ -9,14 +9,14 @@ class DetailMenuModel {
   final String? icon;
   final String title;
   final String subtitle;
-  final String description;
+  final String? description;
   final List<SubmenuModel> navigation;
   const DetailMenuModel(
       {required this.id,
       this.icon,
       required this.title,
       required this.subtitle,
-      required this.description,
+      this.description,
       required this.navigation});
 
   factory DetailMenuModel.fromJson(Map<String, dynamic> json) =>

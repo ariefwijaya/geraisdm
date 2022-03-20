@@ -405,10 +405,6 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
                                         }
                                       },
                                 onSaved: (value) {
-                                  if (value?.val != null) {
-                                    TimeHelper.dateTimeToYearMonthDay(
-                                        value!.val!);
-                                  }
                                   valueMapper[e.valueName] =
                                       TimeHelper.dateTimeToYearMonthDay(
                                           value!.val!);

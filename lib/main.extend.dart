@@ -122,11 +122,12 @@ class ErrorBlocObserver extends BlocObserver {
     super.onChange(bloc, change);
     final stateValue = '${change.nextState}'.toLowerCase();
 
-    if (stateValue.contains("failed") || stateValue.contains("failure")) {
+    if (stateValue.contains("fail")) {
       try {
-        final errorState = change.nextState.props as List<Object>;
+        final errorState = change.nextState.props as List<Object?>;
         if (errorState.isNotEmpty) {
-          Catcher.reportCheckedError(errorState.first, errorState.last);
+          Catcher.reportCheckedError(
+              "${change.nextState}${errorState.first}", errorState.last);
         }
       } catch (e, s) {
         Catcher.reportCheckedError(e, s);

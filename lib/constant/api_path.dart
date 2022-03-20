@@ -42,4 +42,6 @@ class ApiPath {
 
   static const String inboxUnread = "/inbox-unread";
   static const String inboxMarkRead = "/inbox-mark-read";
+  static const String polriBelajar = '/polri-belajar';
+  static const String polriBelajarComment = '/polri-belajar-comment';
 }
