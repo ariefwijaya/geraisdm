@@ -59,6 +59,11 @@ android {
         versionName flutterVersionName
 
         multiDexEnabled true
+
+        ndk {
+            // debugSymbolLevel 'SYMBOL_TABLE'
+            debugSymbolLevel 'FULL'
+        }
     }
 
 
@@ -78,6 +83,7 @@ android {
        }
     }
 
+    ndkVersion "23.1.7779620"
 
     buildTypes {
         release {
