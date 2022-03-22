@@ -16,8 +16,6 @@ import 'package:geraisdm/constant/localizations.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geraisdm/widgets/general_component.dart';
 import 'package:geraisdm/widgets/image_viewer.dart';
-import 'package:screen_capture_event/screen_capture_event.dart';
-import 'package:secure_application/secure_gate.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PolriBelajarDetailScreen extends StatefulWidget {
@@ -38,14 +36,6 @@ class PolriBelajarDetailScreen extends StatefulWidget {
 }
 
 class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
-  final ScreenCaptureEvent screenListener = ScreenCaptureEvent();
-
-  @override
-  void dispose() {
-    screenListener.preventAndroidScreenShot(false);
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -61,9 +51,7 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
       child: BlocListener<PolriBelajarBloc, PolriBelajarState>(
         listener: (context, state) {
           if (state is PolriBelajarDetailSuccess &&
-              state.data.fileType == PolriBelajarFileType.pdf) {
-            screenListener.preventAndroidScreenShot(true);
-          }
+              state.data.fileType == PolriBelajarFileType.pdf) {}
         },
         child: BlocBuilder<PolriBelajarBloc, PolriBelajarState>(
           builder: (context, state) {
@@ -93,14 +81,22 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
             leading: const RouteBackButton(),
             actions: [
               if (data.comments)
-                IconButton(
-                  icon: const Icon(
-                    Icons.comment,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    _showComments(context);
-                  },
+                Row(
+                  children: [
+                    Text(
+                      "${data.totalComment}",
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.comment,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        _showComments(context);
+                      },
+                    ),
+                  ],
                 ),
               IconButton(
                 icon: const Icon(
@@ -190,8 +186,7 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
 
   Widget _buildPdf(BuildContext context, {required PolriBelajarModel data}) {
     final PageController pageController = PageController(keepPage: true);
-    return SecureGate(
-        child: SizedBox(
+    return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: PageView.builder(
         controller: pageController,
@@ -234,7 +229,7 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
           );
         },
       ),
-    ));
+    );
   }
 
   Widget _buildImage(BuildContext context, {required PolriBelajarModel data}) {
@@ -384,7 +379,10 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
   }
 
   Future<void> _showComments(BuildContext context) async {
-    context.router.pushWidget(
-        PolriBelajarCommentModal(id: widget.id, refId: widget.refId!));
+    context.router.pushWidget(PolriBelajarCommentModal(
+      id: widget.id,
+      refId: widget.refId!,
+      title: widget.title,
+    ));
   }
 }

@@ -22,4 +22,11 @@ class PolriBelajarCommentSubmitFailure extends PolriBelajarCommentSubmitState {
   List<Object> get props => [error, stackTrace];
 }
 
-class PolriBelajarCommentSubmitSuccess extends PolriBelajarCommentSubmitState {}
+class PolriBelajarCommentSubmitSuccess extends PolriBelajarCommentSubmitState {
+  final PolriBelajarCommentModel data;
+
+  const PolriBelajarCommentSubmitSuccess({required this.data});
+
+  @override
+  List<Object> get props => [data];
+}

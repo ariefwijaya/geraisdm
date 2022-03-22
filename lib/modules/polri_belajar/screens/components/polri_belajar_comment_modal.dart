@@ -15,8 +15,9 @@ import 'package:geraisdm/widgets/form_component.dart';
 class PolriBelajarCommentModal extends StatelessWidget {
   final int id;
   final int refId;
+  final String? title;
   const PolriBelajarCommentModal(
-      {Key? key, required this.id, required this.refId})
+      {Key? key, required this.id, required this.refId, this.title})
       : super(key: key);
 
   @override
@@ -70,149 +71,167 @@ class PolriBelajarCommentModal extends StatelessWidget {
   Widget _buildSuccess(BuildContext context,
       {required List<PolriBelajarCommentModel> comments}) {
     TextEditingController messageText = TextEditingController();
+    final ScrollController _scrollController = ScrollController();
     List<PolriBelajarCommentModel> allcomments = comments;
 
-    return Scaffold(
-      appBar: AppBar(),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            BlocConsumer<PolriBelajarCommentSubmitBloc,
-                PolriBelajarCommentSubmitState>(
-              listener: (context, state) {
-                if (state is PolriBelajarCommentSubmitFailure) {
-                  FlushbarHelper.createError(
-                          message:
-                              LocaleKeys.polri_belajar_comment_submit_fail.tr())
-                      .show(context);
-                }
-                if (state is PolriBelajarCommentSubmitSuccess) {
-                  FlushbarHelper.createError(
-                          message:
-                              LocaleKeys.polri_belajar_comment_submit_fail.tr())
-                      .show(context)
-                      .then((value) => context.popRoute());
-                }
-              },
-              builder: (context, state) {
-                return Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: FilledTextField(
-                        maxLines: null,
-                        controller: messageText,
-                        hint: LocaleKeys.polri_belajar_comment_placeholder.tr(),
-                      )),
-                      const SizedBox(width: 8),
-                      if (state is PolriBelajarCommentSubmitLoading)
-                        const SizedBox(
-                          width: 35,
-                          height: 35,
-                          child: CircularProgressIndicator(),
-                        )
-                      else
-                        CircleButton(
-                          outlineColor: Theme.of(context).primaryColor,
-                          useOutline: true,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.send,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          onPressed: () {
-                            if (messageText.text.isEmpty) {
-                              FlushbarHelper.createError(
-                                      message: LocaleKeys.form_required.tr())
-                                  .show(context);
-                            } else {
-                              context.read<PolriBelajarCommentSubmitBloc>().add(
-                                  PolriBelajarCommentSubmit(
-                                      id: id,
-                                      refId: refId,
-                                      comment: messageText.text));
-                              messageText.clear();
-                            }
-                          },
-                        ),
-                    ],
-                  ),
-                );
-              },
-            )
-          ],
+    return StatefulBuilder(builder: (context, innerSetState) {
+      return Scaffold(
+        appBar: AppBar(
+          title: title != null ? Text(title!) : null,
         ),
-      ),
-      body: allcomments.isEmpty
-          ? Center(
-              child: Text(LocaleKeys.polri_belajar_comment_submit_empty.tr()),
-            )
-          : ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = allcomments[index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BlocConsumer<PolriBelajarCommentSubmitBloc,
+                  PolriBelajarCommentSubmitState>(
+                listener: (context, state) {
+                  if (state is PolriBelajarCommentSubmitFailure) {
+                    FlushbarHelper.createError(
+                            message: LocaleKeys
+                                .polri_belajar_comment_submit_fail
+                                .tr())
+                        .show(context);
+                  }
+                  if (state is PolriBelajarCommentSubmitSuccess) {
+                    FlushbarHelper.createSuccess(
+                            message: LocaleKeys
+                                .polri_belajar_comment_submit_success
+                                .tr())
+                        .show(context);
+                    innerSetState(() {
+                      allcomments.add(state.data);
+                    });
+                    _scrollController.animateTo(
+                        _scrollController.position.maxScrollExtent + 100,
+                        curve: Curves.easeInOut,
+                        duration: const Duration(milliseconds: 300));
+                  }
+                },
+                builder: (context, state) {
+                  return Container(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Row(
                       children: [
-                        ImagePlaceholder(
-                          imageUrl: item.avatar,
-                          height: 50,
-                          width: 50,
-                          shape: BoxShape.circle,
-                        ),
                         Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(item.userName,
-                                textAlign: TextAlign.left,
-                                style: Theme.of(context).textTheme.headline5),
+                            child: FilledTextField(
+                          maxLines: null,
+                          controller: messageText,
+                          hint:
+                              LocaleKeys.polri_belajar_comment_placeholder.tr(),
+                        )),
+                        const SizedBox(width: 8),
+                        if (state is PolriBelajarCommentSubmitLoading)
+                          const SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: CircularProgressIndicator(),
+                          )
+                        else
+                          CircleButton(
+                            outlineColor: Theme.of(context).primaryColor,
+                            useOutline: true,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.send,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            onPressed: () {
+                              if (messageText.text.isEmpty) {
+                                FlushbarHelper.createError(
+                                        message: LocaleKeys.form_required.tr())
+                                    .show(context);
+                              } else {
+                                context
+                                    .read<PolriBelajarCommentSubmitBloc>()
+                                    .add(PolriBelajarCommentSubmit(
+                                        id: id,
+                                        refId: refId,
+                                        comment: messageText.text));
+                                messageText.clear();
+                              }
+                            },
                           ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            DateFormat(
-                              "d MMMM yyyy, hh:mm",
-                            ).format(item.date),
-                            textAlign: TextAlign.right,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        )
                       ],
                     ),
-                    Card(
-                      elevation: 0,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            15,
+                  );
+                },
+              )
+            ],
+          ),
+        ),
+        body: allcomments.isEmpty
+            ? Center(
+                child: Text(LocaleKeys.polri_belajar_comment_submit_empty.tr()),
+              )
+            : ListView.separated(
+                controller: _scrollController,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final item = allcomments[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          ImagePlaceholder(
+                            imageUrl: item.avatar,
+                            height: 35,
+                            width: 35,
+                            shape: BoxShape.circle,
                           ),
-                          side: BorderSide(
-                              color: Theme.of(context)
-                                  .highlightColor
-                                  .withOpacity(0.2),
-                              width: 2)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          item.comment,
-                          style: const TextStyle(fontSize: 16),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(item.userName,
+                                  textAlign: TextAlign.left,
+                                  style: Theme.of(context).textTheme.headline5),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              DateFormat(
+                                "d MMMM yyyy, hh:mm",
+                              ).format(item.date),
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(fontSize: 10),
+                            ),
+                          )
+                        ],
+                      ),
+                      Card(
+                        elevation: 0,
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              8,
+                            ),
+                            side: BorderSide(
+                                color: Theme.of(context)
+                                    .highlightColor
+                                    .withOpacity(0.2),
+                                width: 2)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            item.comment,
+                            style: const TextStyle(fontSize: 14),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 8),
-              itemCount: allcomments.length),
-    );
+                    ],
+                  );
+                },
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                itemCount: allcomments.length),
+      );
+    });
   }
 }
