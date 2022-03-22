@@ -20,4 +20,8 @@ class ApiErrorModel extends Equatable implements Exception {
 
   @override
   List<Object?> get props => [errorCode, statusCode];
+
+  @override
+  String toString() =>
+      'ApiErrorModel { errorCode: $errorCode, statusCode: $statusCode,  message: $message}';
 }
