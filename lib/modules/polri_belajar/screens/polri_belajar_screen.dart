@@ -43,7 +43,9 @@ class PolriBelajarScreen extends StatelessWidget {
                   builderDelegate: PagedChildBuilderDelegate<PolriBelajarModel>(
                     itemBuilder: (context, entry, index) {
                       return PolriBelajarCard(
-                          isTrending: true,
+                          totalComment:
+                              entry.comments ? entry.totalComment : null,
+                          isTrending: entry.trending,
                           title: entry.title,
                           imageUrl: entry.image,
                           date: DateFormat("d MMMM yyyy, hh:mm")

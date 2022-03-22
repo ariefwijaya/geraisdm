@@ -33,7 +33,7 @@ class PolriBelajarProvider implements PolriBelajarProviderInterface {
 
   @override
   Future<void> addComment(int id, int refId, String commentText) {
-    return restApi.post("${ApiPath.polriBelajarComment}/$id",
+    return restApi.post("${ApiPath.polriBelajarAddComment}/$id",
         queryParameters: {"ref": refId}, body: {"text": commentText});
   }
 

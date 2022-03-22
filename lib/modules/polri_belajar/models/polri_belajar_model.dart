@@ -17,6 +17,8 @@ class PolriBelajarModel {
   final String? linkShare;
   @JsonKey(defaultValue: false)
   final bool comments;
+  @JsonKey(defaultValue: 0)
+  final int totalComment;
   @JsonKey(defaultValue: [])
   final List<PolriBelajarFileModel> files;
 
@@ -45,6 +47,7 @@ class PolriBelajarModel {
       this.linkShare,
       required this.fileType,
       required this.comments,
+      required this.totalComment,
       required this.files});
 
   factory PolriBelajarModel.fromJson(Map<String, dynamic> json) =>

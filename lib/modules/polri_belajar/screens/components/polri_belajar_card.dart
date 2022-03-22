@@ -10,7 +10,8 @@ class PolriBelajarCard extends StatelessWidget {
       this.imageUrl,
       this.onTap,
       required this.date,
-      this.isTrending = false})
+      this.isTrending = false,
+      this.totalComment})
       : super(key: key);
 
   final String title;
@@ -18,6 +19,7 @@ class PolriBelajarCard extends StatelessWidget {
   final String date;
   final VoidCallback? onTap;
   final bool isTrending;
+  final int? totalComment;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,38 @@ class PolriBelajarCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ImagePlaceholder(
-              imageUrl: imageUrl,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-              height: 140,
+            Stack(
+              children: [
+                ImagePlaceholder(
+                  imageUrl: imageUrl,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16)),
+                  height: 140,
+                ),
+                if (isTrending)
+                  Positioned(
+                      top: 16,
+                      right: 16,
+                      child: Card(
+                        color: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 6),
+                          child: Text(
+                            LocaleKeys.polri_belajar_trending.tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                          ),
+                        ),
+                      ))
+              ],
             ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
@@ -59,24 +88,17 @@ class PolriBelajarCard extends StatelessWidget {
                           date,
                         ),
                       ),
-                      Card(
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4.0, horizontal: 6),
-                          child: Text(
-                            LocaleKeys.polri_belajar_trending.tr(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6!
-                                .copyWith(
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
-                          ),
-                        ),
-                      )
+                      if (totalComment != null)
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.comment_outlined,
+                              color: Theme.of(context).unselectedWidgetColor,
+                            ),
+                            const SizedBox(width: 6),
+                            Text("$totalComment")
+                          ],
+                        )
                     ],
                   )
                 ],
