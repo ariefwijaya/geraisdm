@@ -32,6 +32,7 @@ import 'package:geraisdm/modules/profile/screens/profile_screen.dart';
 import 'package:geraisdm/modules/profile/screens/profile_wrapper_screen.dart';
 import 'package:geraisdm/modules/register/screens/register_verification_screen.dart';
 import 'package:geraisdm/modules/register/screens/register_wrapper_screen.dart';
+import 'package:geraisdm/modules/search/screens/search_screen.dart';
 import 'package:geraisdm/modules/submenu/screens/submenu_screen.dart';
 import '../../../../modules/home_layout/screens/home_layout_screen.dart';
 import '../../../../modules/onboarding/screens/onboarding_screen.dart';
@@ -105,6 +106,7 @@ import '../../../../modules/splash/splash_screen.dart';
           AutoRoute(path: ":id", page: PolriBelajarDetailScreen),
           RedirectRoute(path: '*', redirectTo: ''),
         ]),
+    AutoRoute(path: "/search", page: SearchScreen),
     AutoRoute(path: "/menu", page: HomeLayoutScreen, guards: [
       AuthGuard
     ], children: [

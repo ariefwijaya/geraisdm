@@ -27,6 +27,8 @@ class ProfileRepository implements ProfileRepositoryInterface {
     final image = await profileProviderInterface.pickImageFromCamera();
     if (image != null) {
       return profileProviderInterface.uploadImage(File(image.path));
+    } else {
+      return null;
     }
   }
 
@@ -35,6 +37,8 @@ class ProfileRepository implements ProfileRepositoryInterface {
     final image = await profileProviderInterface.pickImageFromGallery();
     if (image != null) {
       return profileProviderInterface.uploadImage(File(image.path));
+    } else {
+      return null;
     }
   }
 }

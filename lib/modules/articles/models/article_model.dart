@@ -1,3 +1,4 @@
+import 'package:geraisdm/modules/articles/models/article_file_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'article_model.g.dart';
@@ -21,6 +22,19 @@ class ArticleModel {
   final bool liked;
   final String? linkShare;
 
+  @JsonKey(defaultValue: false)
+  final bool trending;
+  @JsonKey(defaultValue: false)
+  final bool comments;
+  @JsonKey(defaultValue: 0)
+  final int totalComment;
+  @JsonKey(defaultValue: [])
+  final List<ArticleFileModel> files;
+  @JsonKey(
+      defaultValue: ArticleFileType.unknown,
+      unknownEnumValue: ArticleFileType.unknown)
+  final ArticleFileType fileType;
+
   const ArticleModel(
       {required this.id,
       this.image,
@@ -32,7 +46,12 @@ class ArticleModel {
       this.description,
       this.content,
       required this.liked,
-      this.linkShare});
+      this.linkShare,
+      required this.trending,
+      required this.comments,
+      required this.totalComment,
+      required this.files,
+      required this.fileType});
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) =>
       _$ArticleModelFromJson(json);
@@ -40,3 +59,5 @@ class ArticleModel {
 }
 
 enum ArticleActionType { url, screen, unknown }
+
+enum ArticleFileType { pdf, image, video, unknown }

@@ -13,6 +13,8 @@ class UploadFileRepository implements UploadFileRepositoryInterface {
     final file = await uploadFileProvider.pickFile();
     if (file != null) {
       return uploadFileProvider.uploadFile(file, id: id);
+    } else {
+      return null;
     }
   }
 }

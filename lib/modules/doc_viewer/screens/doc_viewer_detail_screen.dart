@@ -11,6 +11,8 @@ import 'package:geraisdm/widgets/common_placeholder.dart';
 import 'package:geraisdm/constant/localizations.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geraisdm/constant/assets.gen.dart';
+import 'package:geraisdm/widgets/general_component.dart';
+import 'package:geraisdm/widgets/image_viewer.dart';
 import 'package:screen_capture_event/screen_capture_event.dart';
 import 'package:secure_application/secure_application.dart';
 import 'package:secure_application/secure_gate.dart';
@@ -101,7 +103,6 @@ class _DocViewerDetailScreenState extends State<DocViewerDetailScreen> {
 
   Widget _buildSuccess(BuildContext context,
       {required DocViewerDetailModel data}) {
-    final PageController pageController = PageController(keepPage: true);
     return SecureGate(
       child: Scaffold(
         appBar: AppBar(
@@ -117,46 +118,192 @@ class _DocViewerDetailScreenState extends State<DocViewerDetailScreen> {
                 icon: const Icon(Icons.share))
           ],
         ),
-        body: PageView.builder(
-          controller: pageController,
-          itemCount: data.files.length,
-          itemBuilder: (context, index) {
-            final file = data.files[index];
-            return KeepAliveComponent(
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.doc_viewer_of.tr(
-                              args: ["${index + 1}", "${data.files.length}"]),
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            data.description,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Expanded(
-                      child: SfPdfViewer.network(
-                    file.fileUrl,
-                  )),
-                ],
-              ),
-            );
-          },
+        body: Column(
+          children: [
+            if (data.fileType == DocViewerFileType.pdf)
+              _buildPdf(context, data: data)
+            else if (data.fileType == DocViewerFileType.image)
+              _buildImage(context, data: data)
+            else if (data.fileType == DocViewerFileType.video)
+              _buildVideo(context, data: data)
+            else
+              Center(
+                child: Text(
+                  LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              )
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPdf(BuildContext context, {required DocViewerDetailModel data}) {
+    final PageController pageController = PageController(keepPage: true);
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: PageView.builder(
+        controller: pageController,
+        itemCount: data.files.length,
+        itemBuilder: (context, index) {
+          final file = data.files[index];
+          return KeepAliveComponent(
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        LocaleKeys.doc_viewer_of
+                            .tr(args: ["${index + 1}", "${data.files.length}"]),
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          data.description,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: SfPdfViewer.network(
+                    file.fileUrl,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildImage(BuildContext context,
+      {required DocViewerDetailModel data}) {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          child: InkWell(
+            onTap: () {
+              if (data.image != null) {
+                context.router.pushWidget(
+                    ImageGalleryViewer(imageUrls: [data.image!]),
+                    fullscreenDialog: true);
+              }
+            },
+            child: ImagePlaceholder(
+              imageUrl: data.image,
+              height: 180,
+              width: double.infinity,
+            ),
+          ),
+        ),
+        if (data.files.isNotEmpty)
+          Column(
+            children: data.files
+                .map((e) => Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: InkWell(
+                        onTap: () {
+                          context.router.pushWidget(
+                              ImageGalleryViewer(imageUrls: [e.fileUrl]),
+                              fullscreenDialog: true);
+                        },
+                        child: ImagePlaceholder(
+                          imageUrl: e.fileUrl,
+                          height: 180,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ))
+                .toList(),
+          ),
+        if (data.content != null)
+          HtmlViewer(htmlString: data.content!)
+        else
+          Center(
+            child: Text(
+              "-",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          )
+      ],
+    );
+  }
+
+  Widget _buildVideo(BuildContext context,
+      {required DocViewerDetailModel data}) {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          child: InkWell(
+            onTap: () {
+              if (data.image != null) {
+                context.router.pushWidget(
+                    ImageGalleryViewer(imageUrls: [data.image!]),
+                    fullscreenDialog: true);
+              }
+            },
+            child: ImagePlaceholder(
+              imageUrl: data.image,
+              height: 180,
+              width: double.infinity,
+            ),
+          ),
+        ),
+        if (data.files.isNotEmpty)
+          Column(
+            children: data.files.map((e) {
+              if (e.idKey != null) {
+                //youtube
+                return Column(
+                  children: [
+                    SizedBox(
+                        height: 200,
+                        child: VideoYoutubeViewer(idKey: e.idKey!)),
+                    const SizedBox(height: 10)
+                  ],
+                );
+              }
+              return Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: InkWell(
+                  onTap: () {
+                    context.router.pushWidget(
+                        ImageGalleryViewer(imageUrls: [e.fileUrl]),
+                        fullscreenDialog: true);
+                  },
+                  child: SizedBox(
+                    height: 200,
+                    child: VideoViewer(url: e.fileUrl),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        if (data.content != null)
+          HtmlViewer(htmlString: data.content!)
+        else
+          Center(
+            child: Text(
+              "-",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          )
+      ],
     );
   }
 }

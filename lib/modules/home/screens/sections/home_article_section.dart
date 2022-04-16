@@ -19,6 +19,7 @@ class HomeArticleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeArticleBannerBloc>().add(HomeArticleBannerFetch());
     return BlocBuilder<HomeArticleBannerBloc, HomeArticleBannerState>(
       builder: (context, state) {
         if (state is HomeArticleBannerSuccess) {

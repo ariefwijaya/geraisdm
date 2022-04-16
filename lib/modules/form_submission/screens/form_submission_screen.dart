@@ -328,6 +328,8 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
                                   if (selected != null) {
                                     return FormPickerFieldValue(
                                         name: selected.name, val: selected);
+                                  } else {
+                                    return null;
                                   }
                                 },
                               );
@@ -402,6 +404,8 @@ class _FormSubmissionScreenState extends State<FormSubmissionScreen> {
                                                       context
                                                           .locale.languageCode),
                                               val: selected);
+                                        } else {
+                                          return null;
                                         }
                                       },
                                 onSaved: (value) {

@@ -21,6 +21,7 @@ class HomeMenuSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeMenuBloc>().add(HomeMenuFetch());
     return BlocBuilder<HomeMenuBloc, HomeMenuState>(
       builder: (context, state) {
         if (state is HomeMenuListSuccess) {

@@ -299,5 +299,6 @@
   "polri_belajar_comment_submit_fail": "Gagal menambahkan komentar",
   "polri_belajar_comment_submit_success": "Berhasil menambahkan komentar",
   "polri_belajar_comment_submit_empty": "Belum ada komentar",
-  "polri_belajar_comment_placeholder": "Tulis komentar anda"
+  "polri_belajar_comment_placeholder": "Tulis komentar anda",
+  "seach_hint": "Cari sesuatu disini..."
 }

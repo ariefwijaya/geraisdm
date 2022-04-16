@@ -22,6 +22,7 @@ class HomeAnnouncementSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeAnnouncementBloc>().add(HomeAnnouncementFetch());
     return BlocBuilder<HomeAnnouncementBloc, HomeAnnouncementState>(
       builder: (context, state) {
         if (state is HomeAnnouncementSuccess) {

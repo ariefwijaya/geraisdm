@@ -12,11 +12,11 @@ class ApiPath {
   static const String userSettings = "/user/settings";
   static const String menus = "/menus";
   static const String menusAdditional = "/menus-additional";
-  static const String articlesLatest = "/articles-latest";
-  static const String announcementLatest = "/announcement-latest";
+  static const String articlesLatest = "/articles-latest-v2";
+  static const String announcementLatest = "/announcement-latest-v2";
   static const String menuSublist = "/menus-sublist";
-  static const String announcement = "/announcement";
-  static const String article = "/article";
+  static const String announcement = "/announcement-v2";
+  static const String article = "/article-v2";
   static const String detailMenu = "/detail-menu";
   static const String requirement = "/requirement";
   static const String changePassword = "/change-password";
@@ -24,8 +24,8 @@ class ApiPath {
   static const String formFieldSubmit = "/form-field-submit";
   static const String uploadImage = "/upload/image";
   static const String uploadFile = "/upload/file";
-  static const String docViewerList = "/doc-viewer";
-  static const String docViewerDetail = "/doc-viewer-detail";
+  static const String docViewerList = "/doc-viewer-v2";
+  static const String docViewerDetail = "/doc-viewer-detail-v2";
   static const String biodata = "/biodata";
   static const String submission = "/submission";
   static const String likes = "/likes";
@@ -45,4 +45,5 @@ class ApiPath {
   static const String polriBelajar = '/polri-belajar';
   static const String polriBelajarComment = '/polri-belajar-comment';
   static const String polriBelajarAddComment = '/polri-belajar-add-comment';
+  static const String search = '/search';
 }

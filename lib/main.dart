@@ -78,10 +78,6 @@ class MyApp extends StatelessWidget {
                     ],
                     child: SecureApplication(
                       nativeRemoveDelay: 800,
-                      onNeedUnlock: (secure) {
-                        // print(
-                        //     'need unlock maybe use biometric to confirm and then use sercure.unlock()');
-                      },
                       child: currentEnv != "prod"
                           ? Banner(
                               message: currentEnv.toUpperCase(),

@@ -234,6 +234,18 @@ Map<String, dynamic> remoteConfigDefaultValue = {
   }),
   "home_screen": jsonEncode({
     "sections": [
+      {"name": "header", "enable": true},
+      {
+        "name": "divider",
+        "enable": true,
+        "config": {"size": 8}
+      },
+      {"name": "searchbar", "enable": true},
+      {
+        "name": "divider",
+        "enable": true,
+        "config": {"size": 8}
+      },
       {
         "name": "article_banner",
         "enable": true,

@@ -14,6 +14,7 @@ class HomeHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeBloc>().add(HomeFetchHeader());
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeSuccess) {

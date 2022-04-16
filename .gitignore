@@ -53,4 +53,5 @@ app.*.map.json
 injectable_core.config.dart
 **.mocks.dart
 **.gr.dart
+**.cer
 pubspec.lock

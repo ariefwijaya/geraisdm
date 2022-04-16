@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geraisdm/config/injectable/injectable_core.dart';
+import 'package:geraisdm/modules/doc_viewer/screens/components/keep_alive_component.dart';
 import 'package:geraisdm/modules/home/blocs/home_announcement_bloc/home_announcement_bloc.dart';
 import 'package:geraisdm/modules/home/blocs/home_article_banner_bloc/home_article_banner_bloc.dart';
 import 'package:geraisdm/modules/home/blocs/home_bloc/home_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:geraisdm/modules/home/screens/sections/home_announcement_section
 import 'package:geraisdm/modules/home/screens/sections/home_article_section.dart';
 import 'package:geraisdm/modules/home/screens/sections/home_header_section.dart';
 import 'package:geraisdm/modules/home/screens/sections/home_menu_section.dart';
+import 'package:geraisdm/modules/home/screens/sections/home_searchbar_section.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
 
@@ -36,12 +38,7 @@ class HomeScreen extends StatelessWidget {
             create: (context) => getIt.get<HomeAnnouncementBloc>()),
         BlocProvider<HomeBloc>(create: (context) => getIt.get<HomeBloc>()),
       ],
-      child: BlocConsumer<HomeConfigBloc, HomeConfigState>(
-        listener: (context, state) {
-          if (state is HomeConfigSuccess) {
-            _refreshHomeSection(context);
-          }
-        },
+      child: BlocBuilder<HomeConfigBloc, HomeConfigState>(
         builder: (context, state) {
           if (state is HomeConfigSuccess) {
             return _buildConfigSuccess(context, homeConfigModel: state.data);
@@ -58,17 +55,26 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildConfigSuccess(BuildContext context,
       {required HomeConfigModel homeConfigModel}) {
+    final dataSections =
+        homeConfigModel.sections.where((element) => element.enable).toList();
     return RefreshIndicator(
       onRefresh: () => Future.sync(
         () => _refreshHomeSection(context),
       ),
       child: Scaffold(
-        body: ListView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          children: generateSections(context, homeConfigModel),
-        ),
-      ),
+          body: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: 20),
+              itemBuilder: (context, index) {
+                final item = dataSections[index];
+                final itemWidget = generateSections(item);
+                if (itemWidget != null) {
+                  return KeepAliveComponent(child: itemWidget);
+                } else {
+                  return Container();
+                }
+              },
+              itemCount: dataSections.length)),
     );
   }
 
@@ -92,72 +98,43 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> generateSections(BuildContext context, HomeConfigModel config) {
-    final List<Widget> widgetSections = [];
-    for (final item in config.sections) {
-      switch (item.name) {
-        case HomeSectionType.articleBanner:
-          if (item.enable) {
-            final config = item.config;
-            widgetSections.add(HomeArticleSection(
-              maxItem: config?.maxItem,
-            ));
-          }
-          break;
-        case HomeSectionType.menuList:
-          if (item.enable) {
-            final config = item.config;
-            widgetSections.add(HomeMenuSection(
-              maxItem: config?.maxItem,
-              moreButton: config?.enableActionButton ?? false,
-            ));
-          }
-          break;
+  Widget? generateSections(HomeSectionModel item) {
+    switch (item.name) {
+      case HomeSectionType.header:
+        return const HomeHeaderSection();
+      case HomeSectionType.searchbar:
+        return const HomeSearchbarSection();
+      case HomeSectionType.articleBanner:
+        final config = item.config;
+        return HomeArticleSection(
+          maxItem: config?.maxItem,
+        );
+      case HomeSectionType.menuList:
+        final config = item.config;
+        return (HomeMenuSection(
+          maxItem: config?.maxItem,
+          moreButton: config?.enableActionButton ?? false,
+        ));
 
-        case HomeSectionType.announcement:
-          if (item.enable) {
-            final config = item.config;
-            widgetSections.add(HomeAnnouncementSection(
-              maxItem: config?.maxItem,
-              actionButton: config?.enableActionButton ?? false,
-            ));
-          }
-          break;
+      case HomeSectionType.announcement:
+        final config = item.config;
+        return HomeAnnouncementSection(
+          maxItem: config?.maxItem,
+          actionButton: config?.enableActionButton ?? false,
+        );
 
-        case HomeSectionType.divider:
-          if (item.enable) {
-            final config = item.config;
-            widgetSections.add(Divider(
-              height: config?.size,
-            ));
-          }
-          break;
+      case HomeSectionType.divider:
+        final config = item.config;
+        return Divider(
+          height: config?.size,
+        );
 
-        default:
-      }
+      default:
+        return null;
     }
-
-    final List<Widget> widgetCore = [const HomeHeaderSection()];
-
-    if (widgetSections.isNotEmpty) {
-      widgetCore.add(Container(
-        color: Theme.of(context).indicatorColor,
-        child: Column(
-          children: widgetSections,
-        ),
-      ));
-
-      widgetCore.add(Container(
-          color: Theme.of(context).scaffoldBackgroundColor, height: 30));
-    }
-    return widgetCore;
   }
 
   void _refreshHomeSection(BuildContext context) {
-    context.read<HomeBloc>().add(HomeFetchHeader());
-    context.read<HomeAnnouncementBloc>().add(HomeAnnouncementFetch());
-    context.read<HomeMenuBloc>().add(HomeMenuFetch());
-    // context.read<HomeMenuAdditionalBloc>().add(HomeMenuAdditionalFetch());
-    context.read<HomeArticleBannerBloc>().add(HomeArticleBannerFetch());
+    context.read<HomeConfigBloc>().add(HomeConfigFetch());
   }
 }

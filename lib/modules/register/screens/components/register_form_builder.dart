@@ -130,6 +130,8 @@ class RegisterFormBuilder<T> extends StatelessWidget {
                         name: TimeHelper.dateTimeToDayMonthYear(
                             selected, context.locale.languageCode),
                         val: selected);
+                  } else {
+                    return null;
                   }
                 },
           onSaved: (value) => onSaved?.call(value as T?),

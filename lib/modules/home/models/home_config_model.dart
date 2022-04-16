@@ -14,6 +14,8 @@ class HomeConfigModel {
 }
 
 enum HomeSectionType {
+  header,
+  searchbar,
   @JsonValue("article_banner")
   articleBanner,
   @JsonValue("menu_list")

@@ -22,6 +22,8 @@ class UploadFileProvider extends UploadFileProviderInterface {
     if (result != null) {
       File file = File(result.files.single.path!);
       return file;
+    } else {
+      return null;
     }
   }
 
