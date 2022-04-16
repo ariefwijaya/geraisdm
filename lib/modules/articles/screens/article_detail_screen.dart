@@ -50,154 +50,116 @@ class ArticleDetailScreen extends StatelessWidget {
 
   Widget _buildSuccess(BuildContext context, {required ArticleModel data}) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            leading: const RouteBackButton(),
-            actions: [
-              IconButton(
-                  icon: const Icon(
-                    Icons.share,
-                    size: 30,
-                  ),
-                  onPressed: () => LauncherHelper.share(
-                      data.title + "\n" + (data.linkShare ?? ""),
-                      subject: Env.appName))
-            ],
-            iconTheme:
-                IconThemeData(color: Theme.of(context).scaffoldBackgroundColor),
-            backgroundColor: Theme.of(context).primaryColor,
-            expandedHeight: 180,
-            stretch: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: GestureDetector(
-                onTap: () {
-                  if (data.image != null) {
-                    context.router.pushWidget(
-                        ImageGalleryViewer(imageUrls: [data.image!]),
-                        fullscreenDialog: true);
-                  }
-                },
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Hero(
-                      tag: "0 ${data.image}",
-                      child: ImagePlaceholder(
-                        imageUrl: data.image,
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                            Theme.of(context).shadowColor.withOpacity(0.9),
-                            Colors.transparent,
-                            Theme.of(context).shadowColor.withOpacity(0.5),
-                          ])),
-                    )
-                  ],
-                ),
-              ),
+      appBar: AppBar(
+        leading: const RouteBackButton(),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.share,
+              size: 30,
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          data.title,
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      BlocBuilder<ArticleLikeBloc, ArticleLikeState>(
-                        builder: (context, state) {
-                          bool liked = data.liked;
-
-                          if (state is ArticleLikeSuccess) {
-                            liked = state.liked;
-                          }
-
-                          return IconButton(
-                              onPressed: () {
-                                context.read<ArticleLikeBloc>().add(
-                                    ArticleLikeStart(id: id, like: !liked));
-                              },
-                              icon: Icon(
-                                Icons.favorite,
-                                size: 30,
-                                color: liked
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).highlightColor,
-                              ));
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          DateFormat("d MMM yyyy, hh:mm").format(data.date),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Icon(
-                              Icons.person,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              data.author,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: Divider(
-                      thickness: 2,
-                      color: Theme.of(context).highlightColor,
-                    ),
-                  ),
-                  if (data.fileType == ArticleFileType.pdf)
-                    _buildPdf(context, data: data)
-                  else if (data.fileType == ArticleFileType.image)
-                    _buildImage(context, data: data)
-                  else if (data.fileType == ArticleFileType.video)
-                    _buildVideo(context, data: data)
-                  else
-                    Center(
-                      child: Text(
-                        LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    )
-                ],
-              ),
-            ),
+            onPressed: () {
+              LauncherHelper.share(data.title + "\n" + (data.linkShare ?? ""),
+                  subject: Env.appName);
+            },
           )
         ],
       ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    data.title,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                BlocBuilder<ArticleLikeBloc, ArticleLikeState>(
+                  builder: (context, state) {
+                    bool liked = data.liked;
+
+                    if (state is ArticleLikeSuccess) {
+                      liked = state.liked;
+                    }
+
+                    return IconButton(
+                        onPressed: () {
+                          context
+                              .read<ArticleLikeBloc>()
+                              .add(ArticleLikeStart(id: id, like: !liked));
+                        },
+                        icon: Icon(
+                          Icons.favorite,
+                          size: 30,
+                          color: liked
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).highlightColor,
+                        ));
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    DateFormat("d MMM yyyy, hh:mm").format(data.date),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Icon(
+                        Icons.person,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        data.author,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: Divider(
+                thickness: 2,
+                color: Theme.of(context).highlightColor,
+              ),
+            ),
+            Expanded(child: _buildFileType(context, data))
+          ],
+        ),
+      ),
     );
+  }
+
+  Widget _buildFileType(BuildContext context, ArticleModel data) {
+    if (data.fileType == ArticleFileType.pdf) {
+      return _buildPdf(context, data: data);
+    } else if (data.fileType == ArticleFileType.image) {
+      return _buildImage(context, data: data);
+    } else if (data.fileType == ArticleFileType.video) {
+      return _buildVideo(context, data: data);
+    } else {
+      return Center(
+        child: Text(
+          LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+      );
+    }
   }
 
   Widget _buildError(BuildContext context) {

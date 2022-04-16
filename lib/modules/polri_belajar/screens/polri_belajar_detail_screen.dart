@@ -73,111 +73,127 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
   Widget _buildSuccess(BuildContext context,
       {required PolriBelajarModel data}) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            leading: const RouteBackButton(),
-            actions: [
-              if (data.comments)
-                Row(
-                  children: [
-                    Text(
-                      "${data.totalComment}",
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.comment,
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        _showComments(context);
-                      },
-                    ),
-                  ],
+      appBar: AppBar(
+        leading: const RouteBackButton(),
+        actions: [
+          if (data.comments)
+            Row(
+              children: [
+                Text(
+                  "${data.totalComment}",
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
-              IconButton(
-                icon: const Icon(
-                  Icons.share,
-                  size: 30,
-                ),
-                onPressed: () {
-                  LauncherHelper.share(
-                      data.title + "\n" + (data.linkShare ?? ""),
-                      subject: Env.appName);
-                },
-              )
-            ],
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          data.title,
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
+                IconButton(
+                  icon: const Icon(
+                    Icons.comment,
+                    size: 30,
                   ),
-                  const SizedBox(height: 8),
-                  Row(
+                  onPressed: () {
+                    _showComments(context);
+                  },
+                ),
+              ],
+            ),
+          IconButton(
+            icon: const Icon(
+              Icons.share,
+              size: 30,
+            ),
+            onPressed: () {
+              LauncherHelper.share(data.title + "\n" + (data.linkShare ?? ""),
+                  subject: Env.appName);
+            },
+          )
+        ],
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data.title,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    DateFormat("d MMM yyyy, hh:mm").format(data.date),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Expanded(
-                        child: Text(
-                          DateFormat("d MMM yyyy, hh:mm").format(data.date),
-                          textAlign: TextAlign.left,
-                        ),
+                      const Icon(
+                        Icons.person,
+                        size: 18,
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Icon(
-                              Icons.person,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              data.author,
-                            ),
-                          ],
-                        ),
+                      const SizedBox(width: 5),
+                      Text(
+                        data.author,
                       ),
                     ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: Divider(
-                      thickness: 2,
-                      color: Theme.of(context).highlightColor,
-                    ),
-                  ),
-                  if (data.fileType == PolriBelajarFileType.pdf)
-                    _buildPdf(context, data: data)
-                  else if (data.fileType == PolriBelajarFileType.image)
-                    _buildImage(context, data: data)
-                  else if (data.fileType == PolriBelajarFileType.video)
-                    _buildVideo(context, data: data)
-                  else
-                    Center(
-                      child: Text(
-                        LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    )
-                ],
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: Divider(
+                thickness: 2,
+                color: Theme.of(context).highlightColor,
               ),
             ),
+            Expanded(child: _buildFileType(context, data)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFileType(BuildContext context, PolriBelajarModel data) {
+    if (data.fileType == PolriBelajarFileType.pdf) {
+      return _buildPdf(context, data: data);
+    } else if (data.fileType == PolriBelajarFileType.image) {
+      return _buildImage(context, data: data);
+    } else if (data.fileType == PolriBelajarFileType.video) {
+      return _buildVideo(context, data: data);
+    } else {
+      return Center(
+        child: Text(
+          LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+      );
+    }
+  }
+
+  Widget _buildShare({required String title, String? linkShare}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Expanded(
+              child: FilledButton.medium(
+                  buttonText: LocaleKeys.add_comment.tr(),
+                  onPressed: () {
+                    _showComments(context);
+                  })),
+          const SizedBox(width: 16),
+          IconButton(
+            icon: const Icon(
+              Icons.share,
+              size: 30,
+            ),
+            onPressed: () {
+              LauncherHelper.share(title + "\n" + (linkShare ?? ""),
+                  subject: Env.appName);
+            },
           )
         ],
       ),
@@ -186,54 +202,52 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
 
   Widget _buildPdf(BuildContext context, {required PolriBelajarModel data}) {
     final PageController pageController = PageController(keepPage: true);
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: PageView.builder(
-        controller: pageController,
-        itemCount: data.files.length,
-        itemBuilder: (context, index) {
-          final file = data.files[index];
-          return KeepAliveComponent(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Text(
-                        LocaleKeys.doc_viewer_of
-                            .tr(args: ["${index + 1}", "${data.files.length}"]),
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      const SizedBox(width: 8),
-                      if (data.description != null)
-                        Expanded(
-                          child: Text(
-                            data.description!,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: const TextStyle(fontSize: 12),
-                          ),
+    return PageView.builder(
+      controller: pageController,
+      itemCount: data.files.length,
+      itemBuilder: (context, index) {
+        final file = data.files[index];
+        return KeepAliveComponent(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Text(
+                      LocaleKeys.doc_viewer_of
+                          .tr(args: ["${index + 1}", "${data.files.length}"]),
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    const SizedBox(width: 8),
+                    if (data.description != null)
+                      Expanded(
+                        child: Text(
+                          data.description!,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(fontSize: 12),
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: SfPdfViewer.network(
-                    file.fileUrl,
-                  ),
+              ),
+              const SizedBox(height: 8),
+              Expanded(
+                child: SfPdfViewer.network(
+                  file.fileUrl,
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+              _buildShare(title: data.title, linkShare: data.linkShare)
+            ],
+          ),
+        );
+      },
     );
   }
 
   Widget _buildImage(BuildContext context, {required PolriBelajarModel data}) {
-    return Column(
+    return ListView(
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
@@ -272,22 +286,14 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
                     ))
                 .toList(),
           ),
-        if (data.content != null)
-          HtmlViewer(htmlString: data.content!)
-        else
-          Center(
-            child: Text(
-              "-",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          )
+        if (data.content != null) HtmlViewer(htmlString: data.content!),
+        _buildShare(title: data.title, linkShare: data.linkShare)
       ],
     );
   }
 
   Widget _buildVideo(BuildContext context, {required PolriBelajarModel data}) {
-    return Column(
+    return ListView(
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
@@ -336,16 +342,8 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
               );
             }).toList(),
           ),
-        if (data.content != null)
-          HtmlViewer(htmlString: data.content!)
-        else
-          Center(
-            child: Text(
-              "-",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          )
+        if (data.content != null) HtmlViewer(htmlString: data.content!),
+        _buildShare(title: data.title, linkShare: data.linkShare)
       ],
     );
   }

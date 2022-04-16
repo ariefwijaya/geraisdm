@@ -52,120 +52,116 @@ class AnnouncementDetailScreen extends StatelessWidget {
   Widget _buildSuccess(BuildContext context,
       {required AnnouncementModel data}) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            leading: const RouteBackButton(),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.share,
-                  size: 30,
-                ),
-                onPressed: () {
-                  LauncherHelper.share(
-                      data.title + "\n" + (data.linkShare ?? ""),
-                      subject: Env.appName);
-                },
-              )
-            ],
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          data.title,
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      BlocBuilder<AnnouncementLikeBloc, AnnouncementLikeState>(
-                        builder: (context, state) {
-                          bool liked = data.liked;
-
-                          if (state is AnnouncementLikeSuccess) {
-                            liked = state.liked;
-                          }
-
-                          return IconButton(
-                              onPressed: () {
-                                context.read<AnnouncementLikeBloc>().add(
-                                    AnnouncementLikeStart(
-                                        id: id, like: !liked));
-                              },
-                              icon: Icon(
-                                Icons.favorite,
-                                size: 30,
-                                color: liked
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).highlightColor,
-                              ));
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          DateFormat("d MMM yyyy, hh:mm").format(data.date),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Icon(
-                              Icons.person,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              data.author,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: Divider(
-                      thickness: 2,
-                      color: Theme.of(context).highlightColor,
-                    ),
-                  ),
-                  if (data.fileType == AnnouncementFileType.pdf)
-                    _buildPdf(context, data: data)
-                  else if (data.fileType == AnnouncementFileType.image)
-                    _buildImage(context, data: data)
-                  else if (data.fileType == AnnouncementFileType.video)
-                    _buildVideo(context, data: data)
-                  else
-                    Center(
-                      child: Text(
-                        LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    )
-                ],
-              ),
+      appBar: AppBar(
+        leading: const RouteBackButton(),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.share,
+              size: 30,
             ),
+            onPressed: () {
+              LauncherHelper.share(data.title + "\n" + (data.linkShare ?? ""),
+                  subject: Env.appName);
+            },
           )
         ],
       ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    data.title,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                BlocBuilder<AnnouncementLikeBloc, AnnouncementLikeState>(
+                  builder: (context, state) {
+                    bool liked = data.liked;
+
+                    if (state is AnnouncementLikeSuccess) {
+                      liked = state.liked;
+                    }
+
+                    return IconButton(
+                        onPressed: () {
+                          context
+                              .read<AnnouncementLikeBloc>()
+                              .add(AnnouncementLikeStart(id: id, like: !liked));
+                        },
+                        icon: Icon(
+                          Icons.favorite,
+                          size: 30,
+                          color: liked
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).highlightColor,
+                        ));
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    DateFormat("d MMM yyyy, hh:mm").format(data.date),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Icon(
+                        Icons.person,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        data.author,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: Divider(
+                thickness: 2,
+                color: Theme.of(context).highlightColor,
+              ),
+            ),
+            Expanded(child: _buildFileType(context, data))
+          ],
+        ),
+      ),
     );
+  }
+
+  Widget _buildFileType(BuildContext context, AnnouncementModel data) {
+    if (data.fileType == AnnouncementFileType.pdf) {
+      return _buildPdf(context, data: data);
+    } else if (data.fileType == AnnouncementFileType.image) {
+      return _buildImage(context, data: data);
+    } else if (data.fileType == AnnouncementFileType.video) {
+      return _buildVideo(context, data: data);
+    } else {
+      return Center(
+        child: Text(
+          LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+      );
+    }
   }
 
   Widget _buildError(BuildContext context) {
@@ -198,49 +194,46 @@ class AnnouncementDetailScreen extends StatelessWidget {
 
   Widget _buildPdf(BuildContext context, {required AnnouncementModel data}) {
     final PageController pageController = PageController(keepPage: true);
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: PageView.builder(
-        controller: pageController,
-        itemCount: data.files.length,
-        itemBuilder: (context, index) {
-          final file = data.files[index];
-          return KeepAliveComponent(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Text(
-                        LocaleKeys.doc_viewer_of
-                            .tr(args: ["${index + 1}", "${data.files.length}"]),
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      const SizedBox(width: 8),
-                      if (data.description != null)
-                        Expanded(
-                          child: Text(
-                            data.description!,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: const TextStyle(fontSize: 12),
-                          ),
+    return PageView.builder(
+      controller: pageController,
+      itemCount: data.files.length,
+      itemBuilder: (context, index) {
+        final file = data.files[index];
+        return KeepAliveComponent(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Text(
+                      LocaleKeys.doc_viewer_of
+                          .tr(args: ["${index + 1}", "${data.files.length}"]),
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    const SizedBox(width: 8),
+                    if (data.description != null)
+                      Expanded(
+                        child: Text(
+                          data.description!,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(fontSize: 12),
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: SfPdfViewer.network(
-                    file.fileUrl,
-                  ),
+              ),
+              const SizedBox(height: 8),
+              Expanded(
+                child: SfPdfViewer.network(
+                  file.fileUrl,
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

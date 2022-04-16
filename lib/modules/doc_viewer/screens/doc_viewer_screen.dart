@@ -5,6 +5,7 @@ import 'package:geraisdm/config/injectable/injectable_core.dart';
 import 'package:geraisdm/config/routes/routes.gr.dart';
 import 'package:geraisdm/modules/doc_viewer/blocs/doc_viewer_bloc/doc_viewer_bloc.dart';
 import 'package:geraisdm/modules/doc_viewer/models/doc_viewer_model.dart';
+import 'package:geraisdm/utils/helpers/launcher_helper.dart';
 import 'package:geraisdm/widgets/button_component.dart';
 import 'package:geraisdm/widgets/common_placeholder.dart';
 import 'package:geraisdm/constant/localizations.g.dart';
@@ -67,7 +68,9 @@ class DocViewerScreen extends StatelessWidget {
         action: FilledButton.large(
             buttonText: LocaleKeys.doc_viewer_error_retry.tr(),
             onPressed: () {
-              context.read<DocViewerBloc>().add(DocViewerFetch(id: id));
+              context
+                  .read<DocViewerBloc>()
+                  .add(DocViewerFetch(id: id, type: type));
             }));
   }
 
@@ -91,8 +94,13 @@ class DocViewerScreen extends StatelessWidget {
             title: Text(data.name),
             subtitle: Text(DateFormat("d MMM yyyy, hh:mm").format(data.date)),
             onTap: () {
-              context.pushRoute(DocViewerDetailRoute(
-                  id: data.id, title: data.name, type: data.type));
+              if (data.actionType == DocViewerActionType.screen) {
+                getIt
+                    .get<AppRouter>()
+                    .pushNamed(data.path!, includePrefixMatches: true);
+              } else if (data.actionType == DocViewerActionType.url) {
+                LauncherHelper.openUrl(data.path!);
+              }
             },
           ),
         );

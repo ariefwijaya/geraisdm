@@ -9,14 +9,15 @@ enum DocViewerFileType { pdf, image, video, unknown }
 @JsonSerializable(fieldRename: FieldRename.snake)
 class DocViewerDetailModel {
   final int id;
+  @JsonKey(name: "title")
   final String name;
+  @JsonKey(name: "content")
   final String description;
   final DateTime date;
   final String? icon;
   @JsonKey(defaultValue: [])
   final List<DocViewerFileModel> files;
   final String? linkShare;
-  final String? content;
   final String? image;
   @JsonKey(
       defaultValue: DocViewerFileType.unknown,
@@ -31,7 +32,6 @@ class DocViewerDetailModel {
       this.icon,
       required this.files,
       this.linkShare,
-      this.content,
       this.image,
       required this.fileType});
 

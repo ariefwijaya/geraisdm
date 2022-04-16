@@ -96,7 +96,8 @@ class _DocViewerDetailScreenState extends State<DocViewerDetailScreen> {
           action: FilledButton.large(
               buttonText: LocaleKeys.doc_viewer_error_retry.tr(),
               onPressed: () {
-                docViewerDetailBloc.add(DocViewerDetailFetch(id: widget.id));
+                docViewerDetailBloc.add(
+                    DocViewerDetailFetch(id: widget.id, type: widget.type));
               })),
     );
   }
@@ -105,39 +106,39 @@ class _DocViewerDetailScreenState extends State<DocViewerDetailScreen> {
       {required DocViewerDetailModel data}) {
     return SecureGate(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title ?? ""),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  if (data.linkShare != null) {
-                    LauncherHelper.share(
-                        data.description + "\n" + data.linkShare!);
-                  }
-                },
-                icon: const Icon(Icons.share))
-          ],
-        ),
-        body: Column(
-          children: [
-            if (data.fileType == DocViewerFileType.pdf)
-              _buildPdf(context, data: data)
-            else if (data.fileType == DocViewerFileType.image)
-              _buildImage(context, data: data)
-            else if (data.fileType == DocViewerFileType.video)
-              _buildVideo(context, data: data)
-            else
-              Center(
-                child: Text(
-                  LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              )
-          ],
-        ),
-      ),
+          appBar: AppBar(
+            title: Text(widget.title ?? ""),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    if (data.linkShare != null) {
+                      LauncherHelper.share(
+                          data.description + "\n" + data.linkShare!);
+                    }
+                  },
+                  icon: const Icon(Icons.share))
+            ],
+          ),
+          body: _buildFileType(context, data)),
     );
+  }
+
+  Widget _buildFileType(BuildContext context, DocViewerDetailModel data) {
+    if (data.fileType == DocViewerFileType.pdf) {
+      return _buildPdf(context, data: data);
+    } else if (data.fileType == DocViewerFileType.image) {
+      return _buildImage(context, data: data);
+    } else if (data.fileType == DocViewerFileType.video) {
+      return _buildVideo(context, data: data);
+    } else {
+      return Center(
+        child: Text(
+          LocaleKeys.polri_belajar_detail_file_type_unknown.tr(),
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+      );
+    }
   }
 
   Widget _buildPdf(BuildContext context, {required DocViewerDetailModel data}) {
@@ -228,16 +229,7 @@ class _DocViewerDetailScreenState extends State<DocViewerDetailScreen> {
                     ))
                 .toList(),
           ),
-        if (data.content != null)
-          HtmlViewer(htmlString: data.content!)
-        else
-          Center(
-            child: Text(
-              "-",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          )
+        HtmlViewer(htmlString: data.description)
       ],
     );
   }
@@ -293,16 +285,7 @@ class _DocViewerDetailScreenState extends State<DocViewerDetailScreen> {
               );
             }).toList(),
           ),
-        if (data.content != null)
-          HtmlViewer(htmlString: data.content!)
-        else
-          Center(
-            child: Text(
-              "-",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          )
+        HtmlViewer(htmlString: data.description)
       ],
     );
   }
