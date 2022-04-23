@@ -238,7 +238,8 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
                   file.fileUrl,
                 ),
               ),
-              _buildShare(title: data.title, linkShare: data.linkShare)
+              if (data.comments)
+                _buildShare(title: data.title, linkShare: data.linkShare)
             ],
           ),
         );
@@ -287,7 +288,8 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
                 .toList(),
           ),
         if (data.content != null) HtmlViewer(htmlString: data.content!),
-        _buildShare(title: data.title, linkShare: data.linkShare)
+        if (data.comments)
+          _buildShare(title: data.title, linkShare: data.linkShare)
       ],
     );
   }
@@ -343,7 +345,8 @@ class _PolriBelajarDetailScreenState extends State<PolriBelajarDetailScreen> {
             }).toList(),
           ),
         if (data.content != null) HtmlViewer(htmlString: data.content!),
-        _buildShare(title: data.title, linkShare: data.linkShare)
+        if (data.comments)
+          _buildShare(title: data.title, linkShare: data.linkShare)
       ],
     );
   }
