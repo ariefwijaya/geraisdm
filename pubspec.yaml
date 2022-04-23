@@ -58,7 +58,7 @@ dependencies:
       path: extras/encryption
   envify: ^2.0.2
   equatable: ^2.0.3
-  file_picker: ^4.3.2
+  file_picker: ^4.5.1
   firebase_analytics: ^9.0.3
   firebase_crashlytics: ^2.4.3
   firebase_dynamic_links: ^4.0.3
