@@ -41,7 +41,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SearchBar(
                     onChanged: (value) {
-                      _searchBloc.add(SearchRefresh(query: value));
+                      if (value.isEmpty || value.length >= 3) {
+                        _searchBloc.add(SearchRefresh(query: value));
+                      }
                     },
                   ),
                 ),
@@ -67,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           onTap: () {
                             if (entry.actionType == SearchActionType.screen) {
                               getIt.get<AppRouter>().pushNamed(entry.path!,
-                                  includePrefixMatches: true);
+                                  includePrefixMatches: false);
                             } else if (entry.actionType ==
                                 SearchActionType.url) {
                               LauncherHelper.openUrl(entry.path!);

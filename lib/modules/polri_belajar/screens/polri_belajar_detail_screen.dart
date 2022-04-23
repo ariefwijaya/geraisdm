@@ -27,7 +27,7 @@ class PolriBelajarDetailScreen extends StatefulWidget {
       {Key? key,
       @pathParam required this.id,
       @queryParam this.title,
-      @queryParam this.refId})
+      @QueryParam("ref_id") this.refId})
       : super(key: key);
 
   @override

@@ -19,6 +19,8 @@ class SearchModel {
       unknownEnumValue: SearchActionType.unknown)
   final SearchActionType actionType;
   final String? path;
+  @JsonKey(defaultValue: true)
+  final bool pathPrefixMatch;
 
   const SearchModel(
       {required this.id,
@@ -28,7 +30,8 @@ class SearchModel {
       this.category,
       this.locked = true,
       required this.actionType,
-      this.path});
+      this.path,
+      required this.pathPrefixMatch});
 
   factory SearchModel.fromJson(Map<String, dynamic> json) =>
       _$SearchModelFromJson(json);
